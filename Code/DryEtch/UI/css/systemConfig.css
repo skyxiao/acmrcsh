@@ -1,0 +1,180 @@
+﻿html
+{
+	height:100%;
+	margin-bottom:0px;
+	margin-top:0px;
+}
+
+body 
+{
+	height:100%;
+	background: -webkit-gradient(linear, left top, left bottom, from(#044D71), to(#0B3449));
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+.logo
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	border-left:#01202A;
+	border : 1px solid #011B1E;
+	border-top:none;
+	border-bottom:1px solid #77BFD7;
+	height : 60px;
+	width:1490px;
+	box-shadow: 1px 1px 3px #020B0B;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.config_body
+{
+	width : auto;
+	margin-left:auto;
+	margin-right:auto;
+	height : 650px;
+	width:1490px;
+	border : 1px solid #011B1E;
+	border-top:none;
+	background-color:#002B3A;
+	border-bottom-left-radius:3px;
+	border-bottom-right-radius:3px;
+	box-shadow: 1px 1px 3px #020B0B;
+	padding-top:50px;
+}
+
+.list_box
+{
+	border : 1px solid #014A52;
+	-moz-border-radius : 10px;      /* Gecko browsers */
+    -webkit-border-radius : 10px;   /* Webkit browsers */
+    border-radius : 10px;            /* W3C syntax */
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	width : 200px;
+	height : 500px;
+	margin-left:100px;
+	float:left;
+}
+
+.config_content
+{
+	border : 1px solid #014A52;
+	-moz-border-radius : 10px;      /* Gecko browsers */
+    -webkit-border-radius : 10px;   /* Webkit browsers */
+    border-radius : 10px;            /* W3C syntax */
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	width:1000px;
+	height : 470px;
+	margin-left:20px;
+	padding-top:30px;
+	overflow:auto;
+	float:left;
+	color:#fff;
+}
+
+.config_content > table
+{
+	margin-left:auto;
+	margin-right:auto;
+	width:90%;
+}
+
+.config_content > table td
+{
+	padding:5px;
+}
+
+.conf_input
+{
+	width : 100%;
+	background-color : #C6F0FB;
+	border : none;
+	padding-left : 3px;
+}
+
+.conf_disable
+{
+	width : 100%;
+	background-color : #D3D7D7;
+	border : none;
+	padding-left : 3px;
+}
+
+.conf_btn
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	width : 70px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
+}
+  
+#tree, #tree ul
+{
+	list-style-type: none;
+	color:#fff;
+	padding-left:0px;
+	font-weight:bold;
+}
+
+#tree  li
+{
+	margin-left:auto;
+	margin-right:auto;
+	width:170px;
+	height:25px;
+	padding-left:20px;
+	line-height:25px;
+}
+
+.select
+{
+	background-color : #0BCBD5;
+	border-bottom: 1px solid #014549;
+}
+
+#tree  li:hover
+{
+	background-color : #0BCBD5;
+	border-bottom: 1px solid #014549;
+}
+        
+#tree li > span
+{
+      margin-left: 20px;
+}
+        
+#tree li > .toggle
+{
+   position: absolute;
+   display: inline-block;
+   background-position: center;
+   background-repeat: no-repeat;
+   height: 16px;
+   width: 16px;
+   cursor: pointer;
+}
+        
+#tree li > div.closed
+{
+    background-image: url(../images/expand_icon.png);
+}
+        
+#tree li > div.open
+{
+    background-image: url(../images/contract_icon.png);
+}
+        
+.focus
+{
+    background-color: #eee;
+}
+   
+/*
+#data
+{
+    position: absolute;
+    left: 200px;
+	top: 20px;
+}
+*/

@@ -1,0 +1,93 @@
+html
+{
+	height:100%;
+}
+
+body
+{
+	height:100%;
+	background: -webkit-gradient(linear, left top, left bottom, from(#044D71), to(#0B3449));
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+.new_log_box
+{
+	width:1490px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+.log_content
+{
+	width:90%;
+	height:48px;
+	border:1px solid #C6F0FB;
+	margin-top:5px;
+	margin-left:10px;
+	float:left;
+	text-indent: 2em; 
+	word-wrap: break-word;
+	word-break: normal;
+	overflow:auto;
+	/*color:#E3DBC8;*/
+	color:#F8AF04;
+	padding-left:3px;
+	padding-right:3px;
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	line-height:48px;
+}
+
+.log_content_contrast
+{
+	filter: glow(color:blue, strength=2); 
+	color:red; 
+	/*-webkit-filter:saturate(300%);*/
+	text-shadow: 1px 1px 5px #E95004;
+}
+
+.long_log
+{
+	font-weight:900;
+}
+
+.log_btn
+{
+	float:left;
+}
+
+.log_btn button
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	width : 80px;
+	height : 30px;
+	margin-left : 30px;
+	margin-top:15px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
+}
+
+.log_btn button:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
+}
+
+.log_info
+{
+	color:#F5F3EE;
+}
+
+.log_warning
+{
+	color:#F9DB1A;
+}
+
+.log_error
+{
+	color:#F74610;
+	font-weight:bold;
+}

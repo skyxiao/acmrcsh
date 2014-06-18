@@ -1,0 +1,10 @@
+{
+    "database":
+    {
+        "host": "127.0.0.1",
+        "user": "acm",
+        "password": "acm",
+        "database": "dry_etch",
+        "port": "3306"
+    }
+}

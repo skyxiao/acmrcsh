@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Recipe</title>
+		<link rel="stylesheet" type="text/css" href="../css/recipe.css" />
+		<script language="javascript" type="text/javascript" src="../js/jquery-2.1.0.js"></script>
+		
+		<script language="javascript" type="text/javascript" src="../js/Dialog.js"></script>
+		<script language="javascript" type="text/javascript" src="../js/recipe.js"></script>
+	</head>
+	<body>
+	<div style="padding-top:30px;">
+	<div class="mainWin">
+		<div class="logo"></div>
+		<div class="messagealert"></div>
+		<div class="mainContent">
+		<div class="head">Recipe</div>
+		<table>
+			<tr>
+				<td class="recipe">
+					<div class="recipebox">
+						<ul class="recipelist">
+						</ul>
+						<div class="recipebtn" align="center">
+							<button onclick="recipeAdd()">add</button>
+							<button onclick="recipeDelete()">delete</button>
+							<button onclick="recipeSave()">save</button>
+							<button onclick="recipeSaveAs()">save as</button>
+						</div>
+					</div>
+				</td>
+				<td class="recipehead">
+					<div class="recipeheadbox">
+						<table cellspacing="1">
+							<tr>
+								<td>Name</td>
+							</tr>
+							<tr>
+								<td>Time (s)</td>
+							</tr>
+							<tr>
+								<td>APC Mode</td>
+							</tr>
+							<tr>
+								<td>Position (%)</td>
+							</tr>
+							<tr>
+								<td>Pressure (torr)</td>
+							</tr>
+							<tr>
+								<td>Rotate Speed (rpm)</td>
+							</tr>
+							<tr>
+								<td>HF Bypass</td>
+							</tr>
+							<tr>
+								<td>HF (sccm)</td>
+							</tr>
+							<tr>
+								<td>EtOH Bypass</td>
+							</tr>
+							<tr>
+								<td>EtOH (sccm)</td>
+							</tr>
+							<tr>
+								<td>N2 (sccm)</td>
+							</tr>
+							<tr>
+								<td>N2 Purge (sccm)</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+				<td class="recipevalue">
+					<div class="recipevaluebox">
+						<div class='recipevaluebox1'>
+							<table cellspacing="5">
+								<tr>
+								</tr>
+							</table>
+						</div>
+						<div class="stepbtn" align="center">
+							<button onclick="addOneStep()">add</button>
+							<button onclick="deleteStep()">delete</button>
+							<button onclick="copyStep()">copy</button>
+							<button onclick="pasteStep()">paste</button>
+							<button onclick="cutStep()">cut</button>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</div>
+	</div>
+		<script>
+			loadRecipe();
+		</script>
+	</body>
+</html>

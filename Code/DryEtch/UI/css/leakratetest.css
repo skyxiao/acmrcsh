@@ -1,0 +1,166 @@
+html
+{
+	height:100%;
+	margin-bottom:0px;
+	margin-top:0px;
+}
+
+body 
+{
+	height:100%;
+	background: -webkit-gradient(linear, left top, left bottom, from(#044D71), to(#0B3449));
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+.logo
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	border-left:#01202A;
+	border : 1px solid #011B1E;
+	border-top:none;
+	border-bottom:1px solid #77BFD7;
+	height : 60px;
+	width:1490px;
+	box-shadow: 1px 1px 3px #020B0B;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.lratetest_box
+{
+	width : auto;
+	margin-left:auto;
+	margin-right:auto;
+	height : 675px;
+	width:1490px;
+	border : 1px solid #011B1E;
+	border-top:none;
+	background-color:#002B3A;
+	border-bottom-left-radius:3px;
+	border-bottom-right-radius:3px;
+	box-shadow: 1px 1px 3px #020B0B;
+	padding-top:25px;
+}
+
+.setting_box
+{
+	width : 90%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.setting_head
+{
+	background-color : #01202A;
+	width : 100px;
+	height : 30px;
+	color : #fff;
+	font-weight : bold;
+	text-align : center;
+	line-height : 30px;
+	border-top : 2px solid #16707E;
+	border-left : 1px solid #07ABC4;
+}
+
+.setting_content
+{
+	border : 1px solid #014A52;
+	-moz-border-radius : 10px;      /* Gecko browsers */
+    -webkit-border-radius : 10px;   /* Webkit browsers */
+    border-radius : 10px;            /* W3C syntax */
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	height : 100px;
+	margin-top:5px;
+	line-height:100px;
+}
+
+.setting_content label
+{
+	color:#fff;
+	margin-left:40px;
+}
+.setting_content span
+{
+	color:#fff;
+	margin-left:5px;
+}
+
+.setting_content input
+{
+	background-color : #C6F0FB;
+	padding-left : 3px;
+	border : 1px solid #04AAB9;
+	width:80px;
+}
+
+.lratetest_content
+{
+	height:500px;
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.btn_box
+{
+	border : 1px solid #014A52;
+	-moz-border-radius : 10px;      /* Gecko browsers */
+    -webkit-border-radius : 10px;   /* Webkit browsers */
+    border-radius : 10px;            /* W3C syntax */
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	height: 40%;
+	width:78%;
+	margin-top:10px;
+}
+
+.enable_button
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	margin-left : 40px;
+	margin-top : 40px;
+	width : 150px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
+}
+
+.disabled_button
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	margin-left : 40px;
+	margin-top : 40px;
+	width : 150px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#A9ABAB));
+}
+
+.enable_button:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
+}
+
+.increase_rate label, span
+{
+	color:#fff;
+	font-weight:bold;
+}
+
+.result
+{
+	border : 1px solid #014A52;
+	-moz-border-radius : 10px;      /* Gecko browsers */
+    -webkit-border-radius : 10px;   /* Webkit browsers */
+    border-radius : 10px;            /* W3C syntax */
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	height:150px;
+	width:78%;
+	margin-top:30%;
+	text-align:center;
+	color:#fff;
+	font-weight:bold;
+	line-height:150px;
+	font-size:20px;
+}

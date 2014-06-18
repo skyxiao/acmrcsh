@@ -1,0 +1,47 @@
+html
+{
+	height:100%;
+}
+
+body
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#0D4E67), to(#128C9C));
+	color:#fff;
+	/*border-top: 1px solid #0691AA;*/
+	height:100%;
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+.menu_box
+{
+	height:100%;
+	width:1490px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.menu_box table
+{
+	height:100%;
+	/*margin-left:20px;*/
+}
+
+
+.menu_item
+{
+	padding-left:10px;
+	padding-right:10px;
+}
+
+
+.menu_item:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#0A68BA), to(#044D71));
+	/*background-color:#3098F3;*/
+}
+
+.select
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#0A68BA), to(#044D71));
+	font-weight:bold;
+}

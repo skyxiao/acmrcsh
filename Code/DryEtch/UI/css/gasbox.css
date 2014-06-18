@@ -1,0 +1,159 @@
+﻿html
+{
+	height:100%;
+	margin-bottom:0px;
+	margin-top:0px;
+}
+
+body 
+{
+	height:100%;
+	background: -webkit-gradient(linear, left top, left bottom, from(#044D71), to(#0B3449));
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+.logo
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	border-left:#01202A;
+	border : 1px solid #011B1E;
+	border-top:none;
+	border-bottom:1px solid #77BFD7;
+	height : 60px;
+	width:1490px;
+	box-shadow: 1px 1px 3px #020B0B;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.gas_body
+{
+	width : auto;
+	margin-left:auto;
+	margin-right:auto;
+	height : 660px;
+	width:1490px;
+	border : 1px solid #011B1E;
+	border-top:none;
+	background-color:#002B3A;
+	border-bottom-left-radius:3px;
+	border-bottom-right-radius:3px;
+	box-shadow: 1px 1px 3px #020B0B;
+	padding-top:40px;
+}
+
+.btn_box
+{
+	border : 1px solid #014A52;
+	-moz-border-radius : 10px;      /* Gecko browsers */
+    -webkit-border-radius : 10px;   /* Webkit browsers */
+    border-radius : 10px;            /* W3C syntax */
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	width:200px;
+	height:500px;
+	margin-left:40px;
+	margin-top:30px;
+	float:left;
+}
+
+.enable_button
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	margin-left : 15px;
+	margin-top : 37px;
+	width : 170px;
+	height : 40px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
+}
+
+.disabled_button
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	margin-left : 15px;
+	margin-top : 37px;
+	width : 170px;
+	height : 40px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#A9ABAB));
+}
+
+.enable_button:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
+}
+ 
+ .background
+{
+	float:left;
+    position: relative;
+    background: url(../images/chemical_flow.png);
+    width:880px;
+    height:620px;
+	margin-left:200px;
+}
+
+.valve_green
+{
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    background: url(../images/valve.png) no-repeat left top;
+    cursor:pointer;
+}
+.valve_gray
+{
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    background: url(../images/valve.png) no-repeat left bottom;
+    cursor:pointer;
+}
+
+.valve_green_h
+{
+    position:absolute;
+    width: 17px;
+    height: 17px;
+    background: url(../images/valve2.png) no-repeat left top;
+    cursor:pointer;
+}
+.valve_gray_h
+{
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    background: url(../images/valve2.png) no-repeat left bottom;
+    cursor:pointer;
+}
+
+.vac_gray
+{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: url(../images/vac.png) no-repeat left bottom;
+    cursor:pointer;
+}
+
+.vac_green
+{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: url(../images/vac.png) no-repeat left top;
+    cursor:pointer;
+}
+
+.vac_yellow
+{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: url(../images/vac.png) no-repeat left center;
+    cursor:pointer;
+}

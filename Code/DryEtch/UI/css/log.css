@@ -1,0 +1,140 @@
+html
+{
+	height:100%;
+	margin-bottom:0px;
+	margin-top:0px;
+}
+
+body 
+{
+	height:100%;
+	background: -webkit-gradient(linear, left top, left bottom, from(#044D71), to(#0B3449));
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+.logo
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	border-left:#01202A;
+	border : 1px solid #011B1E;
+	border-top:none;
+	border-bottom:1px solid #77BFD7;
+	height : 60px;
+	width:1490px;
+	box-shadow: 1px 1px 3px #020B0B;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.log_box
+{
+	width : auto;
+	margin-left: 5%;
+	margin-right: 5%;
+	height : 675px;
+	width:1490px;
+	border : 1px solid #011B1E;
+	border-top:none;
+	background-color:#002B3A;
+	border-bottom-left-radius:3px;
+	border-bottom-right-radius:3px;
+	box-shadow: 1px 1px 3px #020B0B;
+	padding-top:25px;
+}
+
+.log_content
+{
+	width : 80%;
+	height:680px;
+	border : 1px solid #014A52;
+	-moz-border-radius : 10px;      /* Gecko browsers */
+    -webkit-border-radius : 10px;   /* Webkit browsers */
+    border-radius : 10px;            /* W3C syntax */
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:-15px;
+}
+
+.table_head  tr
+{
+	background-color:#fff;
+	height:30px;
+}
+
+.table_head 
+{
+	border-left : 1px solid #07ABC4;
+	border-right : 1px solid #042A30;
+	border-top : 1px solid #0A98AE;
+	border-bottom : 1px solid #042A30;
+}
+
+.table_content
+{
+	width:97%;
+	height:641px;
+	margin-left:auto;
+	margin-right:auto;
+	
+	margin-top:25px;
+}
+
+.table_info
+{
+	width : 100%;
+}
+
+.table_head
+{
+	width:100%;
+}
+
+.table_content table tr
+{
+	height:28px;
+}
+
+.table_info_box
+{
+	height:613px;
+	width:100%;
+	overflow:auto;
+}
+
+.table_info_box table td
+{
+	padding-left:5px;
+	border-top:1px solid #16707E;
+	border-left:1px solid #16707E;
+}
+
+.table_info  tr:hover
+{
+	background-color:#9BFAFA;
+	color:#D43C05;
+}
+
+.info
+{
+	background-color:#FFFFE3;
+	color:#D43C05;
+}
+
+.error
+{
+	background-color:#FC889F;
+	color:#fff;
+}
+
+.warning
+{
+	background-color:#FEF503;
+	color:#D43C05;
+}
+
+.fatal
+{
+	background-color:#D2412A;
+	color:#fff;
+}

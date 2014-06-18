@@ -1,0 +1,104 @@
+{
+    "Blocks":
+    [
+	    {
+	    	"ID": "0",
+	        "Name": "DI",
+	        "Variable": ".stVariableGeneralDX",
+	        "NetID": "192.168.3.100.1.1",
+	        "Port": "801",
+	        "ReadStart": "0",
+	        "ReadEnd": "512",
+	        "WriteStart": "512",
+	        "WriteEnd": "512"
+	    },
+	    {
+	    	"ID": "1",
+	        "Name": "DO",
+	        "Variable": ".stVariableGeneralDY",
+	        "NetID": "192.168.3.100.1.1",
+	        "Port": "801",
+	        "ReadStart": "0",
+	        "ReadEnd": "0",
+	        "WriteStart": "0",
+	        "WriteEnd": "512"
+	    },
+ 	    {
+	    	"ID": "2",
+	        "Name": "AI",
+	        "Variable": ".stVariableGeneralAX",
+	        "NetID": "192.168.3.100.1.1",
+	        "Port": "801",
+	        "ReadStart": "0",
+	        "ReadEnd": "512",
+	        "WriteStart": "512",
+	        "WriteEnd": "512"
+	    },
+	    {
+	    	"ID": "3",
+	        "Name": "AO",
+	        "Variable": ".stVariableGeneralAY",
+	        "NetID": "192.168.3.100.1.1",
+	        "Port": "801",
+	        "ReadStart": "0",
+	        "ReadEnd": "0",
+	        "WriteStart": "0",
+	        "WriteEnd": "256"
+	    },
+	    {
+	    	"ID": "4",
+	        "Name": "BodyHeater",
+	        "Variable": ".stVariableCCHA1BodyHeater",
+	        "NetID": "192.168.3.100.1.1",
+	        "Port": "801",
+	        "ReadStart": "0",
+	        "ReadEnd": "18",
+	        "WriteStart": "18",
+	        "WriteEnd": "34"
+	    },
+	    {
+	    	"ID": "5",
+	        "Name": "LidHeater",
+	        "Variable": ".stVariableCCHA1LidHeater",
+	        "NetID": "192.168.3.100.1.1",
+	        "Port": "801",
+	        "ReadStart": "0",
+	        "ReadEnd": "18",
+	        "WriteStart": "18",
+	        "WriteEnd": "34"
+	    },
+	    {
+	    	"ID": "6",
+	        "Name": "ChuckHeater",
+	        "Variable": ".stVariableCCHA1ChuckHeater",
+	        "NetID": "192.168.3.100.1.1",
+	        "Port": "801",
+	        "ReadStart": "0",
+	        "ReadEnd": "18",
+	        "WriteStart": "18",
+	        "WriteEnd": "34"
+	    },
+	    {
+	    	"ID": "7",
+	        "Name": "Motion",
+	        "Variable": ".stVariableChuckMotor",
+	        "NetID": "192.168.3.100.1.1",
+	        "Port": "801",
+	        "ReadStart": "0",
+	        "ReadEnd": "52",
+	        "WriteStart": "52",
+	        "WriteEnd": "113"
+	    },
+	    {
+	    	"ID": "8",
+	        "Name": "DeviceNet",
+	        "Variable": ".stVariableDeviceNet",
+	        "NetID": "192.168.3.100.1.1",
+	        "Port": "801",
+	        "ReadStart": "0",
+	        "ReadEnd": "26",
+	        "WriteStart": "26",
+	        "WriteEnd": "38"
+	    }
+    ]
+}

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="../js/jquery-2.1.0.min.js" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript" src="../js/Dialog.js"></script>
+    <script type="text/javascript">
+		try
+		{
+			var control = require('../ControlBinder');
+			control.initialize('libDryEtch');
+			var gui = require('nw.gui');
+			var win = gui.Window.get();
+			win.on('close', function () {
+				if(confirm("Are you sure you want to exit?"))
+				{
+					if (window.top.frames["leaktest"].clearSetInterval)
+					{
+						window.top.frames["leaktest"].clearSetInterval();
+					}	
+
+					if (window.top.frames["overview"].clearSetInterval)
+					{
+						window.top.frames["overview"].clearSetInterval();
+					}
+
+					if (window.top.frames["gasbox"].clearSetInterval)
+					{
+						window.top.frames["gasbox"].clearSetInterval();
+					}
+
+					if (window.top.frames["systemdata"].clearSetInterval)
+					{
+						window.top.frames["systemdata"].clearSetInterval();
+					}
+					control.terminate();
+					this.close(true);
+				}
+				//win.removeAllListeners('close');
+				//win.close();
+			});
+			var FS = require("fs");
+		}
+		catch (e)
+		{
+			alert(e);
+		}
+//        var isHistoryLoad = false;
+//        var isRecipeEdit = false;	
+//		var isOverView = true;
+//		var isSysConfig = false;
+//		var isSysData = false;
+//		var isGasBox = false;
+//		var isLeakTest = false;
+//		var isMonitor = false;
+    </script>
+</head>
+<frameset id="Frameset1" rows="40,60,100%" framespacing="0" border="0">
+	<frame  frameborder="no" noresize="NORESIZE" marginheight="0" marginwidth="0"/>
+	<frame  frameborder="no" noresize="NORESIZE" marginheight="0" marginwidth="0" scrolling="no" src="newLog.htm"/>
+	<frameset id="frames" rows="40,*" framespacing="0" border="0">
+	    <frame frameborder="0" noresize="noresize" marginheight="0" marginwidth="0" scrolling="no" src="menu.htm" name="top" />
+	    <frame frameborder="0" noresize="noresize" marginheight="0" marginwidth="0"  src="overview.htm" name="overview" />
+		<frame frameborder="0" noresize="noresize" marginheight="0"  src="ablank.htm" name="systemconfig" />
+		<frame frameborder="0" noresize="noresize" marginheight="0"  src="ablank.htm" name="systemdata" />
+		<frame frameborder="0" noresize="noresize" marginheight="0"  src="ablank.htm" name="gasbox" />
+	    <frame frameborder="0" noresize="noresize" marginheight="0"  src="ablank.htm" name="historydata" />
+	    <frame frameborder="0" noresize="noresize" marginheight="0"  src="ablank.htm" name="recipeedit"/>
+		<frame frameborder="0" noresize="noresize" marginheight="0"  src="ablank.htm" name="log" />
+		<frame frameborder="0" noresize="noresize" marginheight="0"  src="ablank.htm" name="leaktest" />
+		<frame frameborder="0" noresize="noresize" marginheight="0"  src="ablank.htm" name="monitor" />
+	</frameset>
+</frameset>
+</html>

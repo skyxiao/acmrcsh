@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../css/gasbox.css" type="text/css" />
+    <script language="javascript" type="text/javascript" src="../js/jquery-2.1.0.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/common.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/gasbox.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/Dialog.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/jquery.contextmenu.r2.packed.js"></script>
+    <style type="text/css">
+        input[type="text"]
+        {
+            width: 54px;
+            height: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="padding-top: 30px;">
+        <div class="logo">
+        </div>
+        <div class="gas_body">
+            <div class="background" id="gasbox">
+                <div style="position: absolute; text-align: center; width: 54px; height: 10px; left: 346px;
+                    top: 152px">
+                    <input max="700" pid="8030" id="Text1" type="text" style="text-align: center;" />
+                </div>
+                <div style="position: absolute; text-align: center; width: 60px; height: 16px; left: 398px;
+                    top: 407px">
+                    <input max="2000" pid="8032" id="Text2" type="text" style="text-align: center;" />
+                </div>
+                <div style="position: absolute; text-align: center; width: 60px; height: 16px; left: 398px;
+                    top: 487px">
+                    <input max="5000" pid="8034" id="Text3" type="text" style="text-align: center;" />
+                </div>
+                <div style="position: absolute; text-align: center; width: 60px; height: 16px; left: 398px;
+                    top: 576px">
+                    <input max="5000" pid="8036" id="Text4" type="text" style="text-align: center;" />
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 289px; top: 168px" id="8009">
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 348px; top: 168px" id="8030">
+                </div>
+                <div tag="text" style="position: absolute; width: 60px; text-align: center; height: 16px;
+                    left: 339px; top: 423px" id="8012">
+                </div>
+                <div tag="text" style="position: absolute; width: 60px; text-align: center; height: 16px;
+                    left: 399px; top: 423px" id="8032">
+                </div>
+                <div tag="text" style="position: absolute; width: 60px; text-align: center; height: 16px;
+                    left: 341px; top: 503px" id="8015">
+                </div>
+                <div tag="text" style="position: absolute; width: 60px; text-align: center; height: 16px;
+                    left: 401px; top: 503px" id="8034">
+                </div>
+                <div tag="text" style="position: absolute; width: 60px; text-align: center; height: 16px;
+                    left: 341px; top: 592px" id="8018">
+                </div>
+                <div tag="text" style="position: absolute; width: 60px; text-align: center; height: 16px;
+                    left: 398px; top: 592px" id="8036">
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 160px; top: 21px" id="10000">
+                    0
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 673px; top: 3px" id="10001">
+                    0
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 742px; top: 3px" id="10002">
+                    0
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 810px; top: 3px" id="10003">
+                    0
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 619px; top: 40px" id="10004">
+                    0
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 168px; top: 214px" id="10005">
+                    0
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 477px; top: 156px" id="10007">
+                    0
+                </div>
+                <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 477px; top: 156px" id="2006">
+                    0
+                </div>
+                 <div tag="text" style="position: absolute; text-align: center; width: 60px; height: 16px;
+                    left: 691px; top: 139px" id="10008">
+                    0
+                </div>
+            </div>
+            <div class="btn_box">
+                <button class="PurgeHF enable_button">
+                    PurgeHF</button>
+                <button class="PurgeEtOH enable_button">
+                    PurgeEtOH</button>
+                <button class="PurgeExpchamber enable_button">
+                    PurgeExpchamber</button>
+                <button class="PurgeProcesschamber enable_button">
+                    PurgeProcesschamber</button>
+                <button class="PumpExpchamber enable_button">
+                    PumpExpchamber</button>
+                <button class="PumpProcesschamber enable_button">
+                    PumpProcesschamber</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    getSettingsData();
+</script>
+</html>

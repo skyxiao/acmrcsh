@@ -1,0 +1,125 @@
+html
+{
+	height:100%;
+	margin-bottom:0px;
+	margin-top:0px;
+}
+
+body 
+{
+	height:100%;
+	background: -webkit-gradient(linear, left top, left bottom, from(#044D71), to(#0B3449));
+	font-family:Arial,Helvetica,sans-serif;
+}
+
+.logo
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	border-left:#01202A;
+	border : 1px solid #011B1E;
+	border-top:none;
+	border-bottom:1px solid #77BFD7;
+	height : 60px;
+	width:1490px;
+	box-shadow: 1px 1px 3px #020B0B;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.monitor_body
+{
+	width : auto;
+	margin-left:auto;
+	margin-right:auto;
+	height : 650px;
+	width:1490px;
+	border : 1px solid #011B1E;
+	border-top:none;
+	background-color:#002B3A;
+	border-bottom-left-radius:3px;
+	border-bottom-right-radius:3px;
+	box-shadow: 1px 1px 3px #020B0B;
+	padding-top:50px;
+}
+
+.monitor_content
+{
+	width:1400px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.monitor_content table
+{
+	height:600px;
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.monitor_item
+{
+	border : 1px solid #014A52;
+	-moz-border-radius : 10px;      /* Gecko browsers */
+    -webkit-border-radius : 10px;   /* Webkit browsers */
+    border-radius : 10px;            /* W3C syntax */
+	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	width:100%;
+	height:100%;
+}
+
+.interval_time
+{
+	background-color : #C6F0FB;
+	padding-left : 3px;
+	border : 1px solid #04AAB9;
+	width:90px;
+}
+
+span
+{
+	color:#fff;
+	margin-left:5px;
+}
+
+.btn_box
+{
+	margin-top:50px;
+	width : 100px;
+	margin-left:40px;
+
+}
+
+.btn_box button
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	width : 100px;
+	height:30px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
+}
+
+.btn_box button:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
+}
+
+.monitor_item ul
+{
+	list-style-type: none;
+	color:#fff;
+	padding-left:0px;
+	margin-left:15px;
+}
+
+.monitor_item ul li
+{
+	margin-top:10px;
+}
+
+.monitor_item ul li label
+{
+	margin-left:3px;
+}

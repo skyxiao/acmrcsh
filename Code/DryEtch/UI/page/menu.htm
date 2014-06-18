@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+	<link rel="stylesheet" href="../css/menu.css" type="text/css" />
+	 <script language="javascript" type="text/javascript" src="../js/jquery-2.1.0.min.js"></script>
+     <style type="text/css">
+     span  
+    {  
+       cursor:pointer;
+    }  
+    </style>
+</head>
+<body>
+	<div class="menu_box">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="menu_item select" onclick="SelectMenu('Overview', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>Overview</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('SystemConfig', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>System Config</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('SystemData', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>System Data</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('GasBox', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>GasBox</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('RecipeEdit', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>Recipe Edit</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('HistoryData', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>History Data</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('Log', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>Log</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('LeakbackRateTest', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>LeakCheck</span>
+                </div>
+            </td>
+			<td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('Monitor', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>Monitor</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+	</div>
+</body>
+<script type="text/javascript">
+    //var ablank = "file:///F:/NewACMCode/ACM/page/ablank.htm"
+    function SelectMenu(str, This) {
+		$(".select").removeClass("select");
+		$(This).addClass("select");
+		if (top.frames["leaktest"].clearSetInterval)
+		{
+			top.frames["leaktest"].clearSetInterval();
+		}	
+
+		if (top.frames["overview"].clearSetInterval)
+		{
+			top.frames["overview"].clearSetInterval();
+		}
+
+		if (top.frames["gasbox"].clearSetInterval)
+		{
+			top.frames["gasbox"].clearSetInterval();
+		}
+
+		if (top.frames["systemdata"].clearSetInterval)
+		{
+			top.frames["systemdata"].clearSetInterval();
+		}	
+		
+		switch (str)
+		{
+		case "Overview":
+		    top.document.getElementById("frames").rows = "40,100%";
+		    if (top.document.getElementsByName("overview")[0].getAttribute("src") == "ablank.htm") {
+		        top.document.getElementsByName("overview")[0].src = str + ".htm";
+            }
+			else
+			{
+				top.frames["overview"].setIntervalID2 = setInterval(top.frames["overview"].getInitData, 1000);
+				top.frames["overview"].setIntervalID = setInterval(top.frames["overview"].turntableRun, 500);
+			}
+			break;
+
+		case "SystemConfig":
+			top.document.getElementById("frames").rows = "40,0,100%";
+			if (top.document.getElementsByName("systemconfig")[0].getAttribute("src") == "ablank.htm") {
+			    top.document.getElementsByName("systemconfig")[0].src = str + ".htm";
+            }
+			break;
+
+		case "SystemData":
+			top.document.getElementById("frames").rows = "40,0,0,100%";
+			if (top.document.getElementsByName("systemdata")[0].getAttribute("src") == "ablank.htm") {
+			    top.document.getElementsByName("systemdata")[0].src = str + ".htm";
+            }
+            else {
+				var flag = top.frames["systemdata"].isFetchAll;
+				top.frames["systemdata"].isFetchAll = false;
+				top.frames["systemdata"].SynData();
+				top.frames["systemdata"].isFetchAll = flag;
+                top.frames["systemdata"].setIntervalID = setInterval(top.frames["systemdata"].SynData, 500);
+            }
+			break;
+
+		case "GasBox":
+			top.document.getElementById("frames").rows = "40,0,0,0,100%";
+			if (top.document.getElementsByName("gasbox")[0].getAttribute("src") == "ablank.htm") {
+			    top.document.getElementsByName("gasbox")[0].src = str + ".htm";
+            }
+			else
+			{
+				top.frames["gasbox"].setIntervalID2 = setInterval(top.frames["gasbox"].getSettingsData, 500);
+			}
+			break;
+
+		case "RecipeEdit":
+			top.document.getElementById("frames").rows = "40,0,0,0,0,0,100%";
+			if (top.document.getElementsByName("recipeedit")[0].getAttribute("src") == "ablank.htm") {
+			    top.document.getElementsByName("recipeedit")[0].src = str + ".htm";
+            }
+			break;
+
+		case "HistoryData":
+			top.document.getElementById("frames").rows = "40,0,0,0,0,100%";
+			if (top.document.getElementsByName("historydata")[0].getAttribute("src") == "ablank.htm") {
+			    top.document.getElementsByName("historydata")[0].src = str + ".htm";
+            }
+			break;
+
+		case "Log":
+			top.document.getElementById("frames").rows = "40,0,0,0,0,0,0,100%";
+			if (top.document.getElementsByName("log")[0].getAttribute("src") == "ablank.htm")
+			{
+				 top.document.getElementsByName("log")[0].src = str + ".htm";
+			}
+			else
+			{
+				top.frames["log"].getLogData("");
+			}
+           
+			break;
+
+		case "LeakbackRateTest":
+			top.document.getElementById("frames").rows = "40,0,0,0,0,0,0,0,100%";
+			if (top.document.getElementsByName("leaktest")[0].getAttribute("src") == "ablank.htm") {
+			    top.document.getElementsByName("leaktest")[0].src = str + ".htm";
+            }
+			else
+			{
+				top.frames["leaktest"].intervalTimeId = setInterval(top.frames["leaktest"].getSettings, 500);
+			}
+			break;
+
+		case "Monitor":
+			top.document.getElementById("frames").rows = "40,0,0,0,0,0,0,0,0,100%";
+			if (top.document.getElementsByName("monitor")[0].getAttribute("src") == "ablank.htm") {
+			    top.document.getElementsByName("monitor")[0].src = str + ".htm";
+            }
+			break;
+
+		default:
+			
+		
+		}
+		/*
+        if (str == "RecipeEdit") {
+            top.document.getElementById("frames").rows = "40,0,0,100%";
+            if (!top.isRecipeEdit) {
+                top.frames["recipeedit"].location.href = str + ".htm";
+                top.isRecipeEdit = true;
+            }
+        }
+        else if(str == "HistoryData")
+        {
+            top.document.getElementById("frames").rows = "40,0,100%";
+            if (!top.isHistoryLoad) {
+                top.frames["historydata"].location.href = str + ".htm";
+                top.isHistoryLoad = true;
+            }
+        }
+        else {
+            top.document.getElementById("frames").rows = "40,100%";
+            top.frames["content"].location.href = str + ".htm"
+        }*/
+        
+    }
+</script>
+</html>

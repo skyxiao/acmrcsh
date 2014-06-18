@@ -1,0 +1,8 @@
+{
+    "Manual": "64",
+    "Auto": "64",
+    "Maintenance": "16",
+    "Warning": "260",
+    "Alarm": "514",
+    "Emergency": "514"
+}

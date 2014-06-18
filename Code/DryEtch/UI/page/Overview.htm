@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../css/overview.css" type="text/css" />
+    <script language="javascript" type="text/javascript" src="../js/jquery-2.1.0.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/common.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/overview.js"></script>
+	<script language="javascript" type="text/javascript" src="../js/Dialog.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/jquery.contextmenu.r2.packed.js"></script>
+</head>
+<body id="body">
+	<div class="overview">
+		<div class="logo">
+		</div>
+		<div class="overview_body">
+		<table>
+			<tr>
+				<td class="overview_turntable">
+					<!--<input id="btnRun" type="button" value="AutoRun" />-->
+					<div id="background">
+					</div>
+					<div id="firstWinfer" class="empty">
+						<label style="margin-left:65px;margin-top:-20px;position:absolute;color:#fff;"></label>
+					</div>
+					<div id="secondWinfer" class="empty">
+						<label style="margin-left:65px;margin-top:-20px;position:absolute;color:#fff;"></label>
+					</div>
+					<div id="thirdWinfer" class="empty">
+						<label style="margin-left:65px;margin-top:-20px;position:absolute;color:#fff;"></label>
+					</div>
+					  <div class="contextMenu" id="myMenu1">
+					  <ul>
+						<li id="HOME">Home</li>
+						<li id="PUMP">Pump</li>
+						<li id="VENT">Vent</li>
+						<li id="PINUP">PinUp</li>
+						<li id="PINDOWN">PinDown</li>
+						<li id="OPEN_DOOR">Open Door</li>
+						<li id="CLOSE_DOOR">Close Door</li>
+						<li id="TURNON_HEATER">Turnon Heater</li>
+						<li id="TURNOFF_HEATER">Turnoff Heater</li>
+						<li id="ROTATE_FORWARD">Rotate Forward</li>
+						<li id="ROTATE_BACKWARD">Rotate Backward</li>	
+					  </ul>
+					</div>
+					<div class="turntable_btn">
+						<label>WaferLotID:</label>
+						<input class="WaferLotID" />
+						<button onclick="overViewSkip()">Skip</button>
+						<button onclick="overViewOk()">Ok</button>
+					</div>
+				</td>
+				<td class="overview_opreation" align="top">
+					<div class="overview_info" >
+						<table cellspacing="1">
+							<tr>
+								<td class="overview_info_1">Wafers Run:</td>
+								<td class="overview_info_2"></td>
+							</tr>
+						</table>
+					</div>
+					<div class="overview_progress">
+						<table  width="100%">
+							<tr>
+								<td width="30%">
+									<span>Recipe Progress:</span>
+								</td>
+								<td width="70%">
+									<div class="progress">
+										<span class="recipe_done_progress"><span></span></span>
+										<div style="margin-top:-19px;margin-left:130px;z-index:2;position:absolute;color:#430248;"></div>
+									</div> 
+								</td>
+							</tr>
+							<tr>
+								<td style="height:20px;"></td><td></td>
+							</tr>
+							<tr>
+								<td width="30%">
+									<span>Step Progress:</span>
+								</td>
+								<td width="70%">
+									<div class="progress">
+										<span class="step_done_progress"><span></span></span>
+										<div style="margin-top:-19px;margin-left:130px;z-index:2;position:absolute;color:#430248;"></div>
+									</div> 
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="overview_recipe">
+						<div>
+							<label class="overview_rname">Recipe Name:</label>
+							<input style="width:80px;height:22px;background-color:#C6F0FB;border:none;padding-left:5px;" disabled="true"/>
+							<button class="long_btn" onclick="loadRecipe()">Load Recipe</button>
+							<button class="long_btn" onclick="unLoadRecipe()">Unload Recipe</button>
+						</div>
+						<div class="recipe_list">
+							<div style="height:75%;" class="recipe_content">
+								<table cellspacing="10">
+								</table>
+							</div>
+							<div>
+								<button class="short_btn" style="margin-left:30%;" onclick="selectRecipeSure()">Ok</button>
+								<button class="short_btn" style="margin-left:40px;;" onclick="selectRecipeCancel()">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</td>
+				<td class="overview_status" valign="top">
+					<div class="overview_state">
+						<label class="status_label">Status:</label>
+						<label class="status_content idle">idle</label>
+					</div>
+					<div class="overview_btn">
+						<button class="short_btn auto">Auto</button>
+						<button class="short_btn abort">Abort</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+		</div>
+	</div>
+</body>
+<script>
+	getInitData();
+</script>
+</html>

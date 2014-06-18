@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			div
+			{
+				width:600px;
+				background-color:#ff9900;
+				box-shadow: 10px 10px 5px #888888;
+			}
+		</style>
+		<script>
+			var control = require('../node-webkit/ControlBinder');
+			function test()
+			{
+				document.getElementById("output").innerHTML = "test";
+			}
+			function initialize()
+			{
+				control.initialize('libDryEtch');
+			}
+			function terminate()
+			{
+				control.terminate();
+			}
+			function fetch_parameters_byrange()
+			{
+				var from = document.getElementById("param_from").value;
+				var to = document.getElementById("param_to").value;
+				var json = control.fetch_parameters(parseInt(from), parseInt(to));
+				document.getElementById("output").innerHTML = json;
+			}
+			function fetch_parameters_byids()
+			{
+				var arr = new Array();
+				var ids = document.getElementById("param_ids").value.split(",");
+				for(index in ids)
+				{
+					arr.push(parseInt(ids[index]));
+				}
+				var json = control.fetch_parameters(arr);
+				document.getElementById("output").innerHTML = json;
+			}
+			function fetch_parameters_bypath()
+			{
+				var path = document.getElementById("param_path").value;
+				var json = control.fetch_parameters(path);
+				document.getElementById("output").innerHTML = json;
+			}
+			function modify_parameter()
+			{
+				var id = document.getElementById("param_id").value;
+				var value = document.getElementById("param_value").value;
+				control.modify_parameter(parseInt(id), value);
+				document.getElementById("output").innerHTML = "modify parameter(id="+id+") to "+value+".";
+			}
+			function fetch_system_data_byrange()
+			{
+				var from = document.getElementById("data_from").value;
+				var to = document.getElementById("data_to").value;
+				var json = control.fetch_system_data(parseInt(from), parseInt(to), false);
+				document.getElementById("output").innerHTML = json;
+			}
+			function fetch_system_data_byids()
+			{
+				var arr = new Array();
+				var ids = document.getElementById("data_ids").value.split(",");
+				for(index in ids)
+				{
+					arr.push(parseInt(ids[index]));
+				}
+				var json = control.fetch_system_data(arr, false);
+				document.getElementById("output").innerHTML = json;
+			}
+			function fetch_system_data_bypath()
+			{
+				var path = document.getElementById("data_path").value;
+				var json = control.fetch_system_data(path, false);
+				document.getElementById("output").innerHTML = json;
+			}
+			function modify_system_data()
+			{
+				var id = document.getElementById("data_id").value;
+				var value = document.getElementById("data_value").value;
+				control.modify_system_data(parseInt(id), value);
+				document.getElementById("output").innerHTML = "modify system data(id="+id+") to "+value+".";
+			}
+		</script>
+	</head>
+	<body>
+		<div height='100px'>
+			<p>initialize & terminate:</p>
+			<p>
+				<button onclick="initialize()">initialize</button>
+				<button onclick="terminate()">terminate</button>
+				<button onclick="test()">test</button>
+			</p>
+			<p> </p>
+		</div>		
+		<div>
+			<p>fetch and modify parameters:</p>
+			<p>
+				<input type='text' id='param_from'>
+				<input type='text' id='param_to'>
+				<button onclick="fetch_parameters_byrange()">fetch_parameters_byrange</button>
+			</p>
+			<p>
+				<input type='text' id='param_ids'>
+				<button onclick="fetch_parameters_byids()">fetch_parameters_byids</button>
+			</p>
+			<p>
+				<input type='text' id='param_path'>
+				<button onclick="fetch_parameters_bypath()">fetch_parameters_bypath</button>
+			</p>
+			<p>
+				<input type='text' id='param_id'>
+				<input type='text' id='param_value'>
+				<button onclick="modify_parameter()">modify_parameter</button>
+			</p>
+			<p> </p>
+		</div>	
+		<div>
+			<p>fetch and modify system data:</p>
+			<p>
+				<input type='text' id='data_from'>
+				<input type='text' id='data_to'>
+				<button onclick="fetch_system_data_byrange()">fetch_system_data_byrange</button>
+			</p>
+			<p>
+				<input type='text' id='data_ids'>
+				<button onclick="fetch_system_data_byids()">fetch_system_data_byids</button>
+			</p>
+			<p>
+				<input type='text' id='data_path'>
+				<button onclick="fetch_system_data_bypath()">fetch_system_data_bypath</button>
+			</p>
+			<p>
+				<input type='text' id='data_id'>
+				<input type='text' id='data_value'>
+				<button onclick="modify_system_data()">modify_system_data</button>
+			</p>
+			<p> </p>
+		</div>	
+		<div>
+			<p id="output">output</p>
+		</div>		
+	</body>
+</html>

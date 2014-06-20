@@ -21,6 +21,7 @@ enum AxisControl : unsigned
 	AxisControl_Relative = 3,
 	AxisControl_Velocity = 4,
 	AxisControl_Homing = 5,
+	AxisControl_Patrol = 6,
 };
 
 enum APCControl : unsigned

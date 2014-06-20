@@ -36,47 +36,7 @@ $(document).ready(function () {
     }
     initVAC();
     initText();
-    setIntervalID = setInterval(function () {
-        try {
-            var data = fetchSystemDatabyids(ids, isFetchAll);
-            if (!isFetchAll) {
-                isFetchAll = true;
-            }
-            for (var i = 0; i < data.systemdata.length; i++) {
-                prpos[data.systemdata[i].id] = data.systemdata[i].value;
-                if ($("#" + data.systemdata[i].id).length > 0) {
-                    if ($("#" + data.systemdata[i].id).attr("tag") == "text") {
-                        console.log(data.systemdata[i].value);
-                        $("#" + data.systemdata[i].id).text(data.systemdata[i].value);
-                    }
-                    else {
-                        if (data.systemdata[i].value == "1") {
-                            $("#" + data.systemdata[i].id).attr("class", $("#" + data.systemdata[i].id).attr("class1"));
-                        }
-                        else {
-                            $("#" + data.systemdata[i].id).attr("class", $("#" + data.systemdata[i].id).attr("class2"));
-                        }
-                    }
-                }
-                else {
-                    if (data.systemdata[i].id == 1011 || data.systemdata[i].id == 50 || data.systemdata[i].id == 51) {
-                        if (prpos[1011] == "0") {
-                            $("#vac").attr("class", "vac_gray");
-                        }
-                        else if (prpos[50] == "0" && prpos[51] == "0") {
-                            $("#vac").attr("class", "vac_green");
-                        }
-                        else {
-                            $("#vac").attr("class", "vac_yellow");
-                        }
-                    }
-                }
-            }
-        } catch (e) {
-            alert(e);
-            clearInterval(setIntervalID);
-        }
-    }, 500);
+    setIntervalID = setInterval(getVoleStatus, 500);
 
 	$(".PurgeHF").click(function() {
 		if ($(this).text() == "PurgeHF")
@@ -245,6 +205,7 @@ function initValve() {
     arr.push(new valve(650, 230, "valve_green_h", "valve_gray_h", 1038));
     arr.push(new valve(151, 243, "valve_green_h", "valve_gray_h", 1037));
     arr.push(new valve(191, 440, "valve_green_h", "valve_gray_h", 1039));
+    arr.push(new valve(151, 549, "valve_green_h", "valve_gray_h", 1048));
     arr.push(new valve(321, 423, "valve_green_h", "valve_gray_h", 1026));
     arr.push(new valve(474, 423, "valve_green_h", "valve_gray_h", 1027));
     arr.push(new valve(394, 459, "valve_green_h", "valve_gray_h", 1028));
@@ -393,9 +354,53 @@ function getSettingsData()
 	delete system_data;
 }
 
+function getVoleStatus()
+{
+	try {
+            var data = fetchSystemDatabyids(ids, isFetchAll);
+            if (!isFetchAll) {
+                isFetchAll = true;
+            }
+            for (var i = 0; i < data.systemdata.length; i++) {
+                prpos[data.systemdata[i].id] = data.systemdata[i].value;
+                if ($("#" + data.systemdata[i].id).length > 0) {
+                    if ($("#" + data.systemdata[i].id).attr("tag") == "text") {
+                        console.log(data.systemdata[i].value);
+                        $("#" + data.systemdata[i].id).text(data.systemdata[i].value);
+                    }
+                    else {
+                        if (data.systemdata[i].value == "1") {
+                            $("#" + data.systemdata[i].id).attr("class", $("#" + data.systemdata[i].id).attr("class1"));
+                        }
+                        else {
+                            $("#" + data.systemdata[i].id).attr("class", $("#" + data.systemdata[i].id).attr("class2"));
+                        }
+                    }
+                }
+                else {
+                    if (data.systemdata[i].id == 1011 || data.systemdata[i].id == 50 || data.systemdata[i].id == 51) {
+                        if (prpos[1011] == "0") {
+                            $("#vac").attr("class", "vac_gray");
+                        }
+                        else if (prpos[50] == "0" && prpos[51] == "0") {
+                            $("#vac").attr("class", "vac_green");
+                        }
+                        else {
+                            $("#vac").attr("class", "vac_yellow");
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            alert(e);
+            clearInterval(setIntervalID);
+        }
+}
+
 function clearSetInterval()
 {
 	clearInterval(setIntervalID2);
+	clearInterval(setIntervalID);
 }
 
 setIntervalID2 = setInterval(getSettingsData, 500);

@@ -129,20 +129,6 @@ Handle<Value> Terminate(const Arguments& args)
 	if(control_core_handle == NULL)
 		return scope.Close(Undefined());
 
-	if (control_module.terminate)
-	{
-		try
-		{
-			control_module.terminate();
-		}
-		catch(...)
-		{
-			ThrowException(Exception::TypeError(String::New("Failed to initialize control module.")));
-			return scope.Close(Undefined());
-		}
-	}
-
-	control_module.terminate = NULL;
 	control_module.fetch_parameters_by_id_range = NULL;
 	control_module.fetch_parameters_by_ids = NULL;
 	control_module.fetch_parameters_by_path = NULL;
@@ -157,6 +143,20 @@ Handle<Value> Terminate(const Arguments& args)
 	control_module.unload_recipe = NULL;
 	control_module.reset_signal_tower = NULL;
 	control_module.change_mode = NULL;
+
+	if (control_module.terminate)
+	{
+		try
+		{
+			control_module.terminate();
+		}
+		catch(...)
+		{
+			ThrowException(Exception::TypeError(String::New("Failed to initialize control module.")));
+			return scope.Close(Undefined());
+		}
+	}
+	control_module.terminate = NULL;
 
 	FreeLibrary(control_core_handle);
 	control_core_handle = NULL;

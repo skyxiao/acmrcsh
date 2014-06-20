@@ -50,6 +50,7 @@ extern SystemData<unsigned> diAlcoholLeak;
 extern SystemData<unsigned> diPrcCbVacuumFail;
 extern SystemData<unsigned> diPrcCbDoorClose;
 extern SystemData<unsigned> diAlcoholGasLeak;
+extern SystemData<unsigned> diExhaustPresAlarm;
 extern SystemData<unsigned> diGasboxDoorClose;
 extern SystemData<unsigned> diDoorOverride;
 extern SystemData<unsigned> diInterlockReset;
@@ -188,6 +189,7 @@ extern SystemData<unsigned> diAxisStandStill;
 extern SystemData<unsigned> diAxisMoving;
 extern SystemData<unsigned> diAxisNotMoving;
 extern SystemData<unsigned> aiAxisErrCode;
+extern SystemData<unsigned> diAxisHomeDone;
 extern SystemData<float> aiActualPosition;
 extern SystemData<float> aiActualVelocity;
 extern SystemData<unsigned> aoAxisControl;
@@ -203,12 +205,13 @@ extern SystemData<float> aoAxisVelocity;
 extern SystemData<float> aoAxisPosition;
 extern SystemData<float> aoAxisDistance;
 extern SystemData<float> aoAxisVelOverride;
-
+extern SystemData<float> aoAxisPatrolPos1;
+extern SystemData<float> aoAxisPatrolPos2;
 
 //DeviceNet
 extern SystemData<unsigned> aiAPCStatus;
 extern SystemData<float> aiAPCPressure;
-extern SystemData<float> aiAPCPressure;
+extern SystemData<float> aiAPCPosition;
 extern SystemData<unsigned> aiAPCOverrideStatus;
 extern SystemData<unsigned> aiVapMFCStatus;
 extern SystemData<float> aiEtOHFlowrate;
@@ -223,13 +226,13 @@ extern SystemData<unsigned> aiProcChamManoStatus;
 extern SystemData<float> aiExpChamPressure;
 extern SystemData<unsigned> aiExpChamManoStatus;
 extern SystemData<float> aoAPCPressure;
-extern SystemData<float> aoAPCPosition;
 extern SystemData<unsigned> aoAPCOverride;
 extern SystemData<unsigned> aoAPCControlMode;
 extern SystemData<float> aoEtOHFlowSetpoint;
 extern SystemData<float> aoHFFlowSetpoint;
 extern SystemData<float> aoPurgeN2FlowSetpoint;
 extern SystemData<float> aoN2FlowSetpoint;
+extern SystemData<float> aoAPCPosition;
 
 
 //user defined

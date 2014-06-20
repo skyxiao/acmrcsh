@@ -20,11 +20,11 @@ ParameterItem<float> TempAlarmOffset(26, "TempAlarmOffset", "Heater", "Relative 
 
 
 //Chuck position
-ParameterItem<float> ChuckPos1(1001,"ChuckPos1","Chuck","chuck position1",0,360,0,"deg");
-ParameterItem<float> ChuckPos2(1002,"ChuckPos2","Chuck","chuck position2",0,360,120,"deg");
-ParameterItem<float> ChuckPos3(1003,"ChuckPos3","Chuck","chuck position3",0,360,240,"deg");
-ParameterItem<float> ChuckPatrolStart(1004,"ChuckPatrolStart","Chuck","chuck patrol start degree",0,360,0,"deg");
-ParameterItem<float> ChuckPatrolEnd(1005,"ChuckPatrolEnd","Chuck","chuck patrol end degree",0,360,360,"deg");
+ParameterItem<float> ChuckPos1(1001,"ChuckPos1","Chuck","chuck position1",-160,160,-120,"deg");
+ParameterItem<float> ChuckPos2(1002,"ChuckPos2","Chuck","chuck position2",-160,160,0,"deg");
+ParameterItem<float> ChuckPos3(1003,"ChuckPos3","Chuck","chuck position3",-160,160,120,"deg");
+ParameterItem<float> ChuckPatrolStart(1004,"ChuckPatrolStart","Chuck","chuck patrol start degree",-160,160,-160,"deg");
+ParameterItem<float> ChuckPatrolEnd(1005,"ChuckPatrolEnd","Chuck","chuck patrol end degree",-160,160,160,"deg");
 
 
 //Flow

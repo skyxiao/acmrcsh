@@ -140,7 +140,12 @@
             }
 			else
 			{
+				var flag = top.frames["gasbox"].isFetchAll;
+				top.frames["gasbox"].isFetchAll = false;
 				top.frames["gasbox"].setIntervalID2 = setInterval(top.frames["gasbox"].getSettingsData, 500);
+				top.frames["gasbox"].getVoleStatus();
+				top.frames["gasbox"].isFetchAll = flag;
+				top.frames["gasbox"].setIntervalID = setInterval(top.frames["gasbox"].getVoleStatus, 500);
 			}
 			break;
 

@@ -305,8 +305,9 @@ void ProcessUnit::OnHome()
 		ADD_STEP_COMMAND([&]()
 		{	Data::aoAxisControl = AxisControl_Homing;
 			Data::doAxisExecute = (Data::doAxisExecute ? 0 : 1);})
+		ADD_STEP_WAIT(1)
 		ADD_STEP_WAIT_CONDITION([&]()->bool
-		{	return Data::diAxisNotMoving == 1 && Data::diAxisMoving == 0;},
+		{	return Data::diAxisHomeDone == 1 && Data::diAxisMoving == 0;},
 			Parameters::HomingTimeout,
 			[&](){	EVT::HomingTimeout.Report();})
 	END_UNIT_STEP
@@ -936,7 +937,7 @@ float ProcessUnit::get_next_position()
 	pos[1] = Parameters::ChuckPos2;
 	pos[2] = Parameters::ChuckPos3;
 
-	float current_pos = Data::aiActualPosition;
+	float current_pos = Data::aiActualPosition + 5;
 	unsigned int i=0;
 	for(i=0; i<3; i++)
 	{

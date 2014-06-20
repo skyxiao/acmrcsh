@@ -111,11 +111,11 @@ function createFromGroup(node) {
 function getContent(title, name, text, unit, min, max, i,id) {
    if(i%2==1)
    {
-       return '<td width="80px" style="text-align:left"><span title="' + title + '">' + name + '</span></td><td  width="80px"><input class="conf_input" type="text" id="'
+       return '<td>' + id + '</td><td width="80px" style="text-align:left"><span title="' + title + '">' + name + '</span></td><td  width="80px"><input class="conf_input" type="text" id="'
               + id + '" value="' + text + '" /></td><td  width="50px">'+unit+'</td><td style="text-align:left">'
                + '<input class="conf_btn" pid="' + id + '" max="' + max + '" min="' + min + '"  txtID="' + id + '" type="button" onclick="buttonClick(this);" value="set" /></td></tr>';
    }
-   return '<tr><td width="80px"  style="text-align:left"><span title="' + title + '">' + name + '</span></td><td  width="80px"><input class="conf_input"  type="text" id="'
+   return '<tr><td>' + id + '</td><td width="80px"  style="text-align:left"><span title="' + title + '">' + name + '</span></td><td  width="80px"><input class="conf_input"  type="text" id="'
               + id + '" value="' + text + '" /></td><td  width="50px">'+unit+'</td><td style="text-align:left">'
                + '<input class="conf_btn" pid="' + id + '" max="' + max + '" min="' + min + '"  txtID="' + id + '" type="button" onclick="buttonClick(this);" value="set" /></td>';
 }

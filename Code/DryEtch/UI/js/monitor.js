@@ -110,12 +110,11 @@ function draw(List) {
 		var length = results[List[0]].length;
 		var minTime = results[List[0]][0]["time"];
 		var maxTime = results[List[0]][length - 1]["time"];
-		if (maxTime > 100 * (count + 1))
+		if (maxTime < 100)
 		{
-			count = count + 1;
-		}
+			maxTime = 100;
+		}		
 		
-		maxTime = 100 * (count + 1);
 		Chart1.axes.bottom.setMinMax(minTime, maxTime);
 	}
 	

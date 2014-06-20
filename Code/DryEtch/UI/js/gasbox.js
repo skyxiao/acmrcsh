@@ -143,30 +143,30 @@ function initText() {
     prpos[8009] = "1";
     prpos[8030] = "1";
     prpos[8012] = "1";
-    prpos[8032] = "1";
+    prpos[2004] = "1";
     prpos[8015] = "1";
     prpos[8034] = "1";
     prpos[8018] = "1";
     prpos[8036] = "1";
 
-    ids.push(10000);
-    ids.push(10001);
-    ids.push(10002);
-    ids.push(10003);
-    ids.push(10004);
-    ids.push(10005);
-    ids.push(10006);
-    ids.push(10007);
+    ids.push(8005);
+    ids.push(4000);
+    ids.push(5000);
+    ids.push(6000);
+    ids.push(8020);
+    ids.push(2006);
+    ids.push(2004);
+	ids.push(8023);
 
 
-    prpos[10000] = "0";
-    prpos[10001] = "0";
-    prpos[10002] = "0";
-    prpos[10003] = "0";
-    prpos[10004] = "0";
-    prpos[10005] = "0";
-    prpos[10006] = "0";
-    prpos[10007] = "0";
+    prpos[8005] = "0";
+    prpos[4000] = "0";
+    prpos[5000] = "0";
+    prpos[6000] = "0";
+    prpos[8020] = "0";
+    prpos[2006] = "0";
+    prpos[2004] = "0";
+	prpos[8023] = "0";
 
     $(":text").keydown(function (event) {
         if (event.keyCode == 13) {

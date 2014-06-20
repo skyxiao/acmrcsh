@@ -241,6 +241,18 @@ void ProcessUnit::TranslateTask(const UnitTask& task)
 	case COMMAND_PINDOWN:
 		OnPinDown();
 		break;
+	case COMMAND_EXTEND_ARM:
+		OnExtendArm();
+		break;
+	case COMMAND_RETRACT_ARM:
+		OnRetractArm();
+		break;
+	case COMMAND_FORK_VERTICAL:
+		OnForkVertical();
+		break;
+	case COMMAND_FORK_HORIZONTAL:
+		OnForkHorizontal();
+		break;
 	case COMMAND_ROTATE_FORWARD:
 		OnRotateForward();
 		break;
@@ -280,15 +292,7 @@ void ProcessUnit::OnHome()
 {
 	if(Data::diArmOut == 0)
 	{
-		NEW_UNIT_STEP("Arm out", false)
-			ADD_STEP_COMMAND([&]()
-			{	Data::doArmOut = 1;
-				Data::doArmIn = 0;})
-			ADD_STEP_WAIT_CONDITION([&]()->bool
-			{	return Data::diArmIn == 0 && Data::diArmOut == 1;},
-				Parameters::ArmTimeout,
-				[&](){	EVT::ArmTimeout.Report("out");})
-		END_UNIT_STEP
+		OnRetractArm();
 	}
 
 	if(Data::diPrcCbDoorClose == 0)
@@ -938,6 +942,58 @@ void ProcessUnit::OnPinDown()
 		{	return Data::diPinUp == 0 && Data::diPinDown == 1;},
 			Parameters::PinTimeout,
 			[&](){	EVT::PinTimeout.Report("down");})
+	END_UNIT_STEP
+}
+
+void ProcessUnit::OnExtendArm()
+{
+	NEW_UNIT_STEP("extend arm", false)
+		ADD_STEP_COMMAND([&]()
+		{	Data::doArmIn = 1;
+			Data::doArmOut = 0;})
+		ADD_STEP_WAIT_CONDITION([&]()->bool
+		{	return Data::diArmOut == 0 && Data::diArmIn == 1;},
+			Parameters::ArmTimeout,
+			[&](){	EVT::ArmTimeout.Report("in");})
+	END_UNIT_STEP
+}
+
+void ProcessUnit::OnRetractArm()
+{
+	NEW_UNIT_STEP("retract arm", false)
+		ADD_STEP_COMMAND([&]()
+		{	Data::doArmIn = 0;
+			Data::doArmOut = 1;})
+		ADD_STEP_WAIT_CONDITION([&]()->bool
+		{	return Data::diArmOut == 1 && Data::diArmIn == 0;},
+			Parameters::ArmTimeout,
+			[&](){	EVT::ArmTimeout.Report("out");})
+	END_UNIT_STEP
+}
+
+void ProcessUnit::OnForkVertical()
+{
+	NEW_UNIT_STEP("rotate fork vertical", false)
+		ADD_STEP_COMMAND([&]()
+		{	Data::doForkVertical = 1;
+			Data::doForkHorizontal = 0;})
+		ADD_STEP_WAIT_CONDITION([&]()->bool
+		{	return Data::diForkHorizontal == 0 && Data::diForkVertical == 1;},
+			Parameters::ForkTimeout,
+			[&](){	EVT::ForkTimeout.Report();})
+	END_UNIT_STEP
+}
+
+void ProcessUnit::OnForkHorizontal()
+{
+	NEW_UNIT_STEP("rotate fork horizontal", false)
+		ADD_STEP_COMMAND([&]()
+		{	Data::doForkVertical = 0;
+			Data::doForkHorizontal = 1;})
+		ADD_STEP_WAIT_CONDITION([&]()->bool
+		{	return Data::diForkHorizontal == 1 && Data::diForkVertical == 0;},
+			Parameters::ForkTimeout,
+			[&](){	EVT::ForkTimeout.Report();})
 	END_UNIT_STEP
 }
 

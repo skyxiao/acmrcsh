@@ -55,6 +55,12 @@ enum UnitState //: unsigned
 #define COMMAND_OPEN_DOOR 1017
 #define COMMAND_CLOSE_DOOR 1018
 
+#define COMMAND_EXTEND_ARM 1019
+#define COMMAND_RETRACT_ARM 1020
+
+#define COMMAND_FORK_VERTICAL 1021
+#define COMMAND_FORK_HORIZONTAL 1022
+
 
 struct UnitTask
 {

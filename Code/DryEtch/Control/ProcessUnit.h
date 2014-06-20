@@ -62,6 +62,12 @@ private:
 	void OnPinUp();
 	void OnPinDown();
 
+	void OnExtendArm();
+	void OnRetractArm();
+
+	void OnForkVertical();
+	void OnForkHorizontal();
+
 	void OnRotateForward();
 	void OnRotateBackward();
 

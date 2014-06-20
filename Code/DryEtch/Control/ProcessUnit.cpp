@@ -302,6 +302,17 @@ void ProcessUnit::OnHome()
 	}
 
 	NEW_UNIT_STEP("home", false)
+		ADD_STEP_COMMAND([&](){	Data::doAxisServoOn = 1;})
+		ADD_STEP_WAIT_CONDITION([&]()->bool
+		{	return Data::diAxisServoDone == 1;},
+			Parameters::HomingTimeout,
+			[&](){	EVT::HomingTimeout.Report();})
+		ADD_STEP_COMMAND([&]()
+		{	Data::aoAxisStopDec = Parameters::AxisStopDeceleration;
+			Data::aoAxisDec = Parameters::AxisDeceleration;
+			Data::aoAxisAcc = Parameters::AxisAcceleration;
+			Data::aoAxisPatrolPos1 = Parameters::AxisPatrolPos1;
+			Data::aoAxisPatrolPos2 = Parameters::AxisPatrolPos2;})
 		ADD_STEP_COMMAND([&]()
 		{	Data::aoAxisControl = AxisControl_Homing;
 			Data::doAxisExecute = (Data::doAxisExecute ? 0 : 1);})
@@ -560,7 +571,7 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 	if (rpm > 0)
 	{
 		Data::aoAxisVelocity = rpm * 360 / 60;
-		Data::aoAxisControl = AxisControl_Velocity;
+		Data::aoAxisControl = AxisControl_Patrol;
 	}
 	else
 	{

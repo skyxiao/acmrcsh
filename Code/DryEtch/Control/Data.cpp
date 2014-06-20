@@ -130,8 +130,8 @@ SystemData<unsigned> doCbGateVal(1071,"doCbGateVal","DO",0,1,0,0,1,71,0,1,true);
 //AI
 SystemData<float> aiFacPressure(2000,"aiFacPressure","AI",0,0,2,0,2,0,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 100.0f));
 SystemData<float> aiExpPressure(2002,"aiExpPressure","AI",0,0,2,0,2,2,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 100.0f));
-SystemData<float> aiAlcTankPressure(2004,"aiAlcTankPressure","AI",0,0,2,0,2,4,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 1000.0f));
-SystemData<float> aiAlcPressure(2006,"aiAlcPressure","AI",0,0,2,0,2,6,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 1000.0f));
+SystemData<float> aiAlcPressure(2004,"aiAlcPressure","AI",0,0,2,0,2,4,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 1000.0f));
+SystemData<float> aiAlcTankPressure(2006,"aiAlcTankPressure","AI",0,0,2,0,2,6,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 1000.0f));
 SystemData<float> aiHFSupplyPressure(2008,"aiHFSupplyPressure","AI",0,0,2,0,2,8,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 1000.0f));
 SystemData<float> aiAlcGasLeak(2010,"aiAlcGasLeak","AI",0,0,1,0,2,10,0,16,false,"%", ConvertLinear<float,unsigned>(0, 32767, 0.0f, 100.0f));
 SystemData<float> aiHFGasboxPPM(2012,"aiHFGasboxPPM","AI",0,0,2,0,2,12,0,16,false,"ppm", ConvertLinear<float,unsigned>(0, 32767, 0.0f, 10.0f));
@@ -184,7 +184,7 @@ SystemData<unsigned> diAxisNotMoving(7013,"diAxisNotMoving","Motion",0,1,0,0,7,1
 //SystemData<unsigned> diAxisRstCmdBusy(7020,"diAxisRstCmdBusy","Motion",0,1,0,0,7,20,0,1,false);
 //SystemData<unsigned> diAxisRstDone(7021,"diAxisRstDone","Motion",0,1,0,0,7,21,0,1,false);
 //SystemData<unsigned> diAxisServoCmdBusy(7022,"diAxisServoCmdBusy","Motion",0,1,0,0,7,22,0,1,false);
-//SystemData<unsigned> diAxisServoDone(7023,"diAxisServoDone","Motion",0,1,0,0,7,23,0,1,false);
+SystemData<unsigned> diAxisServoDone(7023,"diAxisServoDone","Motion",0,1,0,0,7,23,0,1,false);
 SystemData<unsigned> diAxisHomeDone(7025,"diAxisHomeDone","Motion",0,1,0,0,7,25,0,1,false);
 SystemData<unsigned> aiAxisErrCode(7040, "aiAxisErrCode","Motion",0,0,0,0,7,40,0,32,false);
 SystemData<float> aiActualPosition(7044, "aiActualPosition","Motion",0,0,1,0,7,44,0,32,false,"deg",ConvertMemery<float, unsigned>);

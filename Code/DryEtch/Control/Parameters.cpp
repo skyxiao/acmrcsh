@@ -23,8 +23,6 @@ ParameterItem<float> TempAlarmOffset(26, "TempAlarmOffset", "Heater", "Relative 
 ParameterItem<float> ChuckPos1(1001,"ChuckPos1","Chuck","chuck position1",-160,160,-120,"deg");
 ParameterItem<float> ChuckPos2(1002,"ChuckPos2","Chuck","chuck position2",-160,160,0,"deg");
 ParameterItem<float> ChuckPos3(1003,"ChuckPos3","Chuck","chuck position3",-160,160,120,"deg");
-ParameterItem<float> ChuckPatrolStart(1004,"ChuckPatrolStart","Chuck","chuck patrol start degree",-160,160,-160,"deg");
-ParameterItem<float> ChuckPatrolEnd(1005,"ChuckPatrolEnd","Chuck","chuck patrol end degree",-160,160,160,"deg");
 
 
 //Flow
@@ -68,6 +66,11 @@ ParameterItem<unsigned> RotateTimeout(6014,"RotateTimeout","Motion","Chuck rotat
 ParameterItem<unsigned> HomingTimeout(6015,"HomingTimeout","Motion","Chuck rotation timeout.",0,100,60,"s");
 ParameterItem<unsigned> ArmTimeout(6024,"ArmTimeout","Motion","Arm move in/out timeout.",0,100,60,"s");
 ParameterItem<unsigned> ForkTimeout(6025,"ForkTimeout","Motion","Rotate fork timeout.",0,100,30,"s");
+ParameterItem<float> AxisStopDeceleration(6040,"AxisStopDeceleration","Motion","Deceleration for axis stopping.",0,500,100,"deg/s2");
+ParameterItem<float> AxisDeceleration(6041,"AxisDeceleration","Motion","Axis deceleration.",0,500,100,"deg/s2");
+ParameterItem<float> AxisAcceleration(6042,"AxisAcceleration","Motion","Axis acceleration.",0,500,100,"deg/s2");
+ParameterItem<float> AxisPatrolPos1(6054,"AxisPatrolPos1","Motion","Axis patrol position 1",-160,160,-160,"deg");
+ParameterItem<float> AxisPatrolPos2(6055,"AxisPatrolPos2","Motion","Axis patrol position 2",-160,160,160,"deg");
 
 
 //Pump

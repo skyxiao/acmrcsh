@@ -74,8 +74,8 @@ def add_child(root, data):
         current_node.setAttribute('lb', str(id))
 
 def parse(line):
-    pat1 = '^ParameterItem.*?\s+(\w+)\((\d+),\s*"\w+",\s*"([\w/]+)",\s*"(.*?)",\s*(\d+),\s*(\d+),\s*(\d+),\s*"(.*?)"\)'
-    pat2 = '^ParameterItem.*?\s+(\w+)\((\d+),\s*"\w+",\s*"([\w/]+)",\s*"(.*?)",\s*(\d+),\s*(\d+),\s*(\d+)\)'
+    pat1 = '^ParameterItem.*?\s+(\w+)\((\d+),\s*"\w+",\s*"([\w/]+)",\s*"(.*?)",\s*([-]?\d+),\s*([-]?\d+),\s*([-]?\d+),\s*"(.*?)"\)'
+    pat2 = '^ParameterItem.*?\s+(\w+)\((\d+),\s*"\w+",\s*"([\w/]+)",\s*"(.*?)",\s*([-]?\d+),\s*([-]?\d+),\s*([-]?\d+)\)'
     pat3 = '^ParameterItem.*?\s+(\w+)\((\d+),\s*"\w+",\s*"([\w/]+)",\s*"(.*?)",\s*"(.*?)"\)'
     result = re.search(pat1, line)
     if result is None:

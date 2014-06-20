@@ -18,8 +18,6 @@ extern ParameterItem<float> TempAlarmOffset;
 extern ParameterItem<float> ChuckPos1;
 extern ParameterItem<float> ChuckPos2;
 extern ParameterItem<float> ChuckPos3;
-extern ParameterItem<float> ChuckPatrolStart;
-extern ParameterItem<float> ChuckPatrolEnd;
 
 
 //Flow
@@ -63,6 +61,11 @@ extern ParameterItem<unsigned> RotateTimeout;
 extern ParameterItem<unsigned> HomingTimeout;
 extern ParameterItem<unsigned> ArmTimeout;
 extern ParameterItem<unsigned> ForkTimeout;
+extern ParameterItem<float> AxisStopDeceleration;
+extern ParameterItem<float> AxisDeceleration;
+extern ParameterItem<float> AxisAcceleration;
+extern ParameterItem<float> AxisPatrolPos1;
+extern ParameterItem<float> AxisPatrolPos2;
 
 
 //Pump

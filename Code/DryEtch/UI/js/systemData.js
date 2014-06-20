@@ -123,17 +123,17 @@ function getContent(name,min, max, precision, readonly, id, unit, i) {
     var text;
     if (isRead) {
         if (i % 2 == 1) {
-            return '<td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input class="conf_disable"  type="text" id=' + id + ' disabled /></td><td  width="70px"></td><td  width="50px">' + unit + '</td><td style="text-align:left"></td></tr>';
+            return '<td>' + id + '</td><td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input class="conf_disable"  type="text" id=' + id + ' disabled /></td><td  width="70px"></td><td  width="50px">' + unit + '</td><td style="text-align:left"></td></tr>';
         }
-        return '<tr><td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input class="conf_disable" type="text" id=' + id + ' disabled /></td><td  width="70px"></td><td  width="50px">' + unit + '</td><td style="text-align:left"></td>';
+        return '<tr><td>' + id + '</td><td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input class="conf_disable" type="text" id=' + id + ' disabled /></td><td  width="70px"></td><td  width="50px">' + unit + '</td><td style="text-align:left"></td>';
     }
     else {
         if (i % 2 == 1) {
-            return '<td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input  class="conf_disable" type="text" id=' + id + ' disabled /></td><td  width="80px"><input class="conf_input"   type="text" id="textbox'
+            return '<td>' + id + '</td><td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input  class="conf_disable" type="text" id=' + id + ' disabled /></td><td  width="80px"><input class="conf_input"   type="text" id="textbox'
               + i + '" /></td><td  width="50px">' + unit + '</td><td style="text-align:left">'
                + '<input class="conf_btn" pid="' + id + '" precision="' + precision + '" max="' + max + '" min="' + min + '"  txtID="textbox' + i + '" type="button" onclick="buttonClick(this);" value="set" /></td></tr>';
         }
-        return '<tr><td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input class="conf_disable" type="text" id=' + id + ' disabled /></td><td  width="80px"><input class="conf_input"   type="text" id="textbox'
+        return '<tr><td>' + id + '</td><td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input class="conf_disable" type="text" id=' + id + ' disabled /></td><td  width="80px"><input class="conf_input"   type="text" id="textbox'
               + i + '" /></td><td  width="50px">' + unit + '</td><td style="text-align:left">'
                + '<input class="conf_btn" pid="' + id + '" precision="' + precision + '" max="' + max + '" min="' + min + '"  txtID="textbox' + i + '" type="button" onclick="buttonClick(this);" value="set" /></td>';
     }

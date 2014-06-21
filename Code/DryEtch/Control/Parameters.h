@@ -66,7 +66,8 @@ extern ParameterItem<float> AxisDeceleration;
 extern ParameterItem<float> AxisAcceleration;
 extern ParameterItem<float> AxisPatrolPos1;
 extern ParameterItem<float> AxisPatrolPos2;
-
+extern ParameterItem<float> RotateSpeed;
+extern ParameterItem<float> PositionErrorLimit;
 
 //Pump
 extern ParameterItem<float> FastSlowSwitchPressure;

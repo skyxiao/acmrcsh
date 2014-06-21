@@ -48,6 +48,7 @@ protected:
 	virtual void Notify(const std::string& msg);
 	virtual void OnAbort();
 	virtual bool OnlinePrecheck();
+	virtual bool TaskPrecheck(const UnitTask& task);
 
 private:
 	void OnHome();

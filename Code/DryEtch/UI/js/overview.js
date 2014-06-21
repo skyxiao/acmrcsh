@@ -232,6 +232,12 @@ $(document).ready(function () {
 			},
 			'ROTATE_BACKWARD': function (t) {
 				getControl().invoke(0, 1016);
+			},
+			'LOAD': function (t) {
+				getControl().invoke(0, 1002);
+			},
+			'UNLOAD': function (t) {
+				getControl().invoke(0, 1003);
 			}
 		}
 	});

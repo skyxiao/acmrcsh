@@ -48,7 +48,7 @@ void ProcessUnit::Terminate()
 UnitTask ProcessUnit::GetNextTask()
 {
 	UnitTask last_task = (m_task.command == COMMAND_NONE) ? m_last_task : m_task;
-	if (last_task.command == COMMAND_NONE || m_need_home)
+	if (last_task.command == COMMAND_NONE || Data::diAxisHomeDone == 0)
 	{
 		return UnitTask{COMMAND_HOME, 0, 0};
 	}
@@ -140,6 +140,7 @@ void ProcessUnit::shut_all_chemical()
 	Data::doPurgeN2MFCVal1 = 0;
 	Data::doPurgeN2MFCVal2 = 0;
 	Data::aoPurgeN2FlowSetpoint = 0;
+	Data::doHFRequest = 0;
 }
 
 void ProcessUnit::open_apc()
@@ -216,6 +217,23 @@ void ProcessUnit::OnAbort()
 
 bool ProcessUnit::OnlinePrecheck()
 {
+	return true;
+}
+
+bool ProcessUnit::TaskPrecheck(const UnitTask& task)
+{
+	if(Data::diHWInterlock == 1)
+	{
+		EVT::GenericWarning.Report("Hardware interlock triggered.");
+		return false;
+	}
+
+	if(task.command != COMMAND_HOME && Data::diAxisHomeDone == 0)
+	{
+		EVT::GenericWarning.Report("Chuck motor need homing.");
+		return false;
+	}
+
 	return true;
 }
 
@@ -316,7 +334,8 @@ void ProcessUnit::OnHome()
 			Data::aoAxisDec = Parameters::AxisDeceleration;
 			Data::aoAxisAcc = Parameters::AxisAcceleration;
 			Data::aoAxisPatrolPos1 = Parameters::AxisPatrolPos1;
-			Data::aoAxisPatrolPos2 = Parameters::AxisPatrolPos2;})
+			Data::aoAxisPatrolPos2 = Parameters::AxisPatrolPos2;
+			Data::aoAxisVelOverride = 100;})
 		ADD_STEP_COMMAND([&]()
 		{	Data::aoAxisControl = AxisControl_Homing;
 			Data::doAxisExecute = (Data::doAxisExecute ? 0 : 1);})
@@ -329,11 +348,6 @@ void ProcessUnit::OnHome()
 
 	OnPinUp();
 	OnPinDown();
-
-	NEW_UNIT_STEP("finish home", false)
-		ADD_STEP_COMMAND([this](){ m_need_home = false;})
-	END_UNIT_STEP
-
 }
 
 void ProcessUnit::create_wafer()
@@ -376,21 +390,24 @@ void ProcessUnit::OnLoad()
 	std::stringstream ss;
 	for(int i=2; i>=0; i--)
 	{
-		ss.str("");
-		ss<<"load wafer "<<i;
-
 		float position = pos[i];
+		ss.str("");
+		ss<<"rotate chuck to position "<<i;
 		NEW_UNIT_STEP(ss.str(), false)
-			auto f1 = [&, position]()
+			auto f0 = [&, position]()
 			{	Data::aoAxisPosition = position;
+				Data::aoAxisVelocity = Parameters::RotateSpeed;
 				Data::aoAxisControl = AxisControl_Absolute;
 				Data::doAxisExecute = (Data::doAxisExecute ? 0 : 1);};
-			ADD_STEP_COMMAND(f1)
+			ADD_STEP_COMMAND(f0)
 			ADD_STEP_WAIT(1)
-			ADD_STEP_WAIT_CONDITION([&]()
-			{	return Data::diReachPosition == 1;},
-				Parameters::RotateTimeout,
+			auto f1 = [&, position]()->bool
+			{	return Data::diAxisMoving == 0 && fabs(Data::aiActualPosition-position)<Parameters::PositionErrorLimit;};
+			ADD_STEP_WAIT_CONDITION(f1,	Parameters::RotateTimeout,
 				[position](){	EVT::RotateTimeout.Report(position);})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("rotate fork horizontal", false)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doForkHorizontal = 1;
 				Data::doForkVertical = 0;})
@@ -398,6 +415,11 @@ void ProcessUnit::OnLoad()
 			{	return Data::diForkVertical == 0 && Data::diForkHorizontal == 1;},
 				Parameters::ForkTimeout,
 				[&](){	EVT::ForkTimeout.Report();})
+		END_UNIT_STEP
+
+		ss.str("");
+		ss<<"load wafer "<<i;
+		NEW_UNIT_STEP(ss.str(), false)
 			ADD_STEP_COMMAND([&](){Data::LoadUnloadState = 1;})
 			ADD_STEP_WAIT_CONDITION([&]()
 			{	return Data::LoadUnloadOK == 1;}, UINT_MAX,
@@ -406,6 +428,9 @@ void ProcessUnit::OnLoad()
 			{	Data::LoadUnloadOK = 0;
 				Data::LoadUnloadState = 0;})
 			ADD_STEP_COMMAND([this](){create_wafer();})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("rotate fork vertical", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doForkHorizontal = 0;
 				Data::doForkVertical = 1;})
@@ -413,6 +438,9 @@ void ProcessUnit::OnLoad()
 			{	return Data::diForkVertical == 1 && Data::diForkHorizontal == 0;},
 				Parameters::ForkTimeout,
 				[&](){	EVT::ForkTimeout.Report();})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("extend arm into chamber", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doArmOut = 0;
 				Data::doArmIn = 1;})
@@ -420,6 +448,9 @@ void ProcessUnit::OnLoad()
 			{	return Data::diArmIn == 1 && Data::diArmOut == 0;},
 				Parameters::ArmTimeout,
 				[&](){	EVT::ArmTimeout.Report("in");})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("pin up", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doPinDown = 0;
 				Data::doPinUp = 1;})
@@ -429,6 +460,9 @@ void ProcessUnit::OnLoad()
 				[&](){	EVT::PinTimeout.Report("up");})
 			auto f2 = [this, i](){wafer_movein(i);};
 			ADD_STEP_COMMAND(f2)
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("retract arm from chamber", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doArmOut = 1;
 				Data::doArmIn = 0;})
@@ -436,6 +470,9 @@ void ProcessUnit::OnLoad()
 			{	return Data::diArmIn == 0 && Data::diArmOut == 1;},
 				Parameters::ArmTimeout,
 				[&](){	EVT::ArmTimeout.Report("out");})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("pin down", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doPinDown = 1;
 				Data::doPinUp = 0;})
@@ -479,21 +516,24 @@ void ProcessUnit::OnUnload()
 	std::stringstream ss;
 	for(int i=0; i<3; i++)
 	{
-		ss.str("");
-		ss<<"unload wafer "<<i;
-
 		float position = pos[i];
+		ss.str("");
+		ss<<"rotate chuck to position "<<i;
 		NEW_UNIT_STEP(ss.str(), false)
-			auto f1 = [&, position]()
+			auto f0 = [&, position]()
 			{	Data::aoAxisPosition = position;
+				Data::aoAxisVelocity = Parameters::RotateSpeed;
 				Data::aoAxisControl = AxisControl_Absolute;
 				Data::doAxisExecute = (Data::doAxisExecute ? 0 : 1);};
-			ADD_STEP_COMMAND(f1)
+			ADD_STEP_COMMAND(f0)
 			ADD_STEP_WAIT(1)
-			ADD_STEP_WAIT_CONDITION([&]()
-			{	return Data::diReachPosition == 1;},
-				Parameters::RotateTimeout,
+			auto f1 = [&, position]()->bool
+			{	return Data::diAxisMoving == 0 && fabs(Data::aiActualPosition-position)<Parameters::PositionErrorLimit;};
+			ADD_STEP_WAIT_CONDITION(f1,	Parameters::RotateTimeout,
 				[position](){	EVT::RotateTimeout.Report(position);})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("pin up", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doPinDown = 0;
 				Data::doPinUp = 1;})
@@ -501,6 +541,9 @@ void ProcessUnit::OnUnload()
 			{	return Data::diPinUp == 1 && Data::diPinDown == 0;},
 				Parameters::PinTimeout,
 				[&](){	EVT::PinTimeout.Report("up");})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("rotate fork vertical", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doForkHorizontal = 0;
 				Data::doForkVertical = 1;})
@@ -508,6 +551,9 @@ void ProcessUnit::OnUnload()
 			{	return Data::diForkVertical == 1 && Data::diForkHorizontal == 0;},
 				Parameters::ForkTimeout,
 				[&](){	EVT::ForkTimeout.Report();})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("extend arm into chamber", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doArmOut = 0;
 				Data::doArmIn = 1;})
@@ -515,6 +561,9 @@ void ProcessUnit::OnUnload()
 			{	return Data::diArmIn == 1 && Data::diArmOut == 0;},
 				Parameters::ArmTimeout,
 				[&](){	EVT::ArmTimeout.Report("in");})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("pin down", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doPinDown = 1;
 				Data::doPinUp = 0;})
@@ -524,6 +573,9 @@ void ProcessUnit::OnUnload()
 				[&](){	EVT::PinTimeout.Report("down");})
 			auto f2 = [this, i](){wafer_moveout(i);};
 			ADD_STEP_COMMAND(f2)
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("retract arm from chamber", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doArmOut = 1;
 				Data::doArmIn = 0;})
@@ -531,6 +583,9 @@ void ProcessUnit::OnUnload()
 			{	return Data::diArmIn == 0 && Data::diArmOut == 1;},
 				Parameters::ArmTimeout,
 				[&](){	EVT::ArmTimeout.Report("out");})
+		END_UNIT_STEP
+
+		NEW_UNIT_STEP("rotate fork horizontal", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doForkHorizontal = 1;
 				Data::doForkVertical = 0;})
@@ -538,6 +593,11 @@ void ProcessUnit::OnUnload()
 			{	return Data::diForkVertical == 0 && Data::diForkHorizontal == 1;},
 				Parameters::ForkTimeout,
 				[&](){	EVT::ForkTimeout.Report();})
+		END_UNIT_STEP
+
+		ss.str("");
+		ss<<"unload wafer "<<i;
+		NEW_UNIT_STEP(ss.str(), false)
 			ADD_STEP_COMMAND([&](){Data::LoadUnloadState = 1;})
 			ADD_STEP_WAIT_CONDITION([&]()
 			{	return Data::LoadUnloadOK == 1;}, UINT_MAX,
@@ -704,6 +764,7 @@ void ProcessUnit::OnProcess()
 			Data::doAlcMFCVal3 = 0;
 			Data::doHFMFCVal3 = 0;
 			Data::doExpCbVacValve = 1;
+			Data::doHFRequest = 1;
 		})
 		auto f = [this, steps, recipe_duration, recipe_name]()
 		{	m_recipe_start_time = boost::chrono::system_clock::now();
@@ -1021,14 +1082,14 @@ void ProcessUnit::OnRotateForward()
 	NEW_UNIT_STEP("rotate forward", true)
 		auto f = [&, next_pos]()
 		{	Data::aoAxisPosition = next_pos;
+			Data::aoAxisVelocity = Parameters::RotateSpeed;
 			Data::aoAxisControl = AxisControl_Absolute;
 			Data::doAxisExecute = (Data::doAxisExecute ? 0 : 1);};
 		ADD_STEP_COMMAND(f)
 		ADD_STEP_WAIT(1)
-		ADD_STEP_WAIT_CONDITION([&]()->bool
-		{	return Data::diReachPosition == 1;},
-			Parameters::RotateTimeout,
-			[next_pos](){	EVT::RotateTimeout.Report(next_pos);})
+		auto f1 = [&, next_pos]()->bool
+		{	return Data::diAxisMoving == 0 && fabs(Data::aiActualPosition-next_pos)<Parameters::PositionErrorLimit;};
+		ADD_STEP_WAIT_CONDITION(f1, Parameters::RotateTimeout, [next_pos](){EVT::RotateTimeout.Report(next_pos);})
 	END_UNIT_STEP
 }
 
@@ -1056,14 +1117,14 @@ void ProcessUnit::OnRotateBackward()
 	NEW_UNIT_STEP("rotate backward", true)
 		auto f = [&, last_pos]()
 		{	Data::aoAxisPosition = last_pos;
+			Data::aoAxisVelocity = Parameters::RotateSpeed;
 			Data::aoAxisControl = AxisControl_Absolute;
 			Data::doAxisExecute = (Data::doAxisExecute ? 0 : 1);};
 		ADD_STEP_COMMAND(f)
 		ADD_STEP_WAIT(1)
-		ADD_STEP_WAIT_CONDITION([&]()->bool
-		{	return Data::diReachPosition == 1;},
-			Parameters::RotateTimeout,
-			[last_pos](){	EVT::RotateTimeout.Report(last_pos);})
+		auto f1 = [&, last_pos]()->bool
+		{	return Data::diAxisMoving == 0 && fabs(Data::aiActualPosition-last_pos)<Parameters::PositionErrorLimit;};
+		ADD_STEP_WAIT_CONDITION(f1, Parameters::RotateTimeout, [last_pos](){EVT::RotateTimeout.Report(last_pos);})
 	END_UNIT_STEP
 }
 

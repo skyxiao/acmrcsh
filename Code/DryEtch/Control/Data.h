@@ -138,8 +138,8 @@ extern SystemData<unsigned> doCbGateVal;
 //AI
 extern SystemData<float> aiFacPressure;
 extern SystemData<float> aiExpPressure;
-extern SystemData<float> aiAlcPressure;
 extern SystemData<float> aiAlcTankPressure;
+extern SystemData<float> aiAlcPressure;
 extern SystemData<float> aiHFSupplyPressure;
 extern SystemData<float> aiAlcGasLeak;
 extern SystemData<float> aiHFGasboxPPM;

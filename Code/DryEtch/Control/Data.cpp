@@ -39,29 +39,29 @@ SystemData<unsigned> diPCDoorClose(25, "diPCDoorClose", "DI", 0, 1, 0, 0, 0, 25,
 SystemData<unsigned> diPneuDoorClose(26, "diPneuDoorClose", "DI", 0, 1, 0, 0, 0, 26, 0, 1, false);
 SystemData<unsigned> diAcFrmDoorClose(27, "diAcFrmDoorClose", "DI", 0, 1, 0, 0, 0, 27, 0, 1, false);
 SystemData<unsigned> diAcDoorOverride(28, "diAcDoorOverride", "DI", 0, 1, 0, 0, 0, 28, 0, 1, false);
-SystemData<unsigned> diVaporMHeaterAlarm(29, "diVaporMHeaterAlarm", "DI", 0, 1, 0, 0, 0, 29, 0, 1, false,"",ConvertNot<unsigned int>);
-SystemData<unsigned> diVaporVHeaterAlarm(30, "diVaporVHeaterAlarm", "DI", 0, 1, 0, 0, 0, 30, 0, 1, false,"",ConvertNot<unsigned int>);
+SystemData<unsigned> diVaporMHeaterAlarm(29, "diVaporMHeaterAlarm", "DI", 0, 1, 0, 0, 0, 29, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diVaporVHeaterAlarm(30, "diVaporVHeaterAlarm", "DI", 0, 1, 0, 0, 0, 30, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diHFReady(31, "diHFReady", "DI", 0, 1, 0, 0, 0, 31, 0, 1, false);
-SystemData<unsigned> diHeartbeatFail(32, "diHeartbeatFail", "DI", 0, 1, 0, 0, 0, 32, 0, 1, false,"",ConvertNot<unsigned int>);
-SystemData<unsigned> diExhaustAlarm(33, "diExhaustAlarm", "DI", 0, 1, 0, 0, 0, 33, 0, 1, false,"",ConvertNot<unsigned int>);
-SystemData<unsigned> diFacInletVPrsULmt(34, "diFacInletVPrsULmt", "DI", 0, 1, 0, 0, 0, 34, 0, 1, false,"",ConvertNot<unsigned int>);
-SystemData<unsigned> diAlcoholLeak(35, "diAlcoholLeak", "DI", 0, 1, 0, 0, 0, 35, 0, 1, false,"",ConvertNot<unsigned int>);
-SystemData<unsigned> diPrcCbVacuumFail(36, "diPrcCbVacuumFail", "DI", 0, 1, 0, 0, 0, 36, 0, 1, false,"",ConvertNot<unsigned int>);
+SystemData<unsigned> diHeartbeatFail(32, "diHeartbeatFail", "DI", 0, 1, 0, 0, 0, 32, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diExhaustAlarm(33, "diExhaustAlarm", "DI", 0, 1, 0, 0, 0, 33, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diFacInletVPrsULmt(34, "diFacInletVPrsULmt", "DI", 0, 1, 0, 0, 0, 34, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diAlcoholLeak(35, "diAlcoholLeak", "DI", 0, 1, 0, 0, 0, 35, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPrcCbVacuumFail(36, "diPrcCbVacuumFail", "DI", 0, 1, 0, 0, 0, 36, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diPrcCbDoorClose(37, "diPrcCbDoorClose", "DI", 0, 1, 0, 0, 0, 37, 0, 1, false);
-SystemData<unsigned> diAlcoholGasLeak(38, "diAlcoholGasLeak", "DI", 0, 1, 0, 0, 0, 38, 0, 1, false,"",ConvertNot<unsigned int>);
-SystemData<unsigned> diExhaustPresAlarm(39, "diExhaustPresAlarm", "DI", 0, 1, 0, 0, 0, 39, 0, 1, false,"",ConvertNot<unsigned int>);
+SystemData<unsigned> diAlcoholGasLeak(38, "diAlcoholGasLeak", "DI", 0, 1, 0, 0, 0, 38, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diExhaustPresAlarm(39, "diExhaustPresAlarm", "DI", 0, 1, 0, 0, 0, 39, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diGasboxDoorClose(40, "diGasboxDoorClose", "DI", 0, 1, 0, 0, 0, 40, 0, 1, false);
 SystemData<unsigned> diDoorOverride(41, "diDoorOverride", "DI", 0, 1, 0, 0, 0, 41, 0, 1, false);
 SystemData<unsigned> diInterlockReset(42, "diInterlockReset", "DI", 0, 1, 0, 0, 0, 42, 0, 1, false);
-SystemData<unsigned> diGasBoxHFLeak(43, "diGasBoxHFLeak", "DI", 0, 1, 0, 0, 0, 43, 0, 1, false,"",ConvertNot<unsigned int>);
+SystemData<unsigned> diGasBoxHFLeak(43, "diGasBoxHFLeak", "DI", 0, 1, 0, 0, 0, 43, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diThrottleValveOpen(44, "diThrottleValveOpen", "DI", 0, 1, 0, 0, 0, 44, 0, 1, false);
-SystemData<unsigned> diHWInterlock(45, "diHWInterlock", "DI", 0, 1, 0, 0, 0, 45, 0, 1, false);
+SystemData<unsigned> diHWInterlock(45, "diHWInterlock", "DI", 0, 1, 0, 0, 0, 45, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diAlcTkLow(46, "diAlcTkLow", "DI", 0, 1, 0, 0, 0, 46, 0, 1, false);
 SystemData<unsigned> diAlcTkHigh(47, "diAlcTkHigh", "DI", 0, 1, 0, 0, 0, 47, 0, 1, false);
 SystemData<unsigned> diAlcTkHighHigh(48, "diAlcTkHighHigh", "DI", 0, 1, 0, 0, 0, 48, 0, 1, false);
-SystemData<unsigned> diAlcTkOverfill(49, "diAlcTkOverfill", "DI", 0, 1, 0, 0, 0, 49, 0, 1, false);
-SystemData<unsigned> diVPumpWarning(50, "diVPumpWarning", "DI", 0, 1, 0, 0, 0, 50, 0, 1, false,"",ConvertNot<unsigned int>);
-SystemData<unsigned> diVPumpAlarm(51, "diVPumpAlarm", "DI", 0, 1, 0, 0, 0, 51, 0, 1, false,"",ConvertNot<unsigned int>);
+SystemData<unsigned> diAlcTkOverfill(49, "diAlcTkOverfill", "DI", 0, 1, 0, 0, 0, 49, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diVPumpWarning(50, "diVPumpWarning", "DI", 0, 1, 0, 0, 0, 50, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diVPumpAlarm(51, "diVPumpAlarm", "DI", 0, 1, 0, 0, 0, 51, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diPrcCbDoorOpen(60, "diPrcCbDoorOpen", "DI", 0, 1, 0, 0, 0, 60, 0, 1, false);
 SystemData<unsigned> diPinUp(61, "diPinUp", "DI", 0, 1, 0, 0, 0, 61, 0, 1, false);
 SystemData<unsigned> diPinDown(62, "diPinDown", "DI", 0, 1, 0, 0, 0, 62, 0, 1, false);
@@ -75,8 +75,8 @@ SystemData<unsigned> diPrcCbLidRightOpen(69, "diPrcCbLidRightOpen", "DI", 0, 1, 
 SystemData<unsigned> diPrcCbLidRightClose(70, "diPrcCbLidRightClose", "DI", 0, 1, 0, 0, 0, 70, 0, 1, false);
 SystemData<unsigned> diCbLeftDoorClose(76, "diCbLeftDoorClose", "DI", 0, 1, 0, 0, 0, 76, 0, 1, false);
 SystemData<unsigned> diCbRightDoorClose(77, "diCbRightDoorClose", "DI", 0, 1, 0, 0, 0, 77, 0, 1, false);
-SystemData<unsigned> diProcCbHFLeak(78, "diProcCbHFLeak","DI",0,1,0,0,0,78,0,1,false,"",ConvertNot<unsigned int>);
-SystemData<unsigned> diCDAInletAlarm(79, "diCDAInletAlarm", "DI", 0, 1, 0, 0, 0, 79, 0, 1, false, "", ConvertNot<unsigned int>);
+SystemData<unsigned> diProcCbHFLeak(78, "diProcCbHFLeak","DI",0,1,0,0,0,78,0,1,false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diCDAInletAlarm(79, "diCDAInletAlarm", "DI", 0, 1, 0, 0, 0, 79, 0, 1, false, "", ConvertNot<unsigned>);
 
 
 //DO
@@ -93,12 +93,12 @@ SystemData<unsigned> doExpCbVacValve(1018,"doExpCbVacValve","DO",0,1,0,0,1,18,0,
 SystemData<unsigned> doExpCbVapVacValve(1019,"doExpCbVapVacValve","DO",0,1,0,0,1,19,0,1,true);
 SystemData<unsigned> doAlcMFCVal1(1021,"doAlcMFCVal1","DO",0,1,0,0,1,21,0,1,true);
 SystemData<unsigned> doAlcMFCVal2(1022,"doAlcMFCVal2","DO",0,1,0,0,1,22,0,1,true);
-SystemData<unsigned> doAlcMFCVal3(1023,"doAlcMFCVal3","DO",0,1,0,0,1,23,0,1,true);
+SystemData<unsigned> doAlcMFCVal3(1023,"doAlcMFCVal3","DO",0,1,0,0,1,23,0,1,true,"",ConvertNot<unsigned>,ConvertNot<unsigned>);
 SystemData<unsigned> doVapSupplyN2Valve(1024,"doVapSupplyN2Valve","DO",0,1,0,0,1,24,0,1,true);
 SystemData<unsigned> doVapBypassValve(1025,"doVapBypassValve","DO",0,1,0,0,1,25,0,1,true);
 SystemData<unsigned> doHFMFCVal1(1026,"doHFMFCVal1","DO",0,1,0,0,1,26,0,1,true);
 SystemData<unsigned> doHFMFCVal2(1027,"doHFMFCVal2","DO",0,1,0,0,1,27,0,1,true);
-SystemData<unsigned> doHFMFCVal3(1028,"doHFMFCVal3","DO",0,1,0,0,1,28,0,1,true);
+SystemData<unsigned> doHFMFCVal3(1028,"doHFMFCVal3","DO",0,1,0,0,1,28,0,1,true,"",ConvertNot<unsigned>,ConvertNot<unsigned>);
 SystemData<unsigned> doPurgeN2MFCVal1(1029,"doPurgeN2MFCVal1","DO",0,1,0,0,1,29,0,1,true);
 SystemData<unsigned> doPurgeN2MFCVal2(1030,"doPurgeN2MFCVal2","DO",0,1,0,0,1,30,0,1,true);
 SystemData<unsigned> doVaVapValve(1032,"doVaVapValve","DO",0,1,0,0,1,32,0,1,true);
@@ -128,14 +128,14 @@ SystemData<unsigned> doCbGateVal(1071,"doCbGateVal","DO",0,1,0,0,1,71,0,1,true);
 
 
 //AI
-SystemData<float> aiFacPressure(2000,"aiFacPressure","AI",0,0,2,0,2,0,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 100.0f));
-SystemData<float> aiExpPressure(2002,"aiExpPressure","AI",0,0,2,0,2,2,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 100.0f));
-SystemData<float> aiAlcPressure(2004,"aiAlcPressure","AI",0,0,2,0,2,4,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 1000.0f));
-SystemData<float> aiAlcTankPressure(2006,"aiAlcTankPressure","AI",0,0,2,0,2,6,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 1000.0f));
-SystemData<float> aiHFSupplyPressure(2008,"aiHFSupplyPressure","AI",0,0,2,0,2,8,0,16,false,"kPa", ConvertLinear<float,unsigned>(0, 32767, -100.0f, 1000.0f));
-SystemData<float> aiAlcGasLeak(2010,"aiAlcGasLeak","AI",0,0,1,0,2,10,0,16,false,"%", ConvertLinear<float,unsigned>(0, 32767, 0.0f, 100.0f));
-SystemData<float> aiHFGasboxPPM(2012,"aiHFGasboxPPM","AI",0,0,2,0,2,12,0,16,false,"ppm", ConvertLinear<float,unsigned>(0, 32767, 0.0f, 10.0f));
-SystemData<float> aiHFChamberPPM(2014,"aiHFChamberPPM","AI",0,0,2,0,2,14,0,16,false,"ppm", ConvertLinear<float,unsigned>(0, 32767, 0.0f, 10.0f));
+SystemData<float> aiFacPressure(2000,"aiFacPressure","AI",0,0,2,0,2,0,0,16,false,"kPa", ConvertLinear<float,unsigned>(3276, 16383, -100.0f, 1000.0f));
+SystemData<float> aiExpPressure(2002,"aiExpPressure","AI",0,0,2,0,2,2,0,16,false,"kPa", ConvertLinear<float,unsigned>(3276, 16383, -100.0f, 1000.0f));
+SystemData<float> aiAlcPressure(2004,"aiAlcPressure","AI",0,0,2,0,2,4,0,16,false,"kPa", ConvertLinear<float,unsigned>(3276, 16383, -100.0f, 100.0f));
+SystemData<float> aiAlcTankPressure(2006,"aiAlcTankPressure","AI",0,0,2,0,2,6,0,16,false,"kPa", ConvertLinear<float,unsigned>(3276, 16383, -100.0f, 1000.0f));
+SystemData<float> aiHFSupplyPressure(2008,"aiHFSupplyPressure","AI",0,0,2,0,2,8,0,16,false,"kPa", ConvertLinear<float,unsigned>(3276, 16383, -100.0f, 1000.0f));
+SystemData<float> aiAlcGasLeak(2010,"aiAlcGasLeak","AI",0,0,1,0,2,10,0,16,false,"%lel", ConvertLinear<float,unsigned>(6540, 32701, 0.0f, 100.0f));
+SystemData<float> aiHFGasboxPPM(2012,"aiHFGasboxPPM","AI",0,0,2,0,2,12,0,16,false,"ppm", ConvertLinear<float,unsigned>(6540, 32701, 0.0f, 10.0f));
+SystemData<float> aiHFChamberPPM(2014,"aiHFChamberPPM","AI",0,0,2,0,2,14,0,16,false,"ppm", ConvertLinear<float,unsigned>(6540, 32701, 0.0f, 10.0f));
 
 
 //AO

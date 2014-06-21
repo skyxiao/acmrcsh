@@ -10,7 +10,7 @@
 #include "LogFile.h"
 
 SmartUnit::SmartUnit(int id, const std::string& name) :
-		m_id(id), m_name(name), m_hp(0), m_need_home(true), m_state(State_Idle),
+		m_id(id), m_name(name), m_hp(0), m_state(State_Idle),
 		m_pause_flag(false), m_step_name(""), m_can_retry(false)
 {
 	m_last_task = UnitTask{COMMAND_NONE, 0, 0};
@@ -71,23 +71,11 @@ void SmartUnit::Invoke(unsigned cmd, unsigned param1, unsigned param2)
 		return;
 	}
 
-	if((m_need_home && cmd == COMMAND_HOME) || !m_need_home)
-	{
-		Translate(UnitTask{cmd, param1, param2});
-	}
-	else
-	{
-		Notify("Homing is needed before doing other operation.");
-	}
+	Translate(UnitTask{cmd, param1, param2});
 }
 
 void SmartUnit::Online(int hp)
 {
-//	if(m_need_home)
-//	{
-//		Notify("Homing is needed before put unit online.");
-//		return;
-//	}
 	if(!OnlinePrecheck())
 	{
 		return;
@@ -95,6 +83,7 @@ void SmartUnit::Online(int hp)
 
 	m_hp = hp;
 }
+
 void SmartUnit::Offline()
 {
 	m_hp = 0;
@@ -119,7 +108,6 @@ void SmartUnit::Abort()
 	m_step_name = "";
 	m_can_retry = false;
 	m_hp = 0;
-	//m_need_home = true;
 	m_state = State_Idle;
 
 	OnAbort();
@@ -142,19 +130,20 @@ void SmartUnit::Resume()
 
 void SmartUnit::Translate(const UnitTask& task)
 {
+	if (task.command == COMMAND_NONE)
+		return;
+
+	if(!TaskPrecheck(task))
+		return;
+
 	if (m_task.command != COMMAND_NONE && task.command != m_task.command)
 		m_last_task = m_task;
 
 	m_task = task;
 
-	if (task.command == COMMAND_NONE)
-		return;
-
+	if(m_hp>0)
 	{
-		if(m_hp>0)
-		{
-			m_hp--;
-		}
+		m_hp--;
 	}
 
 	std::stringstream ss;
@@ -273,8 +262,4 @@ bool SmartUnit::CanManualOperate()
 		return false;
 
 	return true;
-}
-void SmartUnit::HomeComplete()
-{
-	m_need_home = false;
 }

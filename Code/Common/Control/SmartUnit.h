@@ -97,6 +97,7 @@ protected:
 	virtual void Notify(const std::string& msg) = 0;
 	virtual void OnAbort() = 0;
 	virtual bool OnlinePrecheck() = 0;
+	virtual bool TaskPrecheck(const UnitTask& task) = 0;
 
 private:
 	void work_fun();
@@ -105,13 +106,9 @@ private:
 	void Translate(const UnitTask& task);
 
 protected:
-	void HomeComplete();
-
-protected:
 	int m_id;
 	std::string m_name;
 	unsigned m_hp;
-	bool m_need_home;
 	UnitState m_state;
 	bool m_pause_flag;
 	std::string m_step_name;

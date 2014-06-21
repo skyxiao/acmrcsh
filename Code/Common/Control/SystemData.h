@@ -62,7 +62,7 @@ public:
 	T1 operator()(T2 input)
 	{
 		double delt = 1.0*(m_output_high - m_output_low)/(m_input_high - m_input_low);
-		return (T1)((input - m_input_low)*delt + m_output_low);
+		return (T1)((input*1.0 - m_input_low)*delt + m_output_low);
 	}
 
 private:

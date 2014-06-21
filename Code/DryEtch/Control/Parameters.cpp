@@ -71,6 +71,8 @@ ParameterItem<float> AxisDeceleration(6041,"AxisDeceleration","Motion","Axis dec
 ParameterItem<float> AxisAcceleration(6042,"AxisAcceleration","Motion","Axis acceleration.",0,500,100,"deg/s2");
 ParameterItem<float> AxisPatrolPos1(6054,"AxisPatrolPos1","Motion","Axis patrol position 1",-160,160,-160,"deg");
 ParameterItem<float> AxisPatrolPos2(6055,"AxisPatrolPos2","Motion","Axis patrol position 2",-160,160,160,"deg");
+ParameterItem<float> RotateSpeed(6060,"RotateSpeed","Motion","Speed of axis rotate forward or backward.",0,100,10,"deg/s");
+ParameterItem<float> PositionErrorLimit(6070,"PositionErrorLimit","Motion","Maximum error limit of chuck position.",0,10,2,"deg");
 
 
 //Pump

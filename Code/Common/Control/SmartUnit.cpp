@@ -167,6 +167,7 @@ void SmartUnit::Translate(const UnitTask& task)
 void SmartUnit::work_fun()
 {
 	boost::this_thread::disable_interruption di;
+	LogDebug("smart unit thread start.");
 	unsigned int loop_interval = 50; //ms, this value can read from config in the future
 
 	while (true)
@@ -244,7 +245,7 @@ void SmartUnit::work_fun()
 				boost::chrono::milliseconds(loop_interval));
 	}
 
-	std::cout<<"smart unit thread exit!"<<std::endl;
+	LogDebug("smart unit thread exit.");
 }
 
 //bool SmartUnit::CanPause()

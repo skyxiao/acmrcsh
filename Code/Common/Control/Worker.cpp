@@ -52,6 +52,7 @@ void Worker::Post(boost::function<void ()> f)
 void Worker::DoWork()
 {
 	boost::this_thread::disable_interruption di;
+	LogDebug("worker thread start.");
 
 	while(true)
 	{
@@ -75,4 +76,5 @@ void Worker::DoWork()
 
 		boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
 	}
+	LogDebug("worker thread exit.");
 }

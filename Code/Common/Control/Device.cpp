@@ -7,7 +7,7 @@
 
 
 #include "Device.h"
-
+#include "LogFile.h"
 
 bool Device::IsSimulator()
 {
@@ -45,6 +45,7 @@ void Device::Terminate()
 void Device::sync()
 {
 	boost::this_thread::disable_interruption di;
+	LogDebug("device thread start.");
 
 	using namespace boost::posix_time;
 	auto t = microsec_clock::universal_time();
@@ -64,6 +65,7 @@ void Device::sync()
 
 		boost::this_thread::sleep(t);
 	}
+	LogDebug("device thread exit.");
 }
 
 void Device::Write(unsigned int value, unsigned block, unsigned byte_offset, unsigned bit_offset, unsigned bits)

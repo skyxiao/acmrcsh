@@ -242,6 +242,7 @@ std::string Database::QueryData(const time_point& start_time, const time_point& 
 void Database::do_work()
 {
 	boost::this_thread::disable_interruption di;
+	LogDebug("database thread start.");
 
 	while(true)
 	{
@@ -272,4 +273,6 @@ void Database::do_work()
 
 		boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
 	}
+
+	LogDebug("database thread exit.");
 }

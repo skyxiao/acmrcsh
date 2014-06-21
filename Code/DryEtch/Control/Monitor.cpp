@@ -115,6 +115,7 @@ bool Monitor::HasAlarm()
 void Monitor::do_work()
 {
 	boost::this_thread::disable_interruption di;
+	LogDebug("monitor thread start.");
 
 	while(true)
 	{
@@ -131,4 +132,5 @@ void Monitor::do_work()
 
 		boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
 	}
+	LogDebug("monitor thread exit.");
 }

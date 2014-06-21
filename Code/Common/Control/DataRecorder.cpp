@@ -160,6 +160,7 @@ void DataRecorder::Remove(const std::string& name)
 void DataRecorder::monitor()
 {
 	boost::this_thread::disable_interruption di;
+	LogDebug("data recorder thread start.");
 
 	using namespace boost::posix_time;
 	auto t = microsec_clock::universal_time();
@@ -180,4 +181,6 @@ void DataRecorder::monitor()
 
 		boost::this_thread::sleep(t);
 	}
+
+	LogDebug("data recorder thread exit.");
 }

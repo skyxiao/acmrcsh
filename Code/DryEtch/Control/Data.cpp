@@ -69,10 +69,10 @@ SystemData<unsigned> diForkVertical(63, "diForkVertical", "DI", 0, 1, 0, 0, 0, 6
 SystemData<unsigned> diForkHorizontal(64, "diForkHorizontal", "DI", 0, 1, 0, 0, 0, 64, 0, 1, false);
 SystemData<unsigned> diArmIn(65, "diArmIn", "DI", 0, 1, 0, 0, 0, 65, 0, 1, false);
 SystemData<unsigned> diArmOut(66, "diArmOut", "DI", 0, 1, 0, 0, 0, 66, 0, 1, false);
-SystemData<unsigned> diPrcCbLidLeftOpen(67, "diPrcCbLidLeftOpen", "DI", 0, 1, 0, 0, 0, 67, 0, 1, false);
-SystemData<unsigned> diPrcCbLidLeftClose(68, "diPrcCbLidLeftClose", "DI", 0, 1, 0, 0, 0, 68, 0, 1, false);
-SystemData<unsigned> diPrcCbLidRightOpen(69, "diPrcCbLidRightOpen", "DI", 0, 1, 0, 0, 0, 69, 0, 1, false);
-SystemData<unsigned> diPrcCbLidRightClose(70, "diPrcCbLidRightClose", "DI", 0, 1, 0, 0, 0, 70, 0, 1, false);
+//SystemData<unsigned> diPrcCbLidLeftOpen(67, "diPrcCbLidLeftOpen", "DI", 0, 1, 0, 0, 0, 67, 0, 1, false);
+//SystemData<unsigned> diPrcCbLidLeftClose(68, "diPrcCbLidLeftClose", "DI", 0, 1, 0, 0, 0, 68, 0, 1, false);
+//SystemData<unsigned> diPrcCbLidRightOpen(69, "diPrcCbLidRightOpen", "DI", 0, 1, 0, 0, 0, 69, 0, 1, false);
+//SystemData<unsigned> diPrcCbLidRightClose(70, "diPrcCbLidRightClose", "DI", 0, 1, 0, 0, 0, 70, 0, 1, false);
 SystemData<unsigned> diCbLeftDoorClose(76, "diCbLeftDoorClose", "DI", 0, 1, 0, 0, 0, 76, 0, 1, false);
 SystemData<unsigned> diCbRightDoorClose(77, "diCbRightDoorClose", "DI", 0, 1, 0, 0, 0, 77, 0, 1, false);
 SystemData<unsigned> diProcCbHFLeak(78, "diProcCbHFLeak","DI",0,1,0,0,0,78,0,1,false,"",ConvertNot<unsigned>);
@@ -118,11 +118,12 @@ SystemData<unsigned> doN2MFCVal2(1051,"doN2MFCVal2","DO",0,1,0,0,1,51,0,1,true);
 SystemData<unsigned> doPinUp(1052,"doPinUp","DO",0,1,0,0,1,52,0,1,true);
 SystemData<unsigned> doArmIn(1053,"doArmIn","DO",0,1,0,0,1,53,0,1,true);
 SystemData<unsigned> doForkVertical(1054,"doForkVertical","DO",0,1,0,0,1,54,0,1,true);
-SystemData<unsigned> doVacFastProcCbVal(1056,"doVacFastProcCbVal","DO",0,1,0,0,1,56,0,1,true);
-SystemData<unsigned> doVacSlowProcCbVal(1057,"doVacSlowProcCbVal","DO",0,1,0,0,1,57,0,1,true);
+SystemData<unsigned> doVacSlowProcCbVal(1056,"doVacSlowProcCbVal","DO",0,1,0,0,1,56,0,1,true);
+SystemData<unsigned> doVacFastProcCbVal(1057,"doVacFastProcCbVal","DO",0,1,0,0,1,57,0,1,true);
 SystemData<unsigned> doPinDown(1063,"doPinDown","DO",0,1,0,0,1,63,0,1,true);
 SystemData<unsigned> doArmOut(1064,"doArmOut","DO",0,1,0,0,1,64,0,1,true);
 SystemData<unsigned> doForkHorizontal(1065,"doForkHorizontal","DO",0,1,0,0,1,65,0,1,true);
+SystemData<unsigned> doVapInletVal(1067,"doVapInletVal","DO",0,1,0,0,1,67,0,1,true);
 SystemData<unsigned> doCbGateVal(1071,"doCbGateVal","DO",0,1,0,0,1,71,0,1,true);
 
 
@@ -209,7 +210,7 @@ SystemData<float> aoAxisPatrolPos2(7101, "aoAxisPatrolPos1","Motion",-160,160,1,
 
 //DeviceNet
 SystemData<unsigned> aiAPCStatus(8000, "aiAPCStatus","DeviceNet",0,0,0,0,8,0,0,8,false);
-SystemData<float> aiAPCPressure(8001, "aiAPCPressure","DeviceNet",0,0,1,0,8,1,0,32,false,"torr",ConvertLinear<float,unsigned>(0, 23405, 0.0f, 1000.0f));
+SystemData<float> aiAPCPressure(8001, "aiAPCPressure","DeviceNet",0,0,2,0,8,1,0,32,false,"torr",ConvertLinear<float,unsigned>(0, 23405, 0.0f, 1000.0f));
 SystemData<float> aiAPCPosition(8005, "aiAPCPosition","DeviceNet",0,0,1,0,8,5,0,16,false,"%",ConvertLinear<float,unsigned>(0, 32767, 0.0f, 100.0f));
 SystemData<unsigned> aiAPCOverrideStatus(8007, "aiAPCOverrideStatus","DeviceNet",0,0,0,0,8,7,0,8,false);
 SystemData<unsigned> aiVapMFCStatus(8008, "aiVapMFCStatus","DeviceNet",0,0,0,0,8,8,0,8,false);
@@ -220,9 +221,9 @@ SystemData<unsigned> aiPurgeN2MFCStatus(8014, "aiPurgeN2MFCStatus","DeviceNet",0
 SystemData<float> aiPurgeN2Flowrate(8015, "aiPurgeN2Flowrate","DeviceNet",0,0,0,0,8,15,0,16,false,"sccm",ConvertLinear<float,unsigned>(0, 32767, 0.0f, 6670.0f));
 SystemData<unsigned> aiN2MFCStatus(8017, "aiN2MFCStatus","DeviceNet",0,0,0,0,8,17,0,8,false);
 SystemData<float> aiN2Flowrate(8018, "aiN2Flowrate","DeviceNet",0,0,0,0,8,18,0,16,false,"sccm",ConvertLinear<float,unsigned>(0, 32767, 0.0f, 6670.0f));
-SystemData<float> aiProcChamPressure(8020, "aiProcChamPressure","DeviceNet",0,0,1,0,8,20,0,16,false,"torr",ConvertLinear<float,unsigned>(0, 23405, 0.0f, 1000.0f));
+SystemData<float> aiProcChamPressure(8020, "aiProcChamPressure","DeviceNet",0,0,2,0,8,20,0,16,false,"torr",ConvertLinear<float,unsigned>(0, 23405, 0.0f, 1000.0f));
 SystemData<unsigned> aiProcChamManoStatus(8022, "aiProcChamManoStatus","DeviceNet",0,0,0,0,8,22,0,8,false);
-SystemData<float> aiExpChamPressure(8023, "aiExpChamPressure","DeviceNet",0,0,1,0,8,23,0,16,false,"torr",ConvertLinear<float,unsigned>(0, 23405, 0.0f, 1000.0f));
+SystemData<float> aiExpChamPressure(8023, "aiExpChamPressure","DeviceNet",0,0,2,0,8,23,0,16,false,"torr",ConvertLinear<float,unsigned>(0, 23405, 0.0f, 1000.0f));
 SystemData<unsigned> aiExpChamManoStatus(8025, "aiExpChamManoStatus","DeviceNet",0,0,0,0,8,25,0,8,false);
 
 SystemData<float> aoAPCPressure(8026, "aoAPCPressure","DeviceNet",0,1000,1,0,8,26,0,16,true,"torr",ConvertLinear<float,unsigned>(0, 32767, 0.0f, 1000.0f),ConvertLinear<unsigned,float>(0.0f, 1000.0f, 0, 32767));
@@ -273,5 +274,7 @@ SystemData<unsigned> ProcUnitParam1(100053, "ProcUnitParam1", "UserDefine", 0, 1
 SystemData<unsigned> ProcUnitParam2(100054, "ProcUnitParam2", "UserDefine", 0, 10000);
 SystemData<std::string> ProcUnitStepName(100055, "ProcUnitStepName", "UserDefine");
 
+SystemData<unsigned> ProcChamberDirty(100060, "ProcChamberDirty", "UserDefine", 0, 1);
+SystemData<unsigned> ExpChamberDirty(100061, "ExpChamberDirty", "UserDefine", 0, 1);
 
 }

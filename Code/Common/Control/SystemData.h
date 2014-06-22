@@ -143,8 +143,15 @@ public:
 						return *this;
 				}
 
+				T old_data = m_data;
 				m_data = rhs;
 				m_changed_flag = true;
+
+				for(boost::function<void (T, T)>& f : m_update_sinks)
+				{
+					if(f)
+						Worker::Instance().Post([this, f, old_data](){f(old_data, this->m_data);});
+				}
 
 				std::stringstream ss;
 				ss<<"system data is modified, [id="<<m_id<<", value="<<rhs<<"].";
@@ -232,11 +239,11 @@ public:
 		m_precheck_funcs.push_back(checker);
 	}
 
-	unsigned int AddUpdateSink(boost::function<void (T)> sink)
+	unsigned int AddUpdateSink(boost::function<void (T, T)> sink)
 	{
 		boost::mutex::scoped_lock lock(m_mtx);
 		unsigned int i=0;
-		for(boost::function<void (T)>& v : m_update_sinks)
+		for(boost::function<void (T, T)>& v : m_update_sinks)
 		{
 			if(v)
 			{
@@ -287,10 +294,10 @@ private:
 		if(m_data != old_data)
 			m_changed_flag = true;
 
-		for(boost::function<void (T)>& f : m_update_sinks)
+		for(boost::function<void (T, T)>& f : m_update_sinks)
 		{
 			if(f)
-				Worker::Instance().Post([this, f](){f(this->m_data);});
+				Worker::Instance().Post([this, f, old_data](){f(old_data, this->m_data);});
 		}
 	}
 
@@ -314,7 +321,7 @@ private:
 	boost::function<void (unsigned int)> m_put_func;
 
 	std::vector<boost::function<bool (T)>> m_precheck_funcs;
-	std::vector<boost::function<void (T)>> m_update_sinks;
+	std::vector<boost::function<void (T, T)>> m_update_sinks;
 
 	boost::mutex m_mtx;
 };

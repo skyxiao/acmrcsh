@@ -29,21 +29,21 @@ private:
 	void shut_all_chemical();
 };
 
-#define DI_INTERLOCK_EX(di, func) Data::di.AddUpdateSink(func);
+#define POST_INTERLOCK_EX(di, func) Data::di.AddUpdateSink(func);
 
-#define DI_INTERLOCK(di, di_val, doo, do_val) Data::di.AddUpdateSink([&](unsigned value) \
+#define POST_INTERLOCK(di, di_val, doo, do_val) Data::di.AddUpdateSink([&](unsigned, unsigned value) \
 	{ \
 		if(value == di_val) \
 		{ Data::doo = do_val; } \
 	});
 
-#define DI_INTERLOCK_MEMBER(di, di_val, mem_func) Data::di.AddUpdateSink([this](unsigned value) \
+#define POST_INTERLOCK_MEMBER(di, di_val, mem_func) Data::di.AddUpdateSink([this](unsigned, unsigned value) \
 	{ \
 		if(value == di_val) \
 		{ mem_func(); } \
 	});
 
-#define DO_INTERLOCK(doo, do_val, di, di_val) \
+#define PRE_INTERLOCK(doo, do_val, di, di_val) \
 		Data::doo.AddPrecheck([&](unsigned new_value) \
 		{ \
 			if(new_value == do_val && Data::di == di_val) \
@@ -54,7 +54,7 @@ private:
 			return false; \
 		});
 
-#define DO_INTERLOCK_AI_LT(doo, do_val, ai, ai_val) \
+#define PRE_INTERLOCK_AI_LT(doo, do_val, ai, ai_val) \
 		Data::doo.AddPrecheck([&](unsigned new_value) \
 		{ \
 			float ai_val1 = ai_val; \
@@ -66,6 +66,6 @@ private:
 			return false; \
 		});
 
-#define DO_INTERLOCK_EX(doo, func) Data::doo.AddPrecheck(func);
+#define PRE_INTERLOCK_EX(doo, func) Data::doo.AddPrecheck(func);
 
 #endif /* INTERLOCK_H_ */

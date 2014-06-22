@@ -105,9 +105,6 @@ private:
 	void open_apc();
 
 private:
-	bool m_proc_dirty_flag;
-	bool m_exp_dirty_flag;
-
 	float m_leak_check_init_pressure;
 
 	boost::chrono::time_point<boost::chrono::system_clock> m_recipe_start_time;

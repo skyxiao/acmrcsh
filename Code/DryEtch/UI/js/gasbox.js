@@ -217,6 +217,7 @@ function initValve() {
     arr.push(new valve(492, 593, "valve_green_h", "valve_gray_h", 1051));
     arr.push(new valve(711, 546, "valve_green_h", "valve_gray_h", 1049));
     arr.push(new valve(304, 592, "valve_green_h", "valve_gray_h", 1050));
+    arr.push(new valve(448, 220, "valve_green_h", "valve_gray_h", 1067));
     arr.push(new valve(570, 151, "valve_green", "valve_gray", 1032));
     arr.push(new valve(620, 151, "valve_green", "valve_gray", 1033));
     arr.push(new valve(833, 167, "valve_green", "valve_gray", 1041));

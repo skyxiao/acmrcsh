@@ -79,10 +79,10 @@ extern SystemData<unsigned> diForkVertical;
 extern SystemData<unsigned> diForkHorizontal;
 extern SystemData<unsigned> diArmIn;
 extern SystemData<unsigned> diArmOut;
-extern SystemData<unsigned> diPrcCbLidLeftOpen;
-extern SystemData<unsigned> diPrcCbLidLeftClose;
-extern SystemData<unsigned> diPrcCbLidRightOpen;
-extern SystemData<unsigned> diPrcCbLidRightClose;
+//extern SystemData<unsigned> diPrcCbLidLeftOpen;
+//extern SystemData<unsigned> diPrcCbLidLeftClose;
+//extern SystemData<unsigned> diPrcCbLidRightOpen;
+//extern SystemData<unsigned> diPrcCbLidRightClose;
 extern SystemData<unsigned> diCbLeftDoorClose;
 extern SystemData<unsigned> diCbRightDoorClose;
 extern SystemData<unsigned> diProcCbHFLeak;
@@ -127,11 +127,12 @@ extern SystemData<unsigned> doN2MFCVal2;
 extern SystemData<unsigned> doPinUp;
 extern SystemData<unsigned> doArmIn;
 extern SystemData<unsigned> doForkVertical;
-extern SystemData<unsigned> doVacFastProcCbVal;
 extern SystemData<unsigned> doVacSlowProcCbVal;
+extern SystemData<unsigned> doVacFastProcCbVal;
 extern SystemData<unsigned> doPinDown;
 extern SystemData<unsigned> doArmOut;
 extern SystemData<unsigned> doForkHorizontal;
+extern SystemData<unsigned> doVapInletVal;
 extern SystemData<unsigned> doCbGateVal;
 
 
@@ -273,6 +274,9 @@ extern SystemData<unsigned> ProcUnitCommand;
 extern SystemData<unsigned> ProcUnitParam1;
 extern SystemData<unsigned> ProcUnitParam2;
 extern SystemData<std::string> ProcUnitStepName;
+
+extern SystemData<unsigned> ProcChamberDirty;
+extern SystemData<unsigned> ExpChamberDirty;
 
 };
 

@@ -16,8 +16,7 @@
 using namespace boost::chrono;
 
 ProcessUnit::ProcessUnit(int id, const std::string& name) :
-		SmartUnit(id, name), m_proc_dirty_flag(true), m_exp_dirty_flag(true),
-		m_leak_check_init_pressure(0)
+		SmartUnit(id, name), m_leak_check_init_pressure(0)
 {
 }
 
@@ -30,9 +29,22 @@ void ProcessUnit::Initialize()
 	//base class initialize
 	SmartUnit::Initialize();
 
-	if(Data::diPrcCbDoorClose == 0 || Data::diPrcCbLidLeftClose == 0 || Data::diPrcCbLidRightClose == 0)
+	if(Data::diPrcCbDoorClose == 0)
 	{
-		m_proc_dirty_flag = false;
+		Data::ProcChamberDirty = 0;
+	}
+	else
+	{
+		Data::ProcChamberDirty = 1;
+	}
+
+	if(Data::doExpCbSupplyCbVal == 1)
+	{
+		Data::ExpChamberDirty = (unsigned)Data::ProcChamberDirty;
+	}
+	else
+	{
+		Data::ExpChamberDirty = 1;
 	}
 	//initialize hardware parameters
 }
@@ -57,7 +69,7 @@ UnitTask ProcessUnit::GetNextTask()
 	{
 		if(WaferManager::Instance().IsWaferAllProcessed(m_id, 0x7))
 		{
-			if(m_proc_dirty_flag)
+			if(Data::ProcChamberDirty == 1)
 			{
 				return UnitTask{COMMAND_PURGE, 0, 0};
 			}
@@ -87,7 +99,7 @@ UnitTask ProcessUnit::GetNextTask()
 	}
 	else
 	{
-		if(m_proc_dirty_flag)
+		if(Data::ProcChamberDirty == 1)
 		{
 			if(Data::aiProcChamPressure > Parameters::VacuumPressure)
 			{
@@ -829,11 +841,11 @@ void ProcessUnit::OnLeakCheck(unsigned param)
 
 void ProcessUnit::OnProcChamberLeakCheck()
 {
-	if(Data::diPrcCbLidLeftClose == 0 || Data::diPrcCbLidRightClose == 0)
-	{
-		EVT::GenericWarning.Report("Chamber lid isn't closed, leak check is aborted.");
-		return;
-	}
+//	if(Data::diPrcCbLidLeftClose == 0 || Data::diPrcCbLidRightClose == 0)
+//	{
+//		EVT::GenericWarning.Report("Chamber lid isn't closed, leak check is aborted.");
+//		return;
+//	}
 
 	NEW_UNIT_STEP("initialize state", true)
 		ADD_STEP_COMMAND([&]()
@@ -1145,11 +1157,11 @@ void ProcessUnit::OnPump(unsigned param)
 
 bool ProcessUnit::OnPumpProcChamber()
 {
-	if(Data::diPrcCbLidLeftClose == 0 || Data::diPrcCbLidRightClose == 0)
-	{
-		EVT::GenericWarning.Report("Chamber lid isn't closed, pumping is aborted.");
-		return false;
-	}
+//	if(Data::diPrcCbLidLeftClose == 0 || Data::diPrcCbLidRightClose == 0)
+//	{
+//		EVT::GenericWarning.Report("Chamber lid isn't closed, pumping is aborted.");
+//		return false;
+//	}
 
 	if(Data::diPrcCbDoorClose == 0)
 	{
@@ -1280,7 +1292,7 @@ bool ProcessUnit::OnVentExpChamber()
 		return true;
 	}
 
-	if(m_exp_dirty_flag)
+	if(Data::ExpChamberDirty == 1)
 	{
 		//OnPurgeProcChamber();
 		EVT::ChamberNotClean.Report("Expansion");
@@ -1316,7 +1328,7 @@ bool ProcessUnit::OnVentProcChamber()
 		return true;
 	}
 
-	if(m_proc_dirty_flag)
+	if(Data::ProcChamberDirty == 1)
 	{
 		//OnPurgeProcChamber();
 		EVT::ChamberNotClean.Report("Process");
@@ -1333,6 +1345,7 @@ bool ProcessUnit::OnVentProcChamber()
 		{	return Data::aiProcChamPressure > Parameters::ATMPressure;},
 			Parameters::VentProcTimeout,
 			[&](){	EVT::VentTimeout.Report("process");})
+		ADD_STEP_WAIT(2)
 		ADD_STEP_COMMAND([&](){	Data::doN2SupplyProcVal = 0;})
 	END_UNIT_STEP
 
@@ -1484,7 +1497,7 @@ void ProcessUnit::OnPurgeExpChamber()
 	NEW_UNIT_STEP("finish purge expansion chamber", false)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doPurgeN2MFCVal2 = 0;
-			m_exp_dirty_flag = false;})
+			Data::ExpChamberDirty = 0;})
 	END_UNIT_STEP
 }
 
@@ -1525,7 +1538,7 @@ void ProcessUnit::OnPurgeProcChamber()
 
 	NEW_UNIT_STEP("finish purge process chamber", false)
 		ADD_STEP_COMMAND([this]()
-		{	m_proc_dirty_flag = false;})
+		{	Data::ProcChamberDirty = 0;})
 	END_UNIT_STEP
 }
 
@@ -1569,7 +1582,7 @@ bool ProcessUnit::OnOpenDoor()
 		return false;
 	}
 
-	if(m_proc_dirty_flag)
+	if(Data::ProcChamberDirty == 1)
 	{
 		EVT::GenericWarning.Report("Chamber is not clean, gate valve can't be opened.");
 		return false;

@@ -47,8 +47,12 @@
 					<div class="turntable_btn">
 						<label>WaferLotID:</label>
 						<input class="WaferLotID" />
-						<button onclick="overViewSkip()">Skip</button>
+						<!--<button onclick="overViewSkip()">Skip</button>-->
 						<button onclick="overViewOk()">Ok</button>
+					</div>
+					<div class="pinStatus">
+						<img src=""/>
+						<img src="../images/rule1.png"/>
 					</div>
 				</td>
 				<td class="overview_opreation" align="top">
@@ -94,7 +98,8 @@
 							<label class="overview_rname">Recipe Name:</label>
 							<input style="width:80px;height:22px;background-color:#C6F0FB;border:none;padding-left:5px;" disabled="true"/>
 							<button class="long_btn" onclick="loadRecipe()">Load Recipe</button>
-							<button class="long_btn" onclick="unLoadRecipe()">Unload Recipe</button>
+							<button class="long_btn" onclick="">Process</button>
+							<button class="long_btn" onclick="unLoadRecipe()" style="margin-left:235px;">Unload Recipe</button>
 						</div>
 						<div class="recipe_list">
 							<div style="height:75%;" class="recipe_content">

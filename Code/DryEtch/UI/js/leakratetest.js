@@ -3,6 +3,60 @@ var LeakCheckPressure = 0;
 var LeakCheckThreshold = 0;
 var LeakCheckPumpHTime = 0;
 var intervalTimeId = "";
+var leadTime = 2 + 30 / 60;
+var range = {
+	"LeakCheckTime" : [0, 3600],
+	"LeakCheckPressure" : [0, 100],
+	"LeakCheckThreshold" : [0, 10],
+	"LeakCheckPumpHTime" : [0, 600]
+};
+
+function getParam()
+{
+	var confJson = {};
+	arr = [9000, 9001, 9002, 9003];
+	try
+	{
+		confJson = getControl().fetch_parameters(arr);
+		confJson = $.parseJSON(confJson);
+	}
+	catch (e)
+	{
+		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
+		return;
+	}
+
+	var system_data = confJson["parameters"];
+	for (var i = 0; i < system_data.length; ++i)
+	{
+		switch (system_data[i]["id"])
+		{
+		case "9000":
+			$(".pump_down_pressure").val(system_data[i]["value"]);
+			LeakCheckPressure = parseFloat(system_data[i]["value"]);
+			break;
+
+		case "9001":
+			$(".leak_check_phtime").val(system_data[i]["value"]);
+			LeakCheckPumpHTime = parseInt(system_data[i]["value"]);
+			break;
+
+		case "9002":
+			$(".test_time").val(system_data[i]["value"]);
+			LeakCheckTime = parseInt(system_data[i]["value"]);
+			break;
+
+		case "9003":
+			$(".leak_check_threshold").val(system_data[i]["value"]);
+			LeakCheckThreshold = parseInt(system_data[i]["value"]);
+			break;
+
+		default:
+		
+		}
+	}
+}
+
 function getSettings()
 {
 	var arr = [100030, 100031, 100050, 100052, 100053, 100054];
@@ -18,7 +72,7 @@ function getSettings()
 		return;
 	}
 
-	
+	/*
 	var confJson = {};
 	arr = [9000, 9001, 9002, 9003];
 	try
@@ -30,7 +84,7 @@ function getSettings()
 	{
 		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
 		return;
-	}
+	}*/
 	
 	var system_data = json["systemdata"];
 	var status = 0;
@@ -70,6 +124,7 @@ function getSettings()
 		}
 	}
 	
+	/*
 	var system_data = confJson["parameters"];
 	for (var i = 0; i < system_data.length; ++i)
 	{
@@ -98,7 +153,7 @@ function getSettings()
 		default:
 		
 		}
-	}
+	}*/
 
 	if (status == 0)
 	{
@@ -142,7 +197,7 @@ function getSettings()
 		$(".btn_box").find("button").addClass("disabled_button");
 	}
 	delete json;
-	delete confJson;
+	//delete confJson;
 	delete system_data;
 	delete arr;
 }
@@ -236,7 +291,7 @@ function draw(results) {
     Chart1.panel.transparent = true;
     Chart1.legend.visible = false;
     var x1 = series1.data.x;
-	Chart1.axes.bottom.setMinMax(0, LeakCheckTime / 60);
+	Chart1.axes.bottom.setMinMax(leadTime, LeakCheckTime / 60);
     Chart1.axes.bottom.labels.roundFirst = false;
     Chart1.zoom.enabled = false;
 	Chart1.scroll.enabled = false;
@@ -323,7 +378,7 @@ function getProChamberData()
 			time1 = time1 + 0.5;
 			var data = {
 				pressure : parseFloat(valueJson["systemdata"][0]["value"]),
-				time : (time1 / 60).toFixed(3)
+				time : (time1 / 60).toFixed(3) + leadTime
 			};			
 			
 			if (pchamberData.length > LeakCheckTime / 0.5)
@@ -401,7 +456,7 @@ function getExpChamberData()
 			time2 = time2 + 0.5;
 			var data = {
 				pressure : parseFloat(valueJson["systemdata"][0]["value"]),
-				time : (time2 / 60).toFixed(3)
+				time : (time2 / 60).toFixed(3) + leadTime
 			};			
 			
 			if (echamberData.length > LeakCheckTime / 0.5)
@@ -426,11 +481,24 @@ function cancelGetExpChamberData()
 
 function init()
 {
+	getParam();
 	$(".test_time").blur(function(){
 		LeakCheckTime = parseInt($(this).val());
 		if (isNaN(LeakCheckTime))
 		{
 			LeakCheckTime = 1200;
+		}
+		else if (LeakCheckTime < range["LeakCheckTime"][0] || LeakCheckTime > range["LeakCheckTime"][1])
+		{
+			alert("The TestTime should be [" + range["LeakCheckTime"][0] + "," + range["LeakCheckTime"][1] + "]");
+			if (LeakCheckTime < range["LeakCheckTime"][0])
+			{
+				$(this).val(range["LeakCheckTime"][0]);
+			}
+			else
+			{
+				$(this).val(range["LeakCheckTime"][1]);
+			}
 		}
 	});
 
@@ -440,6 +508,18 @@ function init()
 		{
 			LeakCheckPressure = 10;
 		}
+		else if (LeakCheckPressure < range["LeakCheckPressure"][0] || LeakCheckPressure > range["LeakCheckPressure"][1])
+		{
+			alert("The LeakCheckPressure should be [" + range["LeakCheckPressure"][0] + "," + range["LeakCheckPressure"][1] + "]");
+			if (LeakCheckPressure < range["LeakCheckPressure"][0])
+			{
+				$(this).val(range["LeakCheckPressure"][0]);
+			}
+			else
+			{
+				$(this).val(range["LeakCheckPressure"][1]);
+			}
+		}
 	});
 
 	$(".leak_check_threshold").blur(function(){
@@ -448,6 +528,18 @@ function init()
 		{
 			LeakCheckThreshold = 5;
 		}
+		else if (LeakCheckThreshold < range["LeakCheckThreshold"][0] || LeakCheckThreshold > range["LeakCheckThreshold"][1])
+		{
+			alert("The LeakCheckThreshold should be [" + range["LeakCheckThreshold"][0] + "," + range["LeakCheckThreshold"][1] + "]");
+			if (LeakCheckThreshold < range["LeakCheckThreshold"][0])
+			{
+				$(this).val(range["LeakCheckThreshold"][0]);
+			}
+			else
+			{
+				$(this).val(range["LeakCheckThreshold"][1]);
+			}
+		}
 	});
 
 	$(".leak_check_phtime").blur(function(){
@@ -455,6 +547,18 @@ function init()
 		if (isNaN(LeakCheckPumpHTime))
 		{
 			LeakCheckPumpHTime = 30;
+		}
+		else if (LeakCheckPumpHTime < range["LeakCheckPumpHTime"][0] || LeakCheckPumpHTime >range["LeakCheckPumpHTime"][1])
+		{
+			alert("The LeakCheckPumpHoldTime should be [" + range["LeakCheckPumpHTime"][0] + "," + range["LeakCheckPumpHTime"][1] + "]");
+			if (LeakCheckPumpHTime < range["LeakCheckPumpHTime"][0])
+			{
+				$(this).val(range["LeakCheckPumpHTime"][0]);
+			}
+			else
+			{
+				$(this).val(range["LeakCheckPumpHTime"][1]);
+			}
 		}
 	});
 }

@@ -3,8 +3,11 @@
   "version": "1.1.11",
   "main": "page/Login.htm",
   "window": {
+	"icon":"./images/acm3.png",
     "width": 1680,
     "height": 1050,
+	"min_width": 1510,
+    "min_height": 960,
     "show": true,
     "position": "center",
     "title": "ACM Dry Etch",

@@ -129,7 +129,7 @@ function createDataEx(node, i,islast) {
         unitText = node.children[5].textContent;
     }
 
-    htmlText += getContent(node.children[1].textContent, node.nodeName, node.children[4].textContent, unitText, node.children[2].textContent, node.children[3].textContent, i, node.children[4].textContent);
+    htmlText += getContent(node.children[1].textContent, node.nodeName, node.children[4].textContent, unitText, node.children[1].textContent, node.children[3].textContent, i, node.children[4].textContent);
     if (islast) {
         if (i % 2 == 0) {
             htmlText+="<td></td><td></td><td></td><td></td></tr>";

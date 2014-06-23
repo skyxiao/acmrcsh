@@ -32,7 +32,7 @@ var arrayObj = ["empty", "unprocessed", "processing", "processed", "semiprocesse
 function turntableRun() 
 {
 	var json = {};
-	var arr = [100040, 100041, 100042, 100043, 100044, 100045, 7044]
+	var arr = [61, 63, 100040, 100041, 100042, 100043, 100044, 100045, 7044]
 	try
 	{
 		json = getControl().fetch_system_data(arr, false);
@@ -53,11 +53,21 @@ function turntableRun()
 	var Slot2WaferState = 0;
 	var Slot3WaferState = 0;
 	var angle = 0;
+	var pickUp = 0;
+	var wClamp = 0;
 
 	for (var i = 0; i < systemdata.length; ++i)
 	{
 		switch (systemdata[i]["id"])
 		{
+		case "61":
+			pickUp = parseInt(systemdata[i]["value"]);
+			break;
+
+		case "63":
+			wClamp = parseInt(systemdata[i]["value"]);
+			break;
+
 		case "100040":
 			Slot1WaferID = systemdata[i]["value"];
 			break;
@@ -92,6 +102,19 @@ function turntableRun()
 		default:
 		
 		}
+	}
+
+	if (pickUp == 0 && wClamp == 0)
+	{
+		$(".pinStatus").find("img:first").attr("src", "../images/pin_normal.png");
+	}
+	else if (pickUp == 1 && wClamp == 0)
+	{
+		$(".pinStatus").find("img:first").attr("src", "../images/pin_up.png");
+	}
+	else if (pickUp == 0 && wClamp == 1)
+	{
+		$(".pinStatus").find("img:first").attr("src", "../images/pin_down.png");
 	}
 
 	var i = parseInt(angle);

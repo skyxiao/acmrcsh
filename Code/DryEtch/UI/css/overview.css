@@ -311,6 +311,7 @@ body
 	width : 80px;
 	height : 28px;
 	margin-left : 25px;
+	margin-top:40px;
 	font-weight : bold;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
 }
@@ -420,6 +421,13 @@ body
 	margin-left : 25px;
 	font-weight : bold;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#A9ABAB));
+}
+
+.pinStatus
+{
+	position:relative;
+	left: 640px;
+	top: -490px;
 }
  
  #background

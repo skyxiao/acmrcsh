@@ -4,6 +4,12 @@ var LeakCheckThreshold = 0;
 var LeakCheckPumpHTime = 0;
 var intervalTimeId = "";
 var leadTime = 2 + 30 / 60;
+var range = {
+	"LeakCheckTime" : [0, 3600],
+	"LeakCheckPressure" : [0, 100],
+	"LeakCheckThreshold" : [0, 10],
+	"LeakCheckPumpHTime" : [0, 600]
+};
 
 function getParam()
 {
@@ -482,6 +488,18 @@ function init()
 		{
 			LeakCheckTime = 1200;
 		}
+		else if (LeakCheckTime < range["LeakCheckTime"][0] || LeakCheckTime > range["LeakCheckTime"][1])
+		{
+			alert("The TestTime should be [" + range["LeakCheckTime"][0] + "," + range["LeakCheckTime"][1] + "]");
+			if (LeakCheckTime < range["LeakCheckTime"][0])
+			{
+				$(this).val(range["LeakCheckTime"][0]);
+			}
+			else
+			{
+				$(this).val(range["LeakCheckTime"][1]);
+			}
+		}
 	});
 
 	$(".pump_down_pressure").blur(function(){
@@ -489,6 +507,18 @@ function init()
 		if (isNaN(LeakCheckPressure))
 		{
 			LeakCheckPressure = 10;
+		}
+		else if (LeakCheckPressure < range["LeakCheckPressure"][0] || LeakCheckPressure > range["LeakCheckPressure"][1])
+		{
+			alert("The LeakCheckPressure should be [" + range["LeakCheckPressure"][0] + "," + range["LeakCheckPressure"][1] + "]");
+			if (LeakCheckPressure < range["LeakCheckPressure"][0])
+			{
+				$(this).val(range["LeakCheckPressure"][0]);
+			}
+			else
+			{
+				$(this).val(range["LeakCheckPressure"][1]);
+			}
 		}
 	});
 
@@ -498,6 +528,18 @@ function init()
 		{
 			LeakCheckThreshold = 5;
 		}
+		else if (LeakCheckThreshold < range["LeakCheckThreshold"][0] || LeakCheckThreshold > range["LeakCheckThreshold"][1])
+		{
+			alert("The LeakCheckThreshold should be [" + range["LeakCheckThreshold"][0] + "," + range["LeakCheckThreshold"][1] + "]");
+			if (LeakCheckThreshold < range["LeakCheckThreshold"][0])
+			{
+				$(this).val(range["LeakCheckThreshold"][0]);
+			}
+			else
+			{
+				$(this).val(range["LeakCheckThreshold"][1]);
+			}
+		}
 	});
 
 	$(".leak_check_phtime").blur(function(){
@@ -505,6 +547,18 @@ function init()
 		if (isNaN(LeakCheckPumpHTime))
 		{
 			LeakCheckPumpHTime = 30;
+		}
+		else if (LeakCheckPumpHTime < range["LeakCheckPumpHTime"][0] || LeakCheckPumpHTime >range["LeakCheckPumpHTime"][1])
+		{
+			alert("The LeakCheckPumpHoldTime should be [" + range["LeakCheckPumpHTime"][0] + "," + range["LeakCheckPumpHTime"][1] + "]");
+			if (LeakCheckPumpHTime < range["LeakCheckPumpHTime"][0])
+			{
+				$(this).val(range["LeakCheckPumpHTime"][0]);
+			}
+			else
+			{
+				$(this).val(range["LeakCheckPumpHTime"][1]);
+			}
 		}
 	});
 }

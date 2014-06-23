@@ -1,0 +1,8 @@
+1、system config页面输入限制有误
+2、gasbox页面按钮不起作用
+3、leak check页面曲线图时间范围需要加大，设置参数不需要一直刷新，只要切换到该页面时更新即可
+4、overview页面添加一个process按钮，用于手动执行recipe
+5、overview页面添加arm [out, middle, in]和fork [vertical, horizontal]图显示，以及上面的wafer状态及id
+6、overview页面添加pin的状态显示，[down,middle,up]
+7、overview页面wafer显示位置好像有点儿不对
+8、overview页面暂时去掉skip按钮

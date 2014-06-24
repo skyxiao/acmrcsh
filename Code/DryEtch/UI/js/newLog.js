@@ -1,5 +1,7 @@
 var recentLog = [];
 var timer = 0;
+var warningCount = 0;
+var errorCount = 0;
 
 function getRecentLog()
 {
@@ -9,6 +11,7 @@ function getRecentLog()
 
 	if (log && log["event_logs"] != "")
 	{
+		/*
 		var level = 0;
 		if (recentLog.length > 0)
 		{
@@ -21,6 +24,7 @@ function getRecentLog()
 				level = 2;
 			}
 		}
+		*/
 
 		var logObject = {};
 		if (log["event_logs"].length == 1)
@@ -29,6 +33,7 @@ function getRecentLog()
 		}
 		else
 		{
+			/*
 			logObject = log["event_logs"][0];
 			for (var i = 1; i < log["event_logs"].length; ++i)
 			{
@@ -50,13 +55,24 @@ function getRecentLog()
 						logObject = log["event_logs"][i];
 					}
 				}
+			}*/
+
+			logObject = log["event_logs"][0];
+			var time = parseInt(logObject["time"]);
+			for (var i = 1; i < log["event_logs"].length; ++i)
+			{
+				if (parseInt(log["event_logs"][i]["time"]) > time)
+				{
+					logObject = log["event_logs"][i];
+					time = parseInt(logObject["time"]);
+				}
 			}
 		}
 
 		var time = logObject["time"].substr(0, 4) + "-" + logObject["time"].substr(4, 2) + "-" + logObject["time"].substr(6, 2) + " " +
 			logObject["time"].substr(9, 2) + ":" + logObject["time"].substr(11, 2) + ":" + logObject["time"].substr(13, 2);
 		logstr += "[" + time + "] " + "[" + logObject["level"] + "] " + "[" + logObject["id"] + "] :" + logObject["info"];
-		if (logObject["level"] == "info" && level == 0)
+		if (logObject["level"] == "info")
 		{
 			$(".log_content").removeClass("log_content_contrast")
 				.removeClass("log_warning")
@@ -69,8 +85,9 @@ function getRecentLog()
 			timer = 0;
 			$(".long_log").removeClass("long_log");
 		}
-		else if (logObject["level"] == "warning" && level <= 1)
+		else if (logObject["level"] == "warning")
 		{
+			warningCount = warningCount + 1;
 			$(".log_content").removeClass("log_content_contrast")
 				.removeClass("log_info")
 				.removeClass("log_error")
@@ -79,11 +96,13 @@ function getRecentLog()
 			delete (recentLog.shift());
 			recentLog.push(logObject);
 			$(".log_content").text(logstr);
+			$(".warning_count").text(warningCount);
 			timer = 0;
 			$(".long_log").removeClass("long_log");
 		}
 		else if (logObject["level"] == "error")
 		{
+			errorCount = errorCount + 1;
 			$(".log_content").removeClass("log_content_contrast")
 				.removeClass("log_info")
 				.removeClass("log_warning")
@@ -94,6 +113,7 @@ function getRecentLog()
 			recentLog.push(logObject);
 			$(".log_content").text(logstr);
 			timer = 0;
+			$(".error_count").text(errorCount);
 			$(".long_log").removeClass("long_log");
 		}
 	}
@@ -134,10 +154,36 @@ function init()
 {
 	$(".log_btn_clear").click(function(){
 		clearInterval(setIntervalid);
+		warningCount = 0;
+		errorCount = 0;
+		$(".warning_count").text(warningCount);
+		$(".error_count").text(errorCount);
 		$(".log_content").text("");
 		$(".long_log").removeClass("long_log");
 		delete (recentLog.shift());
 		getControl().reset_signal_tower();
+	});
+
+	$(".log_content").click(function(){
+		var text = $(this).text();
+		if (text != "")
+		{
+			top.frames["menu"].SelectMenu("Log", null, "log");		
+		}
+	});
+
+	$(".warning_count").click(function(){
+		if (warningCount != 0)
+		{
+			top.frames["menu"].SelectMenu("Log", null, "log");
+		}
+	});
+
+	$(".error_count").click(function(){
+		if (errorCount != 0)
+		{
+			top.frames["menu"].SelectMenu("Log", null, "log");
+		}
 	});
 }
 

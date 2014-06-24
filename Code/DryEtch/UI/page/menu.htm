@@ -13,7 +13,7 @@
 </head>
 <script type="text/javascript">
     //var ablank = "file:///F:/NewACMCode/ACM/page/ablank.htm"
-    function SelectMenu(str, This, className) {
+    function SelectMenu(str, This, className, time) {
 		$(".select").removeClass("select");
 		if (!This && className)
 		{
@@ -114,10 +114,16 @@
 			if (top.document.getElementsByName("log")[0].getAttribute("src") == "ablank.htm")
 			{
 				 top.document.getElementsByName("log")[0].src = str + ".htm";
+				 function set()
+				 {
+					top.frames["log"].getLogData("", time);
+				 }
+				 setTimeout(set, 1000);
+				 //top.frames["log"].getLogData("", time);
 			}
 			else
 			{
-				top.frames["log"].getLogData("");
+				top.frames["log"].getLogData("", time);
 			}
            
 			break;

@@ -1,4 +1,7 @@
 var recentLog = [];
+var recentTime = "";
+var wRecentTime = "";
+var eRecentTime = "";
 var timer = 0;
 var warningCount = 0;
 var errorCount = 0;
@@ -72,6 +75,7 @@ function getRecentLog()
 		var time = logObject["time"].substr(0, 4) + "-" + logObject["time"].substr(4, 2) + "-" + logObject["time"].substr(6, 2) + " " +
 			logObject["time"].substr(9, 2) + ":" + logObject["time"].substr(11, 2) + ":" + logObject["time"].substr(13, 2);
 		logstr += "[" + time + "] " + "[" + logObject["level"] + "] " + "[" + logObject["id"] + "] :" + logObject["info"];
+		recentTime = time;
 		if (logObject["level"] == "info")
 		{
 			$(".log_content").removeClass("log_content_contrast")
@@ -98,6 +102,7 @@ function getRecentLog()
 			$(".log_content").text(logstr);
 			$(".warning_count").text(warningCount);
 			timer = 0;
+			wRecentTime = recentTime;
 			$(".long_log").removeClass("long_log");
 		}
 		else if (logObject["level"] == "error")
@@ -113,6 +118,7 @@ function getRecentLog()
 			recentLog.push(logObject);
 			$(".log_content").text(logstr);
 			timer = 0;
+			eRecentTime = recentTime;
 			$(".error_count").text(errorCount);
 			$(".long_log").removeClass("long_log");
 		}
@@ -168,21 +174,21 @@ function init()
 		var text = $(this).text();
 		if (text != "")
 		{
-			top.frames["menu"].SelectMenu("Log", null, "log");		
+			top.frames["menu"].SelectMenu("Log", null, "log", recentTime);		
 		}
 	});
 
 	$(".warning_count").click(function(){
 		if (warningCount != 0)
 		{
-			top.frames["menu"].SelectMenu("Log", null, "log");
+			top.frames["menu"].SelectMenu("Log", null, "log", wRecentTime);
 		}
 	});
 
 	$(".error_count").click(function(){
 		if (errorCount != 0)
 		{
-			top.frames["menu"].SelectMenu("Log", null, "log");
+			top.frames["menu"].SelectMenu("Log", null, "log", eRecentTime);
 		}
 	});
 }

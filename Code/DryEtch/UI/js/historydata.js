@@ -35,7 +35,11 @@ function draw(results) {
     Chart1.axes.bottom.labels.dateFormat = "isoTime";
 	Chart1.axes.bottom.labels.format.font.fill = "white";
 	Chart1.axes.left.labels.format.font.fill = "white";	
-    var series1 = Chart1.addSeries(new Tee.Line());
+    //var series1 = Chart1.addSeries(new Tee.Line());
+	var series1 = Chart1.addSeries(new Tee.PointXY());
+	series1.pointer.width = 3;
+	series1.pointer.height = 3;
+	//series1.pointer.style = "circular";
     series1.addRandom(results.length);
     series1.title = $("#ddlType").val();
     series1.data.x = new Array(series1.count());

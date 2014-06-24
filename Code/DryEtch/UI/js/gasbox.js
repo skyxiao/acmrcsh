@@ -225,7 +225,9 @@ function initValve() {
     return arr;
 }
 
-var lastStatus = 0;
+var lastStatus = null;
+var lastprocParam1 = null;
+var lastprocParam2 = null;
 
 function getSettingsData()
 {
@@ -273,13 +275,15 @@ function getSettingsData()
 		}
 	}
 
-	if (lastStatus == status)
+	if (lastStatus === status && lastprocParam1 === procParam1 &&  lastprocParam2 === procParam2)
 	{
 		return;
 	}
 	else
 	{
 		lastStatus = status;
+		lastprocParam1 = procParam1;
+		lastprocParam2 = procParam2;
 	}
 
 	if (status == 0)

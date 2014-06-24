@@ -48,7 +48,8 @@ function draw(results) {
     Chart1.panel.transparent = true;
     Chart1.legend.visible = false;
     var x1 = series1.data.x;
-    Chart1.axes.bottom.setMinMax(x1[20].getTime(), x1[40].getTime());
+    var length = x1.length;
+    Chart1.axes.bottom.setMinMax(x1[0].getTime(), x1[length - 1].getTime());
     Chart1.axes.bottom.labels.roundFirst = true;
     Chart1.zoom.enabled = false;
     Chart1.scroll.mouseButton = 0;

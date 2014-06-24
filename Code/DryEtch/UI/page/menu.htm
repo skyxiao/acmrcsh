@@ -11,73 +11,19 @@
     }  
     </style>
 </head>
-<body>
-	<div class="menu_box">
-    <table cellpadding="0" cellspacing="0">
-        <tr>
-            <td class="menu_item select" onclick="SelectMenu('Overview', this);" width="112px">
-                <div style="text-align:center;">
-                    <span>Overview</span></div>
-            </td>
-            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
-            </td>
-            <td class="menu_item" onclick="SelectMenu('SystemConfig', this);" width="112px">
-                <div style="text-align:center;">
-                    <span>System Config</span></div>
-            </td>
-            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
-            </td>
-            <td class="menu_item" onclick="SelectMenu('SystemData', this);" width="112px">
-                <div style="text-align:center;">
-                    <span>System Data</span></div>
-            </td>
-            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
-            </td>
-            <td class="menu_item" onclick="SelectMenu('GasBox', this);" width="112px">
-                <div style="text-align:center;">
-                    <span>GasBox</span></div>
-            </td>
-            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
-            </td>
-            <td class="menu_item" onclick="SelectMenu('RecipeEdit', this);" width="112px">
-                <div style="text-align:center;">
-                    <span>Recipe Edit</span></div>
-            </td>
-            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
-            </td>
-            <td class="menu_item" onclick="SelectMenu('HistoryData', this);" width="112px">
-                <div style="text-align:center;">
-                    <span>History Data</span></div>
-            </td>
-            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
-            </td>
-            <td class="menu_item" onclick="SelectMenu('Log', this);" width="112px">
-                <div style="text-align:center;">
-                    <span>Log</span></div>
-            </td>
-            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
-            </td>
-            <td class="menu_item" onclick="SelectMenu('LeakbackRateTest', this);" width="112px">
-                <div style="text-align:center;">
-                    <span>LeakCheck</span>
-                </div>
-            </td>
-			<td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
-            </td>
-            <td class="menu_item" onclick="SelectMenu('Monitor', this);" width="112px">
-                <div style="text-align:center;">
-                    <span>Monitor</span>
-                </div>
-            </td>
-        </tr>
-    </table>
-	</div>
-</body>
 <script type="text/javascript">
     //var ablank = "file:///F:/NewACMCode/ACM/page/ablank.htm"
-    function SelectMenu(str, This) {
+    function SelectMenu(str, This, className, time) {
 		$(".select").removeClass("select");
-		$(This).addClass("select");
+		if (!This && className)
+		{
+			$("." + className).addClass("select");
+		}
+		else
+		{
+			$(This).addClass("select");
+		}
+
 		if (top.frames["leaktest"].clearSetInterval)
 		{
 			top.frames["leaktest"].clearSetInterval();
@@ -168,10 +114,16 @@
 			if (top.document.getElementsByName("log")[0].getAttribute("src") == "ablank.htm")
 			{
 				 top.document.getElementsByName("log")[0].src = str + ".htm";
+				 function set()
+				 {
+					top.frames["log"].getLogData("", time);
+				 }
+				 setTimeout(set, 1000);
+				 //top.frames["log"].getLogData("", time);
 			}
 			else
 			{
-				top.frames["log"].getLogData("");
+				top.frames["log"].getLogData("", time);
 			}
            
 			break;
@@ -222,4 +174,67 @@
         
     }
 </script>
+<body>
+	<div class="menu_box">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="menu_item select" onclick="SelectMenu('Overview', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>Overview</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('SystemConfig', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>System Config</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('SystemData', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>System Data</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('GasBox', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>GasBox</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('RecipeEdit', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>Recipe Edit</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('HistoryData', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>History Data</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item log" onclick="SelectMenu('Log', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>Log</span></div>
+            </td>
+            <td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('LeakbackRateTest', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>LeakCheck</span>
+                </div>
+            </td>
+			<td width="1px" style="background: -webkit-gradient(linear, left top, left bottom, from(#04505A), to(#0F4C68));">
+            </td>
+            <td class="menu_item" onclick="SelectMenu('Monitor', this);" width="112px">
+                <div style="text-align:center;">
+                    <span>Monitor</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+	</div>
+</body>
+
 </html>

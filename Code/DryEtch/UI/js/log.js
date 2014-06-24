@@ -14,7 +14,7 @@ $(".table_info_box").scroll(function(){
     }
 });
 
-function getLogData(time)
+function getLogData(time, selectTime)
 {
 	try
 	{
@@ -59,7 +59,17 @@ function getLogData(time)
 			for (var i = 0; i < results.length; ++i)
 			{
 				var row = results[i];
-				info += '<tr class="' + row["level"] + '">' +
+				var classname = "";
+				if (selectTime && selectTime == getDateString(row["time"]))
+				{
+					classname = "selectLog";
+				}
+				else
+				{
+					classname = "";
+				}
+
+				info += '<tr class="' + row["level"] + ' ' + classname + '">' +
 							'<td width="10%">' + row["id"] + '</td>' +
 							'<td width="10%">' + row["level"] + '</td>' +
 							'<td width="20%">' + getDateString(row["time"]) + '</td>' +

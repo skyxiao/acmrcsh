@@ -35,7 +35,11 @@ function draw(results) {
     Chart1.axes.bottom.labels.dateFormat = "isoTime";
 	Chart1.axes.bottom.labels.format.font.fill = "white";
 	Chart1.axes.left.labels.format.font.fill = "white";	
-    var series1 = Chart1.addSeries(new Tee.Line());
+    //var series1 = Chart1.addSeries(new Tee.Line());
+	var series1 = Chart1.addSeries(new Tee.PointXY());
+	series1.pointer.width = 3;
+	series1.pointer.height = 3;
+	//series1.pointer.style = "circular";
     series1.addRandom(results.length);
     series1.title = $("#ddlType").val();
     series1.data.x = new Array(series1.count());
@@ -48,7 +52,8 @@ function draw(results) {
     Chart1.panel.transparent = true;
     Chart1.legend.visible = false;
     var x1 = series1.data.x;
-    Chart1.axes.bottom.setMinMax(x1[20].getTime(), x1[40].getTime());
+    var length = x1.length;
+    Chart1.axes.bottom.setMinMax(x1[0].getTime(), x1[length - 1].getTime());
     Chart1.axes.bottom.labels.roundFirst = true;
     Chart1.zoom.enabled = false;
     Chart1.scroll.mouseButton = 0;

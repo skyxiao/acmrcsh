@@ -67,7 +67,7 @@ void Database::Log(unsigned int id, const std::string& level, const std::string&
 {
 	std::stringstream ss;
 	//ss<<boost::chrono::time_fmt(boost::chrono::timezone::local, "%Y-%m-%d %H:%M:%S")<<boost::chrono::system_clock::now();
-	ss<<"call add_log('"<<local_time_string()<<"', "<<id<<", '"<<level<<"', '"<<info<<"');";
+	ss<<"call add_log('"<<local_time_string()<<"', "<<id<<", '"<<level<<"', \""<<info<<"\");";
 
 	boost::mutex::scoped_lock lock(m_list_mtx);
 	m_sql_list.push_back(ss.str());
@@ -130,7 +130,7 @@ void Database::CreateWafer(const std::string& id, const std::string& type, const
 void Database::RemoveWafer(const std::string& id)
 {
 	std::stringstream ss;
-	ss<<"call create_wafer('"<<id<<"', '"<<local_time_string()<<"');";
+	ss<<"call remove_wafer('"<<id<<"', '"<<local_time_string()<<"');";
 
 	boost::mutex::scoped_lock lock(m_list_mtx);
 	m_sql_list.push_back(ss.str());

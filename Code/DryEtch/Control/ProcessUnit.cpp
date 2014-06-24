@@ -12,6 +12,7 @@
 #include "WaferManager.h"
 #include "Monitor.h"
 #include "RecipeManager.h"
+#include "DataRecorder.h"
 
 using namespace boost::chrono;
 
@@ -47,11 +48,44 @@ void ProcessUnit::Initialize()
 		Data::ExpChamberDirty = 1;
 	}
 	//initialize hardware parameters
+
+	//initialize monitor
+
+	//Initialize data recorder
+	DataRecorder::Instance().Add("HF", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("HF", 1000, [&](){return (float)Data::aiHFFlowrate;})));
+	DataRecorder::Instance().Add("EtOH", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("EtOH", 1000, [&](){return (float)Data::aiEtOHFlowrate;})));
+	DataRecorder::Instance().Add("N2", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("N2", 1000, [&](){return (float)Data::aiN2Flowrate;})));
+	DataRecorder::Instance().Add("Pressure", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("Pressure", 1000, [&](){return (float)Data::aiProcChamPressure;})));
+	DataRecorder::Instance().Add("Chuck", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("Chuck", 1000, [&](){return (float)Data::aiChuckHTTemp;})));
+	DataRecorder::Instance().Add("Lid", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("Lid", 1000, [&](){return (float)Data::aiLidHTTemp;})));
+	DataRecorder::Instance().Add("Body", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("Body", 1000, [&](){return (float)Data::aiBodyHTTemp;})));
+	DataRecorder::Instance().Add("ChuckLF", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("Chuck", 60000, [&](){return (float)Data::aiChuckHTTemp;}, true)));
+	DataRecorder::Instance().Add("LidLF", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("Lid", 60000, [&](){return (float)Data::aiLidHTTemp;}, true)));
+	DataRecorder::Instance().Add("BodyLF", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("Body", 60000, [&](){return (float)Data::aiBodyHTTemp;}, true)));
 }
 
 void ProcessUnit::Terminate()
 {
-	//terminate
+	//terminate data recorder
+	DataRecorder::Instance().Remove("HF");
+	DataRecorder::Instance().Remove("EtOH");
+	DataRecorder::Instance().Remove("N2");
+	DataRecorder::Instance().Remove("Chuck");
+	DataRecorder::Instance().Remove("Lid");
+	DataRecorder::Instance().Remove("Body");
+	DataRecorder::Instance().Remove("ChuckLF");
+	DataRecorder::Instance().Remove("LidLF");
+	DataRecorder::Instance().Remove("BodyLF");
 
 	//base class terminate
 	SmartUnit::Terminate();
@@ -63,6 +97,16 @@ UnitTask ProcessUnit::GetNextTask()
 	if (last_task.command == COMMAND_NONE || Data::diAxisHomeDone == 0)
 	{
 		return UnitTask{COMMAND_HOME, 0, 0};
+	}
+
+	if(Data::diBodyHTPowRdy==0 || Data::diLidHTPowRdy==0 || Data::diChuckHTPowRdy==0)
+	{
+		return UnitTask{COMMAND_TURNON_HEATER, 0, 0};
+	}
+
+	if(Data::aiExpChamPressure > Parameters::VacuumPressure)
+	{
+		return UnitTask{COMMAND_PUMP, 1, 0};
 	}
 
 	if (WaferManager::Instance().UnitHasWafer(m_id))
@@ -176,6 +220,16 @@ void ProcessUnit::SafeHandle()
 		open_apc();
 		stop_motor();
 		WaferManager::Instance().ProcessAbort(m_id);
+		DataRecorder::Instance().Disable("HF");
+		DataRecorder::Instance().Disable("EtOH");
+		DataRecorder::Instance().Disable("N2");
+		DataRecorder::Instance().Disable("Pressure");
+		DataRecorder::Instance().Disable("Chuck");
+		DataRecorder::Instance().Disable("Lid");
+		DataRecorder::Instance().Disable("Body");
+		DataRecorder::Instance().Enable("ChuckLF");
+		DataRecorder::Instance().Enable("LidLF");
+		DataRecorder::Instance().Enable("BodyLF");
 	}
 	else if(m_task.command == COMMAND_VENT)
 	{
@@ -229,16 +283,26 @@ void ProcessUnit::OnAbort()
 
 bool ProcessUnit::OnlinePrecheck()
 {
+	float error_offset = Parameters::TempWarnOffset;
+	float lid_offset = fabs(Data::aiLidHTTemp - Parameters::LidTemp);
+	float body_offset = fabs(Data::aiBodyHTTemp - Parameters::BodyTemp);
+	float chuck_offset = fabs(Data::aiChuckHTTemp - Parameters::ChuckTemp);
+	if(lid_offset>error_offset || body_offset>error_offset || chuck_offset>error_offset)
+	{
+		EVT::HeaterTempOutRange.Report();
+		return false;
+	}
+
 	return true;
 }
 
 bool ProcessUnit::TaskPrecheck(const UnitTask& task)
 {
-	if(Data::diHWInterlock == 1)
-	{
-		EVT::GenericWarning.Report("Hardware interlock triggered.");
-		return false;
-	}
+//	if(Data::diHWInterlock == 1)
+//	{
+//		EVT::GenericWarning.Report("Hardware interlock triggered.");
+//		return false;
+//	}
 
 	if(task.command != COMMAND_HOME && Data::diAxisHomeDone == 0)
 	{
@@ -384,7 +448,7 @@ void ProcessUnit::create_wafer()
 		return;
 	}
 
-	WaferManager::Instance().CreateWafer(0, 0, Data::WaferBatchID, wfs);
+	WaferManager::Instance().CreateWafer(1, 0, Data::WaferBatchID, wfs);
 }
 
 void ProcessUnit::OnLoad()
@@ -500,17 +564,17 @@ void ProcessUnit::OnLoad()
 
 void ProcessUnit::remove_wafer()
 {
-	WaferManager::Instance().RemoveWafer(0, 0);
+	WaferManager::Instance().RemoveWafer(1, 0);
 }
 
 void ProcessUnit::wafer_movein(unsigned short slot)
 {
-	WaferManager::Instance().Transfer(0, 0, m_id, slot);
+	WaferManager::Instance().Transfer(1, 0, m_id, slot);
 }
 
 void ProcessUnit::wafer_moveout(unsigned short slot)
 {
-	WaferManager::Instance().Transfer(m_id, slot, 0, 0);
+	WaferManager::Instance().Transfer(m_id, slot, 1, 0);
 }
 
 void ProcessUnit::OnUnload()
@@ -761,7 +825,7 @@ void ProcessUnit::OnProcess()
 	std::string recipe_name = rcp.Name();
 
 	NEW_UNIT_STEP("prepare process", false)
-		ADD_STEP_COMMAND([]()
+		ADD_STEP_COMMAND([&]()
 		{	Data::doExpCbVapVacValve = 0;
 			Data::doN2SupplyProcVal = 0;
 			Data::doAlcTankOpen = 1;
@@ -778,11 +842,21 @@ void ProcessUnit::OnProcess()
 			Data::doExpCbVacValve = 1;
 			Data::doHFRequest = 1;
 		})
-		auto f = [this, steps, recipe_duration, recipe_name]()
+		auto f = [&, this, steps, recipe_duration, recipe_name]()
 		{	m_recipe_start_time = boost::chrono::system_clock::now();
 			Data::TotalSteps = steps;
 			Data::RecipeTotalTime = recipe_duration;
 			WaferManager::Instance().ProcessStart(m_id, recipe_name);
+			DataRecorder::Instance().Disable("ChuckLF");
+			DataRecorder::Instance().Disable("LidLF");
+			DataRecorder::Instance().Disable("BodyLF");
+			DataRecorder::Instance().Enable("HF");
+			DataRecorder::Instance().Enable("EtOH");
+			DataRecorder::Instance().Enable("N2");
+			DataRecorder::Instance().Enable("Pressure");
+			DataRecorder::Instance().Enable("Chuck");
+			DataRecorder::Instance().Enable("Lid");
+			DataRecorder::Instance().Enable("Body");
 		};
 		ADD_STEP_COMMAND(f)
 	END_UNIT_STEP
@@ -790,7 +864,7 @@ void ProcessUnit::OnProcess()
 	std::stringstream ss;
 	for(unsigned i=0; i<steps; i++)
 	{
-		const RecipeStep& rcp_step = rcp.Step(i);
+		RecipeStep rcp_step = rcp.Step(i);
 		unsigned step_time = rcp_step.Duration();
 		ss.str("");
 		ss<<"process step "<<(i+1);
@@ -808,6 +882,7 @@ void ProcessUnit::OnProcess()
 			};
 			ADD_STEP_EXPECT(condition, step_time, [&](){EVT::ProcessAlarm.Report();})
 			ADD_STEP_COMMAND([&](){Monitor::Instance().DisableAll();})
+			ADD_STEP_COMMAND([&](){Data::StepElapseTime = step_time;})
 		END_UNIT_STEP
 	}
 
@@ -819,6 +894,16 @@ void ProcessUnit::OnProcess()
 			Data::CurrentStep = steps;
 			Data::RecipeElapseTime = recipe_duration;
 			WaferManager::Instance().ProcessEnd(m_id);
+			DataRecorder::Instance().Disable("HF");
+			DataRecorder::Instance().Disable("EtOH");
+			DataRecorder::Instance().Disable("N2");
+			DataRecorder::Instance().Disable("Pressure");
+			DataRecorder::Instance().Disable("Chuck");
+			DataRecorder::Instance().Disable("Lid");
+			DataRecorder::Instance().Disable("Body");
+			DataRecorder::Instance().Enable("ChuckLF");
+			DataRecorder::Instance().Enable("LidLF");
+			DataRecorder::Instance().Enable("BodyLF");
 		};
 		ADD_STEP_COMMAND(f)
 	END_UNIT_STEP

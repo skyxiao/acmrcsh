@@ -214,13 +214,13 @@ SystemData<float> aiAPCPressure(8001, "aiAPCPressure","DeviceNet",0,0,2,0,8,1,0,
 SystemData<float> aiAPCPosition(8005, "aiAPCPosition","DeviceNet",0,0,1,0,8,5,0,16,false,"%",ConvertLinear<float,unsigned>(0, 32767, 0.0f, 100.0f));
 SystemData<unsigned> aiAPCOverrideStatus(8007, "aiAPCOverrideStatus","DeviceNet",0,0,0,0,8,7,0,8,false);
 SystemData<unsigned> aiVapMFCStatus(8008, "aiVapMFCStatus","DeviceNet",0,0,0,0,8,8,0,8,false);
-SystemData<float> aiEtOHFlowrate(8009, "aiEtOHFlowrate","DeviceNet",0,0,0,0,8,9,0,16,false,"sccm",ConvertLinear<float,unsigned>(0, 32767, 0.0f, 972.4f));
+SystemData<float> aiEtOHFlowrate(8009, "aiEtOHFlowrate","DeviceNet",0,0,0,0,8,9,0,16,false,"sccm",ConvertLinear2<float,unsigned>(0, 32767, 0.0f, 972.4f));
 SystemData<unsigned> aiHFMFCStatus(8011, "aiHFMFCStatus","DeviceNet",0,0,0,0,8,11,0,8,false);
-SystemData<float> aiHFFlowrate(8012, "aiHFFlowrate","DeviceNet",0,0,0,0,8,12,0,16,false,"sccm",ConvertLinear<float,unsigned>(0, 32767, 0.0f, 2670.0f));
+SystemData<float> aiHFFlowrate(8012, "aiHFFlowrate","DeviceNet",0,0,0,0,8,12,0,16,false,"sccm",ConvertLinear2<float,unsigned>(0, 32767, 0.0f, 2670.0f));
 SystemData<unsigned> aiPurgeN2MFCStatus(8014, "aiPurgeN2MFCStatus","DeviceNet",0,0,0,0,8,14,0,8,false);
-SystemData<float> aiPurgeN2Flowrate(8015, "aiPurgeN2Flowrate","DeviceNet",0,0,0,0,8,15,0,16,false,"sccm",ConvertLinear<float,unsigned>(0, 32767, 0.0f, 6670.0f));
+SystemData<float> aiPurgeN2Flowrate(8015, "aiPurgeN2Flowrate","DeviceNet",0,0,0,0,8,15,0,16,false,"sccm",ConvertLinear2<float,unsigned>(0, 32767, 0.0f, 6670.0f));
 SystemData<unsigned> aiN2MFCStatus(8017, "aiN2MFCStatus","DeviceNet",0,0,0,0,8,17,0,8,false);
-SystemData<float> aiN2Flowrate(8018, "aiN2Flowrate","DeviceNet",0,0,0,0,8,18,0,16,false,"sccm",ConvertLinear<float,unsigned>(0, 32767, 0.0f, 6670.0f));
+SystemData<float> aiN2Flowrate(8018, "aiN2Flowrate","DeviceNet",0,0,0,0,8,18,0,16,false,"sccm",ConvertLinear2<float,unsigned>(0, 32767, 0.0f, 6670.0f));
 SystemData<float> aiProcChamPressure(8020, "aiProcChamPressure","DeviceNet",0,0,2,0,8,20,0,16,false,"torr",ConvertLinear<float,unsigned>(0, 23405, 0.0f, 1000.0f));
 SystemData<unsigned> aiProcChamManoStatus(8022, "aiProcChamManoStatus","DeviceNet",0,0,0,0,8,22,0,8,false);
 SystemData<float> aiExpChamPressure(8023, "aiExpChamPressure","DeviceNet",0,0,2,0,8,23,0,16,false,"torr",ConvertLinear<float,unsigned>(0, 23405, 0.0f, 1000.0f));

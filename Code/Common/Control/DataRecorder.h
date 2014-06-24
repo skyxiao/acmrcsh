@@ -8,14 +8,15 @@
 #ifndef DATARECORDER_H_
 #define DATARECORDER_H_
 
-#include <list>
+#include <map>
 
 #include "boost/function.hpp"
 #include "boost/chrono.hpp"
 #include "boost/thread.hpp"
 #include "boost/thread/mutex.hpp"
 #include "boost/shared_ptr.hpp"
-
+#include "boost/algorithm/string.hpp"
+ 
 #include "Singleton.h"
 
 
@@ -29,7 +30,6 @@ public:
 	RecordItem& operator = (const RecordItem&) = delete;
 
 	bool operator == (const RecordItem&);
-	bool IsName(const std::string& name);
 	void Enable();
 	void Disable();
 
@@ -80,17 +80,17 @@ public:
 
 	void Initialize();
 	void Terminate();
-	void Enable(const std::string& name);
-	void Disable(const std::string& name);
-	void Add(boost::shared_ptr<RecordItem> item);
-	void Remove(const std::string& name);
+	void Enable(const std::string& id);
+	void Disable(const std::string& id);
+	void Add(const std::string& id, boost::shared_ptr<RecordItem> item);
+	void Remove(const std::string& id);
 
 	friend class SingletonT<DataRecorder>;
 private:
 	void monitor();
 
 private:
-	std::list<boost::shared_ptr<RecordItem>> m_items;
+	std::map<std::string, boost::shared_ptr<RecordItem>> m_items;
 	boost::mutex m_mtx;
 	boost::scoped_ptr<boost::thread> m_thrd;
 };

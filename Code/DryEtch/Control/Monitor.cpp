@@ -35,7 +35,8 @@ void Monitor::EnableAll()
 	boost::mutex::scoped_lock lock(m_mtx);
 	for(auto& x : m_items)
 	{
-		x.second->Enable();
+		if(x.second)
+			x.second->Enable();
 	}
 }
 
@@ -44,7 +45,8 @@ void Monitor::DisableAll()
 	boost::mutex::scoped_lock lock(m_mtx);
 	for(auto& x : m_items)
 	{
-		x.second->Disable();
+		if(x.second)
+			x.second->Disable();
 	}
 }
 
@@ -93,7 +95,7 @@ bool Monitor::HasWarning()
 	boost::mutex::scoped_lock lock(m_mtx);
 	for(auto& x : m_items)
 	{
-		if(x.second->HasWarning())
+		if(x.second && x.second->HasWarning())
 			return true;
 	}
 
@@ -105,7 +107,7 @@ bool Monitor::HasAlarm()
 	boost::mutex::scoped_lock lock(m_mtx);
 	for(auto& x : m_items)
 	{
-		if(x.second->HasAlarm())
+		if(x.second && x.second->HasAlarm())
 			return true;
 	}
 
@@ -123,7 +125,8 @@ void Monitor::do_work()
 			boost::mutex::scoped_lock lock(m_mtx);
 			for(auto& x : m_items)
 			{
-				x.second->Monitor();
+				if(x.second)
+					x.second->Monitor();
 			}
 		}
 

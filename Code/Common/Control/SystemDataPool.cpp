@@ -75,12 +75,12 @@ void SystemDataPool::SetData(int id, const std::string& data)
 		else if (p->Type() == typeid(int))
 		{
 			SystemData<int>* pp = dynamic_cast<SystemData<int>*>(p);
-			*pp = boost::lexical_cast<unsigned>(data);
+			*pp = boost::lexical_cast<int>(data);
 		}
 		else if (p->Type() == typeid(float))
 		{
 			SystemData<float>* pp = dynamic_cast<SystemData<float>*>(p);
-			*pp = boost::lexical_cast<unsigned>(data);
+			*pp = boost::lexical_cast<float>(data);
 		}
 		else
 		{

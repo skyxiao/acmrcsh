@@ -7,6 +7,7 @@ if "%1"=="distclean" goto distclean
 if "%1"=="test" goto test
 if "%1"=="testclean" goto testclean
 if "%1"=="release" goto release
+if "%1"=="package" goto package
 if "%1"=="binder" goto binder
 if "%1"=="--help" goto hlp
 if "%1"=="-h" goto hlp
@@ -67,6 +68,12 @@ cd Build
 cmake -G"MinGW Makefiles" ..
 make install
 cd ..
+7z a ./Release/%2.7z ./Output/%2/
+goto quit
+
+:package
+if "%2"=="" echo "module name is empty." && goto quit
+if not exist Output/%2/ goto quit
 7z a ./Release/%2.7z ./Output/%2/
 goto quit
 

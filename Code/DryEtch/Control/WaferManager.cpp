@@ -1,7 +1,7 @@
 /*
  * WaferManager.cpp
  *
- *  Created on: 2014Äê2ÔÂ24ÈÕ
+ *  Created on: 2014Ã„Ãª2Ã”Ã‚24ÃˆÃ•
  *      Author: acm
  */
 
@@ -89,8 +89,11 @@ void WaferManager::Transfer(int src_unit, unsigned short src_slot, int dest_unit
 	int src_index = src_unit*100 + src_slot;
 
 	boost::mutex::scoped_lock lock(m_mtx);
-	m_wafers[dest_index] = m_wafers[src_index];
+	auto wf_ptr = m_wafers[src_index];
+	m_wafers[dest_index] = wf_ptr;
 	m_wafers[src_index].reset();
+	if(wf_ptr)
+		wf_ptr->Transfer(dest_unit, dest_slot);
 	update_wafer_info(src_unit, 0x1<<src_slot);
 	update_wafer_info(dest_unit, 0x1<<dest_slot);
 }
@@ -131,27 +134,40 @@ WaferSize WaferManager::GetSize(int unit, unsigned short slot)
 void WaferManager::ProcessStart(int unit, const std::string& recipe)
 {
 	boost::mutex::scoped_lock lock(m_mtx);
-	int index = unit*100;
 
-	m_wafers[index]->ProcessStart(recipe);
+	for(int i=0; i<3; i++)
+	{
+		int index = unit*100 + i;
+		auto wf_ptr = m_wafers[index];
+		if(wf_ptr)
+			wf_ptr->ProcessStart(recipe);
+	}
 	update_wafer_info(unit, 0x7);
 }
 
 void WaferManager::ProcessEnd(int unit)
 {
 	boost::mutex::scoped_lock lock(m_mtx);
-	int index = unit*100;
-
-	m_wafers[index]->ProcessEnd();
+	for(int i=0; i<3; i++)
+	{
+		int index = unit*100 + i;
+		auto wf_ptr = m_wafers[index];
+		if(wf_ptr)
+			wf_ptr->ProcessEnd();
+	}
 	update_wafer_info(unit, 0x7);
 }
 
 void WaferManager::ProcessAbort(int unit)
 {
 	boost::mutex::scoped_lock lock(m_mtx);
-	int index = unit*100;
-
-	m_wafers[index]->ProcessAbort();
+	for(int i=0; i<3; i++)
+	{
+		int index = unit*100 + i;
+		auto wf_ptr = m_wafers[index];
+		if(wf_ptr)
+			wf_ptr->ProcessAbort();
+	}
 	update_wafer_info(unit, 0x7);
 }
 
@@ -161,11 +177,15 @@ void WaferManager::WaferBroken(int unit, unsigned short slot)
 	int index = unit*100 + slot;
 
 	boost::shared_ptr<Wafer> wf = m_wafers[index];
-	wf->Broken();
-	WaferSite site = wf->GetOriginalSite();
-	int orig_index = site.first*100 + site.second;
-	m_wafers[orig_index] = wf;
-	m_wafers[index].reset();
+	if(wf)
+	{
+		wf->Broken();
+//		WaferSite site = wf->GetOriginalSite();
+//		int orig_index = site.first*100 + site.second;
+//		m_wafers[orig_index] = wf;
+//		m_wafers[index].reset();
+		wf = nullptr;
+	}
 	update_wafer_info(unit, 0x1<<slot);
 }
 
@@ -309,7 +329,7 @@ std::string WaferManager::generate_wafer_id(const std::string& casset_id)
 
 void WaferManager::update_wafer_info(int unit, unsigned mapping)
 {
-	if(unit == 0)
+	if(unit == 1)
 	{
 		int index = unit*100;
 		auto wf = m_wafers[index];

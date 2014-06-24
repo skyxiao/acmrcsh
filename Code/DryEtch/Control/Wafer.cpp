@@ -6,9 +6,11 @@
  */
 
 #include <iomanip>
+#include <sstream>
 
 #include "Database.h"
 #include "Wafer.h"
+#include "LogFile.h"
 
 Wafer::Wafer(const std::string& id, int unit, unsigned short slot,
 		WaferSize size, WaferType type, WaferState state) :
@@ -95,8 +97,8 @@ void Wafer::Broken()
 //	m_unit = m_original_unit;
 //	m_slot = m_original_slot;
 	m_state = WaferState_Broken;
-	Database::Instance().WaferExit(m_id, wafer_state_to_string(m_state));
-	Database::Instance().WaferEnter(m_id, m_original_unit, m_original_slot, wafer_state_to_string(m_state));
+//	Database::Instance().WaferExit(m_id, wafer_state_to_string(m_state));
+//	Database::Instance().WaferEnter(m_id, m_original_unit, m_original_slot, wafer_state_to_string(m_state));
 	m_route.clear();
 }
 

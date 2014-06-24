@@ -27,5 +27,6 @@ extern SystemEvent ProcessAlarm;
 extern SystemEvent InterlockTrigger;
 extern SystemEvent ArmTimeout;
 extern SystemEvent ForkTimeout;
+extern SystemEvent HeaterTempOutRange;
 
 }

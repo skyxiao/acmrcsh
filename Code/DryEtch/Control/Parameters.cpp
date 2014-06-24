@@ -12,11 +12,11 @@ namespace Parameters
 
 //define all needed parameters here
 //temperature
-ParameterItem<float> LidTemp(20, "LidTemp", "Heater", "Chamber lid temperature", 0, 200, 20, "Cels");
-ParameterItem<float> BodyTemp(21, "BodyTemp", "Heater", "Chamber body temperature", 0, 200, 20, "Cels");
-ParameterItem<float> ChuckTemp(22, "ChuckTemp", "Heater", "Chamber chuck temperature", 0, 200, 20, "Cels");
-ParameterItem<float> TempWarnOffset(25, "TempWarnOffset", "Heater", "Relative temperature offset of warning to setting value.", 0, 50, 10, "Cels");
-ParameterItem<float> TempAlarmOffset(26, "TempAlarmOffset", "Heater", "Relative temperature offset of alarm to setting value.", 0, 50, 20, "Cels");
+ParameterItem<float> LidTemp(20, "LidTemp", "Heater", "Chamber lid temperature", 0, 70, 40, "Cels");
+ParameterItem<float> BodyTemp(21, "BodyTemp", "Heater", "Chamber body temperature", 0, 70, 40, "Cels");
+ParameterItem<float> ChuckTemp(22, "ChuckTemp", "Heater", "Chamber chuck temperature", 0, 70, 40, "Cels");
+ParameterItem<float> TempWarnOffset(25, "TempWarnOffset", "Heater", "Relative temperature offset of warning to setting value.", 0, 10, 0.5, "Cels");
+ParameterItem<float> TempAlarmOffset(26, "TempAlarmOffset", "Heater", "Relative temperature offset of alarm to setting value.", 0, 10, 1.0, "Cels");
 
 
 //Chuck position

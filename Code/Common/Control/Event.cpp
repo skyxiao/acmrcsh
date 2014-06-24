@@ -31,6 +31,8 @@ namespace EVT
 	SystemEvent InterlockTrigger(1032, EVENT_LEVEL_WARNING, "%s=%d trigger interlock for %s%s%d.");
 	SystemEvent ArmTimeout(1037, EVENT_LEVEL_ERROR, "Arm move %s timeout.");
 	SystemEvent ForkTimeout(1038, EVENT_LEVEL_ERROR, "Rotate fork timeout.");
+	SystemEvent HeaterTempOutRange(1040, EVENT_LEVEL_WARNING, "Heater temperature is out of range.");
+
 }
 
 

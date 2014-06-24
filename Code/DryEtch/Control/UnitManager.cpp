@@ -11,7 +11,7 @@
 
 void UnitManager::Initialize()
 {
-	m_units[0] = boost::shared_ptr<SmartUnit>(new ProcessUnit(1, "ProcessUnit"));
+	m_units[0] = boost::shared_ptr<SmartUnit>(new ProcessUnit(0, "ProcessUnit"));
 	m_units[0]->Initialize();
 }
 

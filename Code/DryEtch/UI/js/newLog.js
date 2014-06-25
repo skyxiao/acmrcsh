@@ -172,7 +172,7 @@ function init()
 
 	$(".log_content").click(function(){
 		var text = $(this).text();
-		if (text != "")
+		if (text.trim() != "")
 		{
 			top.frames["menu"].SelectMenu("Log", null, "log", recentTime);		
 		}

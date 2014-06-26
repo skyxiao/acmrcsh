@@ -1,7 +1,7 @@
 ﻿var setIntervalID;
 //var x0 = 500;//大圈中心点
 //var y0 = 300;
-var x0 = 400;//大圈中心点
+var x0 = 300;//大圈中心点
 var y0 = 400;
 var r = 110;
 var lr = 70;
@@ -32,7 +32,7 @@ var arrayObj = ["empty", "unprocessed", "processing", "processed", "semiprocesse
 function turntableRun() 
 {
 	var json = {};
-	var arr = [61, 63, 100040, 100041, 100042, 100043, 100044, 100045, 7044]
+	var arr = [61, 62, 100040, 100041, 100042, 100043, 100044, 100045, 7044]
 	try
 	{
 		json = getControl().fetch_system_data(arr, false);
@@ -54,7 +54,7 @@ function turntableRun()
 	var Slot3WaferState = 0;
 	var angle = 0;
 	var pickUp = 0;
-	var wClamp = 0;
+	var pickDown = 0;
 
 	for (var i = 0; i < systemdata.length; ++i)
 	{
@@ -64,8 +64,8 @@ function turntableRun()
 			pickUp = parseInt(systemdata[i]["value"]);
 			break;
 
-		case "63":
-			wClamp = parseInt(systemdata[i]["value"]);
+		case "62":
+			pickDown = parseInt(systemdata[i]["value"]);
 			break;
 
 		case "100040":
@@ -104,15 +104,15 @@ function turntableRun()
 		}
 	}
 
-	if (pickUp == 0 && wClamp == 0)
+	if (pickUp == 0 && pickDown == 0)
 	{
 		$(".pinStatus").find("img:first").attr("src", "../images/pin_normal.png");
 	}
-	else if (pickUp == 1 && wClamp == 0)
+	else if (pickUp == 1 && pickDown == 0)
 	{
 		$(".pinStatus").find("img:first").attr("src", "../images/pin_up.png");
 	}
-	else if (pickUp == 0 && wClamp == 1)
+	else if (pickUp == 0 && pickDown == 1)
 	{
 		$(".pinStatus").find("img:first").attr("src", "../images/pin_down.png");
 	}
@@ -369,7 +369,7 @@ function selectRecipeCancel()
 
 function getInitData()
 {
-	var arr = [100024, 100013, 100014, 100015, 100016, 100017, 100050];
+	var arr = [100024, 100013, 100014, 100015, 100016, 100017, 100050, 100018, 100055];
 	var json = {};
 	try
 	{
@@ -460,6 +460,25 @@ function getInitData()
 				$(".abort").addClass("enable_button");
 				$(".abort").removeAttr("disabled");
 			}
+			break;
+
+		case "100018":
+			if (system_data[i]["value"] == 0)
+			{
+				$(".btn_ok").attr("disabled", "disabled");
+				$(".btn_ok").removeClass("enable_button");
+				$(".btn_ok").addClass("disabled_button");
+			}
+			else
+			{
+				$(".btn_ok").removeAttr("disabled");
+				$(".btn_ok").removeClass("disabled_button");
+				$(".btn_ok").addClass("enable_button");
+			}
+			break;
+
+		case "100055":
+			$(".current_step").text(system_data[i]["value"]);
 			break;
 
 		default:

@@ -53,7 +53,7 @@ body
 	border-bottom:1px solid #77BFD7;
 	border-left:#01202A;
 	height : 60px;
-	width:1490px;
+	width:100%;
 }
 
 .mainWin
@@ -62,7 +62,7 @@ body
 	margin-left: auto;
 	margin-right: auto;
 	height : 760px;
-	width:1490px;
+	width:96%;
 	border : 1px solid #011B1E;
 	border-top:none;
 	background-color:#002B3A;
@@ -98,7 +98,7 @@ body
 	margin-top:30px;
 	margin-left:auto;
 	margin-right:auto;
-	width : 1270px;
+	width : 95%;
 }
 
 .head
@@ -121,7 +121,7 @@ body
     -webkit-border-radius : 10px;   /* Webkit browsers */
     border-radius : 10px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
-	width : 200px;
+	width : 170px;
 	height : 500px;
 }
 
@@ -181,14 +181,14 @@ body
     -webkit-border-radius : 10px;   /* Webkit browsers */
     border-radius : 10px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
-	width : 180px;
+	width : 170px;
 	height : 500px;
-	margin-left : 20px;
+	margin-left : 10px;
 }
 
 .recipehead table
 {
-	margin-left : 20px;
+	margin-left : 10px;
 	margin-top : 36px;
 	width : 150px;
 }
@@ -213,7 +213,7 @@ body
     -webkit-border-radius : 10px;   /* Webkit browsers */
     border-radius : 10px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
-	width : 865px;
+	width : 765px;
 	height : 500px;
 	overflow-y:hidden;
 	
@@ -221,7 +221,7 @@ body
 
 .recipevaluebox1
 {
-	width : 865px;
+	width : 765px;
 	height:88%;
 	overflow-x:auto;
 	overflow-y:hidden;
@@ -299,7 +299,7 @@ body
 	-moz-border-radius : 5px;      /* Gecko browsers */
     -webkit-border-radius : 5px;   /* Webkit browsers */
     border-radius : 5px;            /* W3C syntax */
-	margin-left : 10px;
+	margin-left : 5px;
 	margin-top : 10px;
 	width : 70px;
 	font-weight : bold;

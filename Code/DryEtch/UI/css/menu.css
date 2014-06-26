@@ -15,13 +15,15 @@ body
 .menu_box
 {
 	height:100%;
-	width:1490px;
+	width:100%;
 	margin-left:auto;
 	margin-right:auto;
 }
 
 .menu_box table
 {
+	margin-left:auto;
+	margin-right:auto;
 	height:100%;
 	/*margin-left:20px;*/
 }

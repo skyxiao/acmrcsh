@@ -31,7 +31,7 @@ var lineColor = {
 
 function initChart() {
 	$("#canvas").remove();
-	$(".canvas_box").append('<canvas id="canvas" width="952" height="600" style="padding:0px;">This browser does not seem to support HTML5 Canvas.</canvas>');
+	$(".canvas_box").append('<canvas id="canvas" width="850" height="600" style="padding:0px;">This browser does not seem to support HTML5 Canvas.</canvas>');
     var Chart1 = new Tee.Chart("canvas");
 	Chart1.axes.bottom.title.text = "Time (s)";
 	Chart1.axes.left.title.format.font.fill = "white";
@@ -71,7 +71,7 @@ var count = 0;
 
 function draw(List) {
 	$("#canvas").remove();
-	$(".canvas_box").append('<canvas id="canvas" width="952" height="600" style="padding:0px;">This browser does not seem to support HTML5 Canvas.</canvas>');
+	$(".canvas_box").append('<canvas id="canvas" width="850" height="600" style="padding:0px;">This browser does not seem to support HTML5 Canvas.</canvas>');
     var Chart1 = new Tee.Chart("canvas");
 	Chart1.axes.bottom.title.text = "Time (s)";
 	Chart1.axes.left.title.format.font.fill = "white";

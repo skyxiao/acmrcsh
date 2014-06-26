@@ -46,6 +46,7 @@ private:
 	AmsAddr m_addr;
 	unsigned long m_handle;
 	bool m_dirty;
+	int m_log_flag;
 };
 
 

@@ -471,7 +471,7 @@ void ProcessUnit::OnLoad()
 	{
 		float position = pos[i];
 		ss.str("");
-		ss<<"rotate chuck to position "<<i;
+		ss<<"rotate chuck to position "<<i+1;
 		NEW_UNIT_STEP(ss.str(), false)
 			auto f0 = [&, position]()
 			{	Data::aoAxisPosition = position;
@@ -497,7 +497,7 @@ void ProcessUnit::OnLoad()
 		END_UNIT_STEP
 
 		ss.str("");
-		ss<<"load wafer "<<i;
+		ss<<"load wafer "<<i+1;
 		NEW_UNIT_STEP(ss.str(), false)
 			ADD_STEP_COMMAND([&](){Data::LoadUnloadState = 1;})
 			ADD_STEP_WAIT_CONDITION([&]()
@@ -597,7 +597,7 @@ void ProcessUnit::OnUnload()
 	{
 		float position = pos[i];
 		ss.str("");
-		ss<<"rotate chuck to position "<<i;
+		ss<<"rotate chuck to position "<<i+1;
 		NEW_UNIT_STEP(ss.str(), false)
 			auto f0 = [&, position]()
 			{	Data::aoAxisPosition = position;
@@ -675,7 +675,7 @@ void ProcessUnit::OnUnload()
 		END_UNIT_STEP
 
 		ss.str("");
-		ss<<"unload wafer "<<i;
+		ss<<"unload wafer "<<i+1;
 		NEW_UNIT_STEP(ss.str(), false)
 			ADD_STEP_COMMAND([&](){Data::LoadUnloadState = 1;})
 			ADD_STEP_WAIT_CONDITION([&]()

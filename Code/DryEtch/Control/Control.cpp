@@ -18,36 +18,54 @@
 
 extern "C" void Initialize()
 {
-	EventLogger::Instance().Initialize();
-	LogFile::Instance().Initialize();
-	Database::Instance().Initialize();
-	Worker::Instance().Initialize();
-	DeviceManager::Instance().Initialize();
-	SystemDataPool::Instance().Initialize();
-	Interlock::Instance().Initialize();
-	DataRecorder::Instance().Initialize();
-	Monitor::Instance().Initialize();
-	SignalTower::Instance().Initialize();
-	WaferManager::Instance().Initialize();
-	RecipeManager::Instance().Initialize();
-	UnitManager::Instance().Initialize();
+	try
+	{
+		EventLogger::Instance().Initialize();
+		LogFile::Instance().Initialize();
+		Database::Instance().Initialize();
+		Worker::Instance().Initialize();
+		DeviceManager::Instance().Initialize();
+		SystemDataPool::Instance().Initialize();
+		Interlock::Instance().Initialize();
+		DataRecorder::Instance().Initialize();
+		Monitor::Instance().Initialize();
+		SignalTower::Instance().Initialize();
+		WaferManager::Instance().Initialize();
+		RecipeManager::Instance().Initialize();
+		UnitManager::Instance().Initialize();
+	}
+	catch(std::exception& e)
+	{
+		LogDebug(e.what());
+		boost::this_thread::sleep_for(boost::chrono::milliseconds(5000));
+		throw e;
+	}
 }
 
 extern "C" void Terminate()
 {
-	UnitManager::Instance().Terminate();
-	RecipeManager::Instance().Terminate();
-	WaferManager::Instance().Terminate();
-	SignalTower::Instance().Terminate();
-	Monitor::Instance().Terminate();
-	DataRecorder::Instance().Terminate();
-	Interlock::Instance().Terminate();
-	SystemDataPool::Instance().Terminate();
-	DeviceManager::Instance().Terminate();
-	Worker::Instance().Terminate();
-	Database::Instance().Terminate();
-	LogFile::Instance().Terminate();
-	EventLogger::Instance().Terminate();
+	try
+	{
+		UnitManager::Instance().Terminate();
+		RecipeManager::Instance().Terminate();
+		WaferManager::Instance().Terminate();
+		SignalTower::Instance().Terminate();
+		Monitor::Instance().Terminate();
+		DataRecorder::Instance().Terminate();
+		Interlock::Instance().Terminate();
+		SystemDataPool::Instance().Terminate();
+		DeviceManager::Instance().Terminate();
+		Worker::Instance().Terminate();
+		Database::Instance().Terminate();
+		LogFile::Instance().Terminate();
+		EventLogger::Instance().Terminate();
+	}
+	catch(std::exception& e)
+	{
+		LogDebug(e.what());
+		boost::this_thread::sleep_for(boost::chrono::milliseconds(5000));
+		throw e;
+	}
 }
 
 int copy_string(char* json, unsigned buffer_size, const std::string& json_string)

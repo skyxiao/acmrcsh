@@ -53,13 +53,16 @@ void Worker::DoWork()
 {
 	boost::this_thread::disable_interruption di;
 	LogDebug("worker thread start.");
+	std::stringstream ss;
 
 	while(true)
 	{
 		boost::function<void ()> f;
+		size_t size = 0;
 		{
 			boost::mutex::scoped_lock lock(mutex_);
-			if(m_jobs.size() > 0)
+			size = m_jobs.size();
+			if(size > 0)
 			{
 				f = m_jobs[0];
 				m_jobs.pop_front();
@@ -67,7 +70,17 @@ void Worker::DoWork()
 		}
 		if(f)
 		{
-			f();
+			try
+			{
+				f();
+			}
+			catch(std::exception& e)
+			{
+				LogDebug(e.what());
+			}
+			ss.str("");
+			ss<<"jobs count in queue: "<<size-1<<".";
+			LogDebug(ss.str());
 			continue;
 		}
 

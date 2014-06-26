@@ -50,11 +50,13 @@ static unsigned int bits_mask[32] =
 		0xFFFFFFFF
 };
 
+static const int once_max_log_count = 2;
+
 AdsBlock::AdsBlock(unsigned id, const std::string& name, const std::string& var_name, const std::string& ip,
 		unsigned short port, unsigned short read_start, unsigned short read_end,
 		unsigned short write_start, unsigned short write_end) :
 		Block(id), m_name(name), m_var_name(var_name), m_read_start(read_start), m_read_end(read_end),
-		m_write_start(write_start), m_write_end(write_end), m_handle(0), m_dirty(false)
+		m_write_start(write_start), m_write_end(write_end), m_handle(0), m_dirty(false), m_log_flag(0)
 {
 	if(read_end<read_start || write_end<write_start)
 	{
@@ -107,9 +109,17 @@ void AdsBlock::Sync()
 	if(read_size > 0)
 	{
 		long rtv = AdsSyncReadReq(&m_addr, ADSIGRP_SYM_VALBYHND, m_handle, block_size, &m_comm_buf[0]);
-		if(rtv)
+		if(rtv && m_log_flag<once_max_log_count)
 		{
 			//write log
+			std::stringstream ss;
+			ss<<"Block ["<<m_id<<", "<<m_name<<"] read failed.";
+			LogError(ss.str());
+			m_log_flag++;
+		}
+		else if(rtv==0 && m_log_flag>=once_max_log_count)
+		{
+			m_log_flag = 0;
 		}
 	}
 
@@ -132,9 +142,17 @@ void AdsBlock::Sync()
 	if(write_flag)
 	{
 		long rtv = AdsSyncWriteReq(&m_addr, ADSIGRP_SYM_VALBYHND, m_handle, block_size,	&m_comm_buf[0]);
-		if(rtv)
+		if(rtv && m_log_flag<once_max_log_count)
 		{
 			//write log
+			std::stringstream ss;
+			ss<<"Block ["<<m_id<<", "<<m_name<<"] write failed.";
+			LogError(ss.str());
+			m_log_flag++;
+		}
+		else if(rtv==0 && m_log_flag>=once_max_log_count)
+		{
+			m_log_flag = 0;
 		}
 	}
 

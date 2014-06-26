@@ -245,13 +245,16 @@ void Database::do_work()
 {
 	boost::this_thread::disable_interruption di;
 	LogDebug("database thread start.");
+	std::stringstream ss;
 
 	while(true)
 	{
 		std::string sql;
+		size_t size = 0;
 		{
 			boost::mutex::scoped_lock lock(m_list_mtx);
-			if(m_sql_list.size() > 0)
+			size = m_sql_list.size();
+			if(size > 0)
 			{
 				sql = *(m_sql_list.begin());
 				m_sql_list.pop_front();
@@ -259,11 +262,14 @@ void Database::do_work()
 		}
 		if(!sql.empty())
 		{
-			LogInfo(sql);
 			boost::mutex::scoped_lock lock(m_db_mtx);
 			int rtv = mysql_query(&m_mysql, sql.c_str());
+			ss.str("");
+			ss<<"database queue size: "<<size-1<<".";
+			LogDebug(ss.str());
 			if(rtv)
 			{
+				LogDebug(sql);
 				LogError("mysql insert failed.");
 			}
 

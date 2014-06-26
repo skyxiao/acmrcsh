@@ -42,67 +42,66 @@ $(document).ready(function () {
     setIntervalID = setInterval(getVoleStatus, 500);
 
 	$(".PurgeHF").click(function() {
-		if ($(this).text() == "PurgeHF")
+		if ($(this).attr("isable") == "true")
 		{
 			getControl().invoke(0, 1009, 2);
 		}
-		else if ($(this).text() == "PurgeHF Abort")
+		else if ($(this).attr("isable") == "false")
 		{
 			getControl().invoke(0, 3);
 		}
-		
 	});
 
 	$(".PurgeEtOH").click(function() {
-		if ($(this).text() == "PurgeEtOH")
+		if ($(this).attr("isable") == "true")
 		{
 			getControl().invoke(0, 1009, 3);
 		}
-		else if ($(this).text() == "PurgeEtOH Abort")
+		else if ($(this).attr("isable") == "false")
 		{
 			getControl().invoke(0, 3);
-		}	
+		}
 	});
 
 	$(".PurgeExpchamber").click(function() {
-		if ($(this).text() == "PurgeExpchamber")
+		if ($(this).attr("isable") == "true")
 		{
 			getControl().invoke(0, 1009, 1);
 		}
-		else if ($(this).text() == "PurgeExpchamber Abort")
+		else if ($(this).attr("isable") == "false")
 		{
 			getControl().invoke(0, 3);
-		}		
+		}
 	});
 
 	$(".PurgeProcesschamber").click(function() {
-		if ($(this).text() == "PurgeProcesschamber")
+		if ($(this).attr("isable") == "true")
 		{
 			getControl().invoke(0, 1009, 0);
 		}
-		else if ($(this).text() == "PurgeProcesschamber Abort")
-		{
-			getControl().invoke(0, 3);
-		}		
-	});
-
-	$(".PumpExpchamber").click(function() {
-		if ($(this).text() == "PumpExpchamber")
-		{
-			getControl().invoke(0, 1007, 1);
-		}
-		else if ($(this).text() == "PumpExpchamber Abort")
+		else if ($(this).attr("isable") == "false")
 		{
 			getControl().invoke(0, 3);
 		}	
 	});
 
+	$(".PumpExpchamber").click(function() {
+		if ($(this).attr("isable") == "true")
+		{
+			getControl().invoke(0, 1007, 1);
+		}
+		else if ($(this).attr("isable") == "false")
+		{
+			getControl().invoke(0, 3);
+		}
+	});
+
 	$(".PumpProcesschamber").click(function() {
-		if ($(this).text() == "PumpProcesschamber")
+		if ($(this).attr("isable") == "true")
 		{
 			getControl().invoke(0, 1007, 0);
 		}
-		else if ($(this).text() == "PumpProcesschamber Abort")
+		else if ($(this).attr("isable") == "false")
 		{
 			getControl().invoke(0, 3);
 		}
@@ -227,6 +226,10 @@ function initValve() {
     return arr;
 }
 
+var lastStatus = null;
+var lastprocParam1 = null;
+var lastprocParam2 = null;
+
 function getSettingsData()
 {
 	var arr = [100050, 100052, 100053, 100054];
@@ -273,6 +276,17 @@ function getSettingsData()
 		}
 	}
 
+	if (lastStatus === status && lastprocParam1 === procParam1 &&  lastprocParam2 === procParam2)
+	{
+		return;
+	}
+	else
+	{
+		lastStatus = status;
+		lastprocParam1 = procParam1;
+		lastprocParam2 = procParam2;
+	}
+
 	if (status == 0)
 	{
 		$(".PurgeHF").text("PurgeHF");
@@ -284,6 +298,7 @@ function getSettingsData()
 		$(".btn_box").find("button").removeAttr("disabled");
 		$(".btn_box").find("button").removeClass("disabled_button");
 		$(".btn_box").find("button").addClass("enable_button");
+		$(".btn_box").find("button").attr("isable", "true");
 	}
 	else if (status == 1)
 	{
@@ -296,6 +311,7 @@ function getSettingsData()
 		$(".btn_box").find("button").attr("disabled", "disabled");
 		$(".btn_box").find("button").removeClass("enable_button");
 		$(".btn_box").find("button").addClass("disabled_button");
+		$(".btn_box").find("button").attr("isable", "false");
 
 		if (procCommand == 1009 && procParam1 == 2 && procParam2 == 0)
 		{
@@ -303,6 +319,7 @@ function getSettingsData()
 			$(".PurgeHF").removeAttr("disabled");
 			$(".PurgeHF").removeClass("disabled_button");
 			$(".PurgeHF").addClass("enable_button");
+			$(".PurgeHF").attr("isable", "true");
 		}
 		else if (procCommand == 1009 && procParam1 == 3 && procParam2 == 0)
 		{
@@ -310,6 +327,7 @@ function getSettingsData()
 			$(".PurgeEtOH").removeAttr("disabled");
 			$(".PurgeEtOH").removeClass("disabled_button");
 			$(".PurgeEtOH").addClass("enable_button");
+			$(".PurgeEtOH").attr("isable", "true");
 		}
 		else if (procCommand == 1009 && procParam1 == 1 && procParam2 == 0)
 		{
@@ -317,6 +335,7 @@ function getSettingsData()
 			$(".PurgeExpchamber").removeAttr("disabled");
 			$(".PurgeExpchamber").removeClass("disabled_button");
 			$(".PurgeExpchamber").addClass("enable_button");
+			$(".PurgeExpchamber").attr("isable", "true");
 		}
 		else if (procCommand == 1009 && procParam1 == 0 && procParam2 == 0)
 		{
@@ -324,6 +343,7 @@ function getSettingsData()
 			$(".PurgeProcesschamber").removeAttr("disabled");
 			$(".PurgeProcesschamber").removeClass("disabled_button");
 			$(".PurgeProcesschamber").addClass("enable_button");
+			$(".PurgeProcesschamber").attr("isable", "true");
 		}
 		else if (procCommand == 1007 && procParam1 == 1 && procParam2 == 0)
 		{
@@ -331,6 +351,7 @@ function getSettingsData()
 			$(".PumpExpchamber").removeAttr("disabled");
 			$(".PumpExpchamber").removeClass("disabled_button");
 			$(".PumpExpchamber").addClass("enable_button");
+			$(".PumpExpchamber").attr("isable", "true");
 		}
 		else if (procCommand == 1007 && procParam1 == 0 && procParam2 == 0)
 		{
@@ -338,6 +359,7 @@ function getSettingsData()
 			$(".PumpProcesschamber").removeAttr("disabled");
 			$(".PumpProcesschamber").removeClass("disabled_button");
 			$(".PumpProcesschamber").addClass("enable_button");
+			$(".PumpProcesschamber").attr("isable", "true");
 		}
 	}
 	else if (status == 2)
@@ -351,6 +373,7 @@ function getSettingsData()
 		$(".btn_box").find("button").attr("disabled", "disabled");
 		$(".btn_box").find("button").removeClass("enable_button");
 		$(".btn_box").find("button").addClass("disabled_button");
+		$(".btn_box").find("button").attr("isable", "false");
 	}
 
 	delete json;
@@ -369,7 +392,6 @@ function getVoleStatus()
                 prpos[data.systemdata[i].id] = data.systemdata[i].value;
                 if ($("#" + data.systemdata[i].id).length > 0) {
                     if ($("#" + data.systemdata[i].id).attr("tag") == "text") {
-                        console.log(data.systemdata[i].value);
                         $("#" + data.systemdata[i].id).text(data.systemdata[i].value);
                     }
                     else {

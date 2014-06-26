@@ -1,7 +1,7 @@
 ﻿var setIntervalID;
 //var x0 = 500;//大圈中心点
 //var y0 = 300;
-var x0 = 400;//大圈中心点
+var x0 = 250;//大圈中心点
 var y0 = 400;
 var r = 110;
 var lr = 70;
@@ -363,7 +363,7 @@ function selectRecipeCancel()
 
 function getInitData()
 {
-	var arr = [100024, 100013, 100014, 100015, 100016, 100017, 100050];
+	var arr = [100024, 100013, 100014, 100015, 100016, 100017, 100050, 100018];
 	var json = {};
 	try
 	{
@@ -453,6 +453,21 @@ function getInitData()
 				$(".abort").removeClass("disabled_button");
 				$(".abort").addClass("enable_button");
 				$(".abort").removeAttr("disabled");
+			}
+			break;
+
+		case "100018":
+			if (system_data[i]["value"] == 0)
+			{
+				$(".btn_ok").attr("disabled", "disabled");
+				$(".btn_ok").removeClass("enable_button");
+				$(".btn_ok").addClass("disabled_button");
+			}
+			else
+			{
+				$(".btn_ok").removeAttr("disabled");
+				$(".btn_ok").removeClass("disabled_button");
+				$(".btn_ok").addClass("enable_button");
 			}
 			break;
 

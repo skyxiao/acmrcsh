@@ -3,6 +3,25 @@ var ids = new Array();
 var setIntervalID;
 var isFetchAll = false;
 var setIntervalID2;
+var unit = {
+	"8009" : "sccm",
+	"8030" : "sccm",
+    "8012" : "sccm",
+    "2004" : "kPa",
+    "8015" : "sccm",
+    "8034" : "sccm",
+    "8018" : "sccm",
+    "8036" : "sccm",
+    "8005" : "%",
+    "4000" : "Cels",
+    "5000" : "Cels",
+    "6000" : "Cels",
+    "8020" : "torr",
+    "2006" : "kPa",
+	"8023" : "torr",
+	"8032" : "sccm"
+};
+
 function valve(left, top,class1,class2,id) {
     this.left = left - 7;
     this.top = top - 7;
@@ -391,7 +410,7 @@ function getVoleStatus()
                 prpos[data.systemdata[i].id] = data.systemdata[i].value;
                 if ($("#" + data.systemdata[i].id).length > 0) {
                     if ($("#" + data.systemdata[i].id).attr("tag") == "text") {
-                        $("#" + data.systemdata[i].id).text(data.systemdata[i].value);
+                        $("#" + data.systemdata[i].id).text(data.systemdata[i].value + " " + unit[data.systemdata[i].id]);
                     }
                     else {
                         if (data.systemdata[i].value == "1") {

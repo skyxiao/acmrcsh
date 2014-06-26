@@ -197,6 +197,7 @@ void ProcessUnit::shut_all_chemical()
 	Data::doPurgeN2MFCVal2 = 0;
 	Data::aoPurgeN2FlowSetpoint = 0;
 	Data::doHFRequest = 0;
+	Data::doVapInletVal = 0;
 }
 
 void ProcessUnit::open_apc()
@@ -230,6 +231,7 @@ void ProcessUnit::SafeHandle()
 		DataRecorder::Instance().Enable("ChuckLF");
 		DataRecorder::Instance().Enable("LidLF");
 		DataRecorder::Instance().Enable("BodyLF");
+		Monitor::Instance().DisableAll();
 	}
 	else if(m_task.command == COMMAND_VENT)
 	{
@@ -261,6 +263,7 @@ void ProcessUnit::SafeHandle()
 			Data::doAlcMFCVal1 = 0;
 			Data::doAlcMFCVal2 = 0;
 			Data::doAlcMFCVal3 = 0;
+			Data::doVapInletVal = 0;
 			Data::aoEtOHFlowSetpoint = 0;
 		}
 	}
@@ -829,6 +832,7 @@ void ProcessUnit::OnProcess()
 		{	Data::doExpCbVapVacValve = 0;
 			Data::doN2SupplyProcVal = 0;
 			Data::doAlcTankOpen = 1;
+			Data::doPurgeAlcTank = 1;
 			Data::doVaSupplyIPAValve = 1;
 			Data::doHFFacSupplyVal = 1;
 			Data::doVapBypassValve = 0;
@@ -841,6 +845,7 @@ void ProcessUnit::OnProcess()
 			Data::doHFMFCVal3 = 0;
 			Data::doExpCbVacValve = 1;
 			Data::doHFRequest = 1;
+			Data::doVapInletVal = 1;
 		})
 		auto f = [&, this, steps, recipe_duration, recipe_name]()
 		{	m_recipe_start_time = boost::chrono::system_clock::now();
@@ -869,9 +874,9 @@ void ProcessUnit::OnProcess()
 		ss.str("");
 		ss<<"process step "<<(i+1);
 		NEW_UNIT_STEP(ss.str(), false)
-			auto f = [&, i, rcp_step](){ process_recipe_step(i, rcp_step);};
+			auto f = [this, i, rcp_step](){ process_recipe_step(i, rcp_step);};
 			ADD_STEP_COMMAND(f)
-			auto condition = [&]()
+			auto condition = [&, this]()
 			{
 				auto dur = duration_cast<seconds>(system_clock::now() - m_step_start_time);
 				Data::StepElapseTime = dur.count();
@@ -882,7 +887,8 @@ void ProcessUnit::OnProcess()
 			};
 			ADD_STEP_EXPECT(condition, step_time, [&](){EVT::ProcessAlarm.Report();})
 			ADD_STEP_COMMAND([&](){Monitor::Instance().DisableAll();})
-			ADD_STEP_COMMAND([&](){Data::StepElapseTime = step_time;})
+			auto f1 = [&, step_time](){Data::StepElapseTime = step_time;};
+			ADD_STEP_COMMAND(f1)
 		END_UNIT_STEP
 	}
 
@@ -1520,7 +1526,8 @@ void ProcessUnit::OnPurgeEtOH()
 			Data::doPurgeAlcTank = 1;
 			Data::doAlcMFCVal1 = 1;
 			Data::doAlcMFCVal2 = 1;
-			Data::doAlcMFCVal3 = 1;})
+			Data::doAlcMFCVal3 = 1;
+			Data::doVapInletVal = 1;})
 	END_UNIT_STEP
 
 	for(unsigned i=0; i<Parameters::PurgeRepeatTimes; i++)
@@ -1546,7 +1553,8 @@ void ProcessUnit::OnPurgeEtOH()
 			Data::doExpCbVacValve = 0;
 			Data::doVaSupplyIPAValve = 0;
 			Data::doAlcTankOpen = 0;
-			Data::doPurgeAlcTank = 0;})
+			Data::doPurgeAlcTank = 0;
+			Data::doVapInletVal = 0;})
 	END_UNIT_STEP
 }
 

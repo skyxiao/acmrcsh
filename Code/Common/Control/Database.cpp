@@ -14,6 +14,7 @@
 #include "Utility.h"
 #include "LogFile.h"
 #include "EventLog.h"
+#include "ConfigFile.h"
 
 
 using namespace boost::chrono;
@@ -24,11 +25,12 @@ void Database::Initialize()
 	if(m_thrd)
 		return;
 
-	std::string hostname = m_cfg_file.Read<std::string>("database/host", "127.0.0.1");
-	std::string user = m_cfg_file.Read<std::string>("database/user", "acm");
-	std::string password = m_cfg_file.Read<std::string>("database/password", "acm");
-	std::string database = m_cfg_file.Read<std::string>("database/database", "dry_etch");
-	unsigned short port = m_cfg_file.Read<unsigned short>("database/port", 3306);
+	ConfigFile cfg_file("database");
+	std::string hostname = cfg_file.Read<std::string>("database/host", "127.0.0.1");
+	std::string user = cfg_file.Read<std::string>("database/user", "acm");
+	std::string password = cfg_file.Read<std::string>("database/password", "acm");
+	std::string database = cfg_file.Read<std::string>("database/database", "dry_etch");
+	unsigned short port = cfg_file.Read<unsigned short>("database/port", 3306);
 
 	mysql_init(&m_mysql);
 	if (!mysql_real_connect(&m_mysql, hostname.c_str(), user.c_str(), password.c_str(),

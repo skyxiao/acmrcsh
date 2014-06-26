@@ -17,13 +17,12 @@
 #include "mysql/mysql.h"
 
 #include "Singleton.h"
-#include "ConfigFile.h"
 
 class Database : public SingletonT<Database>
 {
 	typedef boost::chrono::time_point<boost::chrono::system_clock> time_point;
 protected:
-	Database() : m_cfg_file("database"){};
+	Database() = default;
 	Database(const Database&) = delete;
 	Database& operator = (const Database&) = delete;
 
@@ -50,7 +49,6 @@ private:
 	void do_work();
 
 private:
-	ConfigFile m_cfg_file;
 	std::list<std::string> m_sql_list;
 	boost::mutex m_list_mtx;
 	boost::mutex m_db_mtx;

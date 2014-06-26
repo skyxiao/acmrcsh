@@ -78,9 +78,12 @@ void Worker::DoWork()
 			{
 				LogDebug(e.what());
 			}
-			ss.str("");
-			ss<<"jobs count in queue: "<<size-1<<".";
-			LogDebug(ss.str());
+			if(size > 30)
+			{
+				ss.str("");
+				ss<<"jobs count in queue: "<<size-1<<".";
+				LogDebug(ss.str());
+			}
 			continue;
 		}
 

@@ -32,12 +32,12 @@ void SystemParameter::SetData(int id, const std::string& data)
 		else if (p->Type() == typeid(int))
 		{
 			ParameterItem<int>* pp = dynamic_cast<ParameterItem<int>*>(p);
-			*pp = boost::lexical_cast<unsigned>(data);
+			*pp = boost::lexical_cast<int>(data);
 		}
 		else if (p->Type() == typeid(float))
 		{
 			ParameterItem<float>* pp = dynamic_cast<ParameterItem<float>*>(p);
-			*pp = boost::lexical_cast<unsigned>(data);
+			*pp = boost::lexical_cast<float>(data);
 		}
 		else
 		{

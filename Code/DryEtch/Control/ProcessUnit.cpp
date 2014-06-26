@@ -1203,7 +1203,7 @@ float ProcessUnit::get_last_position()
 	pos[1] = Parameters::ChuckPos2;
 	pos[2] = Parameters::ChuckPos3;
 
-	float current_pos = Data::aiActualPosition;
+	float current_pos = Data::aiActualPosition - 5;
 	unsigned int i=0;
 	for(i=0; i<3; i++)
 	{

@@ -20,19 +20,19 @@ body
 	border-top:none;
 	border-bottom:1px solid #77BFD7;
 	height : 60px;
-	width:1490px;
+	width:96%;
 	box-shadow: 1px 1px 3px #020B0B;
-	margin-left: 5%;
-	margin-right: 5%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .log_box
 {
 	width : auto;
-	margin-left: 5%;
-	margin-right: 5%;
+	margin-left: auto;
+	margin-right: auto;
 	height : 675px;
-	width:1490px;
+	width:96%;
 	border : 1px solid #011B1E;
 	border-top:none;
 	background-color:#002B3A;
@@ -44,7 +44,7 @@ body
 
 .log_content
 {
-	width : 80%;
+	width : 90%;
 	height:680px;
 	border : 1px solid #014A52;
 	-moz-border-radius : 10px;      /* Gecko browsers */

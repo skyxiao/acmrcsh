@@ -20,7 +20,7 @@ body
 	border-top:none;
 	border-bottom:1px solid #77BFD7;
 	height : 60px;
-	width:1490px;
+	width:96%;
 	box-shadow: 1px 1px 3px #020B0B;
 	margin-left:auto;
 	margin-right:auto;
@@ -32,7 +32,7 @@ body
 	margin-left:auto;
 	margin-right:auto;
 	height : 675px;
-	width:1490px;
+	width:96%;
 	border : 1px solid #011B1E;
 	border-top:none;
 	background-color:#002B3A;
@@ -44,7 +44,7 @@ body
 
 .setting_box
 {
-	width : 90%;
+	width : 95%;
 	margin-left:auto;
 	margin-right:auto;
 }
@@ -77,7 +77,7 @@ body
 .setting_content label
 {
 	color:#fff;
-	margin-left:40px;
+	margin-left:25px;
 }
 .setting_content span
 {
@@ -90,7 +90,7 @@ body
 	background-color : #C6F0FB;
 	padding-left : 3px;
 	border : 1px solid #04AAB9;
-	width:80px;
+	width:60px;
 }
 
 .lratetest_content
@@ -109,7 +109,7 @@ body
     border-radius : 10px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
 	height: 40%;
-	width:78%;
+	width:98%;
 	margin-top:10px;
 }
 
@@ -118,7 +118,7 @@ body
 	-moz-border-radius : 5px;      /* Gecko browsers */
     -webkit-border-radius : 5px;   /* Webkit browsers */
     border-radius : 5px;            /* W3C syntax */
-	margin-left : 40px;
+	margin-left : 5px;
 	margin-top : 40px;
 	width : 150px;
 	font-weight : bold;
@@ -130,7 +130,7 @@ body
 	-moz-border-radius : 5px;      /* Gecko browsers */
     -webkit-border-radius : 5px;   /* Webkit browsers */
     border-radius : 5px;            /* W3C syntax */
-	margin-left : 40px;
+	margin-left : 5px;
 	margin-top : 40px;
 	width : 150px;
 	font-weight : bold;
@@ -156,7 +156,7 @@ body
     border-radius : 10px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
 	height:150px;
-	width:78%;
+	width:98%;
 	margin-top:30%;
 	text-align:center;
 	color:#fff;

@@ -12,20 +12,20 @@ body
 
 .new_log_box
 {
-	width:90%;
+	width:100%;
 	height:73px;
-	margin-left:20px;
+	margin-left:10px;
 	background:url(../images/logo.png) no-repeat;
 }
 
 
 .log_content
 {
-	width:62%;
+	width:60%;
 	height:48px;
 	border:1px solid #C6F0FB;
 	margin-top:15px;
-	margin-left:255px;
+	margin-left:200px;
 	float:left;
 	text-indent: 2em; 
 	word-wrap: break-word;
@@ -56,6 +56,7 @@ body
 
 .log_btn
 {
+	margin-right:20px;
 	float:right;
 }
 

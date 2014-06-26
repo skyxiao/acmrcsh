@@ -27,7 +27,7 @@ body
 	border-top:none;
 	border-bottom:1px solid #77BFD7;
 	height : 60px;
-	width:1490px;
+	width:96%;
 	box-shadow: 1px 1px 3px #020B0B;
 	margin-left:auto;
 	margin-right:auto;
@@ -39,7 +39,7 @@ body
 	margin-left:auto;
 	margin-right:auto;
 	height : 700px;
-	width:1490px;
+	width:96%;
 	border : 1px solid #011B1E;
 	border-top:none;
 	background-color:#002B3A;
@@ -51,18 +51,18 @@ body
 .overview_body > table
 {
 	padding-top:50px;
-	width : 1450px;
+	width : 100%;
 }
 
  .overview_turntable
  {
-	width : 700px;
+	width : 42%;
 	height : 600px;
 }
  
 .overview_opreation
 {
-	height:600px;
+	height:40%;
 	width:500px;
 	border : 1px solid #158895;
 	-moz-border-radius : 8px;      /* Gecko browsers */
@@ -287,7 +287,7 @@ body
 .turntable_btn
 {
 	margin-top:400px;
-	margin-left:150px;
+	margin-left:50px;
 }
 
 .turntable_btn label
@@ -301,24 +301,6 @@ body
 	border : none;
 	padding-left : 3px;
 	height:20px;
-}
-
-.turntable_btn button
-{
-	-moz-border-radius : 5px;      /* Gecko browsers */
-    -webkit-border-radius : 5px;   /* Webkit browsers */
-    border-radius : 5px;            /* W3C syntax */
-	width : 80px;
-	height : 28px;
-	margin-left : 25px;
-	margin-top:40px;
-	font-weight : bold;
-	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
-}
-
-.turntable_btn button:hover
-{
-	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
 }
 
 .short_btn 
@@ -426,7 +408,7 @@ body
 .pinStatus
 {
 	position:relative;
-	left: 520px;
+	left: 350px;
 	top: -490px;
 }
  
@@ -436,7 +418,7 @@ body
     background: url(../images/chamber.png);
     width:416px;
     height:402px;
-    left:205px;
+    left:55px;
     top: 199px
 }
 

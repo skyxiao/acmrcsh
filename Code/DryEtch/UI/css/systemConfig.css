@@ -20,7 +20,7 @@ body
 	border-top:none;
 	border-bottom:1px solid #77BFD7;
 	height : 60px;
-	width:1490px;
+	width:96%;
 	box-shadow: 1px 1px 3px #020B0B;
 	margin-left:auto;
 	margin-right:auto;
@@ -32,7 +32,7 @@ body
 	margin-left:auto;
 	margin-right:auto;
 	height : 650px;
-	width:1490px;
+	width:96%;
 	border : 1px solid #011B1E;
 	border-top:none;
 	background-color:#002B3A;
@@ -49,9 +49,9 @@ body
     -webkit-border-radius : 10px;   /* Webkit browsers */
     border-radius : 10px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
-	width : 200px;
+	width : 150px;
 	height : 500px;
-	margin-left:100px;
+	margin-left:2.5%;
 	float:left;
 }
 
@@ -62,7 +62,7 @@ body
     -webkit-border-radius : 10px;   /* Webkit browsers */
     border-radius : 10px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
-	width:1000px;
+	width:960px;
 	height : 470px;
 	margin-left:20px;
 	padding-top:30px;
@@ -121,7 +121,7 @@ body
 {
 	margin-left:auto;
 	margin-right:auto;
-	width:170px;
+	width:130px;
 	height:25px;
 	padding-left:20px;
 	line-height:25px;

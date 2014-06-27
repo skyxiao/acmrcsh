@@ -84,6 +84,7 @@ public:
 	void Disable(const std::string& id);
 	void Add(const std::string& id, boost::shared_ptr<RecordItem> item);
 	void Remove(const std::string& id);
+	void Clear();
 
 	friend class SingletonT<DataRecorder>;
 private:

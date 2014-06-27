@@ -168,7 +168,7 @@ public:
 				m_data = rhs;
 				m_changed_flag = true;
 
-				for(boost::function<void (T, T)>& f : m_update_sinks)
+				for(boost::function<void (T, T)>& f : m_change_sinks)
 				{
 					if(f)
 						Worker::Instance().Post([this, f, old_data](){f(old_data, this->m_data);});
@@ -250,7 +250,7 @@ public:
 			boost::shared_ptr<Device> dev_ptr = DeviceManager::Instance().GetDevice(m_device);
 			dev_ptr->Unfollow(m_block, m_token);
 			m_precheck_funcs.clear();
-			m_update_sinks.clear();
+			m_change_sinks.clear();
 		}
 	}
 
@@ -260,11 +260,11 @@ public:
 		m_precheck_funcs.push_back(checker);
 	}
 
-	unsigned int AddUpdateSink(boost::function<void (T, T)> sink)
+	unsigned int AddChangeSink(boost::function<void (T, T)> sink)
 	{
 		boost::mutex::scoped_lock lock(m_mtx);
 		unsigned int i=0;
-		for(boost::function<void (T, T)>& v : m_update_sinks)
+		for(boost::function<void (T, T)>& v : m_change_sinks)
 		{
 			if(v)
 			{
@@ -276,8 +276,8 @@ public:
 				break;
 			}
 		}
-		if(i == m_update_sinks.size())
-			m_update_sinks.push_back(sink);
+		if(i == m_change_sinks.size())
+			m_change_sinks.push_back(sink);
 
 		return i;
 	}
@@ -285,10 +285,10 @@ public:
 	void RemoveUpdateSink(unsigned int token)
 	{
 		boost::mutex::scoped_lock lock(m_mtx);
-		if(token >= m_update_sinks.size())
+		if(token >= m_change_sinks.size())
 			return;
 
-		m_update_sinks[token] = nullptr;
+		m_change_sinks[token] = nullptr;
 	}
 
 private:
@@ -313,12 +313,14 @@ private:
 		T old_data = m_data;
 		m_data = m_raw_to_real(raw);
 		if(m_data != old_data)
+		{
 			m_changed_flag = true;
 
-		for(boost::function<void (T, T)>& f : m_update_sinks)
-		{
-			if(f)
-				Worker::Instance().Post([this, f, old_data](){f(old_data, this->m_data);});
+			for(boost::function<void (T, T)>& f : m_change_sinks)
+			{
+				if(f)
+					Worker::Instance().Post([this, f, old_data](){f(old_data, this->m_data);});
+			}
 		}
 	}
 
@@ -342,7 +344,7 @@ private:
 	boost::function<void (unsigned int)> m_put_func;
 
 	std::vector<boost::function<bool (T)>> m_precheck_funcs;
-	std::vector<boost::function<void (T, T)>> m_update_sinks;
+	std::vector<boost::function<void (T, T)>> m_change_sinks;
 
 	boost::mutex m_mtx;
 };

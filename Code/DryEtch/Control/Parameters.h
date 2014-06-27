@@ -12,7 +12,7 @@ extern ParameterItem<float> BodyTemp;
 extern ParameterItem<float> ChuckTemp;
 extern ParameterItem<float> TempWarnOffset;
 extern ParameterItem<float> TempAlarmOffset;
-
+extern ParameterItem<float> TempMonitorDelay;
 
 //Chuck position
 extern ParameterItem<float> ChuckPos1;
@@ -29,6 +29,7 @@ extern ParameterItem<unsigned> FlowWarnProportion;
 extern ParameterItem<unsigned> FlowWarnMinimum;
 extern ParameterItem<unsigned> FlowAlarmProportion;
 extern ParameterItem<unsigned> FlowAlarmMinimum;
+extern ParameterItem<float> FlowMonitorDelay;
 
 
 //Pressure
@@ -37,6 +38,7 @@ extern ParameterItem<float> VacuumPressure;
 extern ParameterItem<float> PressureDiffAllowance;
 extern ParameterItem<float> PressureWarnOffset;
 extern ParameterItem<float> PressureAlarmOffset;
+extern ParameterItem<float> PressureMonitorDelay;
 
 
 //Purge

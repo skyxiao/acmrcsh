@@ -50,6 +50,13 @@ void ProcessUnit::Initialize()
 	//initialize hardware parameters
 
 	//initialize monitor
+	Monitor::Instance().Add("HF flowrate", [&](){return (float)Data::aiHFFlowrate;});
+	Monitor::Instance().Add("EtOH flowrate", [&](){return (float)Data::aiEtOHFlowrate;});
+	Monitor::Instance().Add("N2 flowrate", [&](){return (float)Data::aiN2Flowrate;});
+	Monitor::Instance().Add("Process pressure", [&](){return (float)Data::aiProcChamPressure;});
+	Monitor::Instance().Add("Chuck temperature", [&](){return (float)Data::aiChuckHTTemp;});
+	Monitor::Instance().Add("Body temperature", [&](){return (float)Data::aiBodyHTTemp;});
+	Monitor::Instance().Add("Lid temperature", [&](){return (float)Data::aiLidHTTemp;});
 
 	//Initialize data recorder
 	DataRecorder::Instance().Add("HF", boost::shared_ptr<RecordItem>(new 
@@ -77,15 +84,10 @@ void ProcessUnit::Initialize()
 void ProcessUnit::Terminate()
 {
 	//terminate data recorder
-	DataRecorder::Instance().Remove("HF");
-	DataRecorder::Instance().Remove("EtOH");
-	DataRecorder::Instance().Remove("N2");
-	DataRecorder::Instance().Remove("Chuck");
-	DataRecorder::Instance().Remove("Lid");
-	DataRecorder::Instance().Remove("Body");
-	DataRecorder::Instance().Remove("ChuckLF");
-	DataRecorder::Instance().Remove("LidLF");
-	DataRecorder::Instance().Remove("BodyLF");
+	DataRecorder::Instance().Clear();
+
+	//terminate process monitor
+	Monitor::Instance().Clear();
 
 	//base class terminate
 	SmartUnit::Terminate();
@@ -699,7 +701,7 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 	{
 		Data::aoAPCControlMode = APCControl_Position;
 		Data::aoAPCPosition = recipe_step.Position();
-		//Monitor::Instance().Disable("ProcessPressure");
+		Monitor::Instance().Disable("Process pressure");
 	}
 	else
 	{
@@ -708,7 +710,8 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		float pres_warn_offset = Parameters::PressureWarnOffset;
 		float pres_alarm_offset = Parameters::PressureAlarmOffset;
 		Data::aoAPCPressure = pressure;
-		Monitor::Instance().Reset("ProcessPressure", pressure, pres_warn_offset, pres_alarm_offset);
+		Monitor::Instance().Reset("Process pressure", Parameters::PressureMonitorDelay, pressure, 
+			pres_warn_offset, pres_alarm_offset);
 	}
 	unsigned short rpm = recipe_step.RotateSpeed();
 	if (rpm > 0)
@@ -751,7 +754,7 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		flow_alarm_offset = 0.01 * flowrate * Parameters::FlowAlarmProportion;
 		flow_alarm_offset = std::max<float>(Parameters::FlowAlarmMinimum, flow_alarm_offset);
 		Data::aoHFFlowSetpoint = flowrate;
-		Monitor::Instance().Reset("HFFlow", flowrate, flow_warn_offset, flow_alarm_offset);
+		Monitor::Instance().Reset("HF flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
 	}
 	Data::doHFMFCVal1 = 1;
 	Data::doHFMFCVal2 = 1;
@@ -781,7 +784,7 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		flow_alarm_offset = 0.01 * flowrate * Parameters::FlowAlarmProportion;
 		flow_alarm_offset = std::max<float>(Parameters::FlowAlarmMinimum, flow_alarm_offset);
 		Data::aoEtOHFlowSetpoint = flowrate;
-		Monitor::Instance().Reset("EtOHFlow", flowrate, flow_warn_offset, flow_alarm_offset);
+		Monitor::Instance().Reset("EtOH flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
 	}
 	Data::doAlcMFCVal1 = 1;
 	Data::doAlcMFCVal2 = 1;
@@ -794,7 +797,7 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 	flow_alarm_offset = 0.01 * flowrate * Parameters::FlowAlarmProportion;
 	flow_alarm_offset = std::max<float>(Parameters::FlowAlarmMinimum, flow_alarm_offset);
 	Data::aoN2FlowSetpoint = flowrate;
-	Monitor::Instance().Reset("N2Flow", flowrate, flow_warn_offset, flow_alarm_offset);
+	Monitor::Instance().Reset("N2 flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
 
 	Data::doPurgeN2MFCVal1 = 1;
 	Data::doPurgeN2MFCVal2 = 1;
@@ -804,7 +807,7 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 	flow_alarm_offset = 0.01 * flowrate * Parameters::FlowAlarmProportion;
 	flow_alarm_offset = std::max<float>(Parameters::FlowAlarmMinimum, flow_alarm_offset);
 	Data::aoPurgeN2FlowSetpoint = flowrate;
-	Monitor::Instance().Reset("N2PurgeFlow", flowrate, flow_warn_offset, flow_alarm_offset);
+	//Monitor::Instance().Reset("N2PurgeFlow", flowrate, flow_warn_offset, flow_alarm_offset);
 }
 
 void ProcessUnit::OnProcess()
@@ -862,6 +865,13 @@ void ProcessUnit::OnProcess()
 			DataRecorder::Instance().Enable("Chuck");
 			DataRecorder::Instance().Enable("Lid");
 			DataRecorder::Instance().Enable("Body");
+			//start monitor heater when process start.
+			Monitor::Instance().Reset("Chuck temperature", Parameters::TempMonitorDelay, Parameters::ChuckTemp, 
+				Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
+			Monitor::Instance().Reset("Body temperature", Parameters::TempMonitorDelay, Parameters::BodyTemp, 
+				Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
+			Monitor::Instance().Reset("Lid temperature", Parameters::TempMonitorDelay, Parameters::LidTemp, 
+				Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
 		};
 		ADD_STEP_COMMAND(f)
 	END_UNIT_STEP
@@ -892,7 +902,7 @@ void ProcessUnit::OnProcess()
 		END_UNIT_STEP
 	}
 
-	NEW_UNIT_STEP("process finish", false)
+	NEW_UNIT_STEP("finish process", false)
 		auto f = [&, this, steps, recipe_duration]()
 		{	shut_all_chemical();
 			open_apc();
@@ -910,6 +920,7 @@ void ProcessUnit::OnProcess()
 			DataRecorder::Instance().Enable("ChuckLF");
 			DataRecorder::Instance().Enable("LidLF");
 			DataRecorder::Instance().Enable("BodyLF");
+			Monitor::Instance().DisableAll();
 		};
 		ADD_STEP_COMMAND(f)
 	END_UNIT_STEP
@@ -938,7 +949,7 @@ void ProcessUnit::OnProcChamberLeakCheck()
 //		return;
 //	}
 
-	NEW_UNIT_STEP("initialize state", true)
+	NEW_UNIT_STEP("initialize leak check state", true)
 		ADD_STEP_COMMAND([&]()
 		{	Data::LeakRate = 0;
 			Data::LeakCheckResult = "Testing";})
@@ -949,7 +960,7 @@ void ProcessUnit::OnProcChamberLeakCheck()
 		OnCloseDoor();
 	}
 
-	NEW_UNIT_STEP("prepare pump", true)
+	NEW_UNIT_STEP("prepare pump process chamber", true)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doExpCbSupplyCbVal = 0;
 			Data::doN2SupplyProcVal = 0;
@@ -974,7 +985,7 @@ void ProcessUnit::OnProcChamberLeakCheck()
 
 	if(Data::aiProcChamPressure > Parameters::FastSlowSwitchPressure)
 	{
-		NEW_UNIT_STEP("slow pump", true)
+		NEW_UNIT_STEP("slowly pump process chamber", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doVacFastProcCbVal = 0;
 				Data::doVacSlowProcCbVal = 1;})
@@ -986,7 +997,7 @@ void ProcessUnit::OnProcChamberLeakCheck()
 		END_UNIT_STEP
 	}
 
-	NEW_UNIT_STEP("fast pump", true)
+	NEW_UNIT_STEP("fast pump process chamber", true)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doVacFastProcCbVal = 1;
 			Data::doVacSlowProcCbVal = 0;})
@@ -1042,7 +1053,7 @@ void ProcessUnit::OnExpChamberLeakCheck()
 		END_UNIT_STEP
 	}
 
-	NEW_UNIT_STEP("pump", true)
+	NEW_UNIT_STEP("pump expansion chamber", true)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doExpCbSupplyCbVal = 0;
 			Data::doExpCbVacIPASupply = 0;
@@ -1057,7 +1068,7 @@ void ProcessUnit::OnExpChamberLeakCheck()
 		auto condition_function = [&](){return Data::aiExpChamPressure < Parameters::LeakCheckPressure;};
 		float pressure1 = Data::aiExpChamPressure;
 		float pressure2 = Parameters::LeakCheckPressure;
-		auto event_function = [=](){EVT::PumpTimeout.Report<float, float>(pressure1, pressure2);};
+		auto event_function = [&, pressure1, pressure2](){EVT::PumpTimeout.Report<float, float>(pressure1, pressure2);};
 		ADD_STEP_WAIT_CONDITION(condition_function,	Parameters::PumpExpTimeout, event_function);
 		ADD_STEP_WAIT(Parameters::LeakCheckPumpHoldTime)
 	END_UNIT_STEP
@@ -1259,7 +1270,7 @@ bool ProcessUnit::OnPumpProcChamber()
 		OnCloseDoor();
 	}
 
-	NEW_UNIT_STEP("prepare pump", true)
+	NEW_UNIT_STEP("prepare pump process chamber", true)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doExpCbSupplyCbVal = 0;
 			Data::doN2SupplyProcVal = 0;
@@ -1284,19 +1295,19 @@ bool ProcessUnit::OnPumpProcChamber()
 
 	if(Data::aiProcChamPressure > Parameters::FastSlowSwitchPressure)
 	{
-		NEW_UNIT_STEP("slow pump", true)
+		NEW_UNIT_STEP("slowly pump process chamber", true)
 			ADD_STEP_COMMAND([&]()
 			{	Data::doVacFastProcCbVal = 0;
 				Data::doVacSlowProcCbVal = 1;})
 			auto condition_function = [&](){return Data::aiProcChamPressure < Parameters::FastSlowSwitchPressure;};
 			float pressure1 = Data::aiProcChamPressure;
 			float pressure2 = Parameters::FastSlowSwitchPressure;
-			auto event_function = [=](){EVT::PumpTimeout.Report<float, float>(pressure1, pressure2);};
+			auto event_function = [&, pressure1, pressure2](){EVT::PumpTimeout.Report<float, float>(pressure1, pressure2);};
 			ADD_STEP_WAIT_CONDITION(condition_function,	Parameters::SlowPumpTimeout, event_function);
 		END_UNIT_STEP
 	}
 
-	NEW_UNIT_STEP("fast pump", true)
+	NEW_UNIT_STEP("fast pump process chamber", true)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doVacFastProcCbVal = 1;
 			Data::doVacSlowProcCbVal = 0;})
@@ -1339,7 +1350,7 @@ bool ProcessUnit::OnPumpExpChamber()
 		END_UNIT_STEP
 	}
 
-	NEW_UNIT_STEP("pump", true)
+	NEW_UNIT_STEP("pump expansion chamber", true)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doExpCbSupplyCbVal = 0;
 			Data::doExpCbVacIPASupply = 0;
@@ -1354,7 +1365,7 @@ bool ProcessUnit::OnPumpExpChamber()
 		auto condition_function = [&](){return Data::aiExpChamPressure < Parameters::PumpDownTargetPressure;};
 		float pressure1 = Data::aiExpChamPressure;
 		float pressure2 = Parameters::PumpDownTargetPressure;
-		auto event_function = [=](){EVT::PumpTimeout.Report<float, float>(pressure1, pressure2);};
+		auto event_function = [&, pressure1, pressure2](){EVT::PumpTimeout.Report<float, float>(pressure1, pressure2);};
 		ADD_STEP_WAIT_CONDITION(condition_function,	Parameters::PumpExpTimeout, event_function);
 	END_UNIT_STEP
 
@@ -1390,7 +1401,7 @@ bool ProcessUnit::OnVentExpChamber()
 		return false;
 	}
 
-	NEW_UNIT_STEP("vent", true)
+	NEW_UNIT_STEP("vent expansion chamber", true)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doExpCbVapVacValve = 0;
 			Data::doExpCbSupplyCbVal = 0;
@@ -1426,7 +1437,7 @@ bool ProcessUnit::OnVentProcChamber()
 		return false;
 	}
 
-	NEW_UNIT_STEP("vent", true)
+	NEW_UNIT_STEP("vent process chamber", true)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doVacFastProcCbVal = 0;
 			Data::doVacSlowProcCbVal = 0;

@@ -29,15 +29,15 @@ private:
 	void shut_all_chemical();
 };
 
-#define POST_INTERLOCK_EX(di, func) Data::di.AddUpdateSink(func);
+#define POST_INTERLOCK_EX(di, func) Data::di.AddChangeSink(func);
 
-#define POST_INTERLOCK(di, di_val, doo, do_val) Data::di.AddUpdateSink([&](unsigned, unsigned value) \
+#define POST_INTERLOCK(di, di_val, doo, do_val) Data::di.AddChangeSink([&](unsigned, unsigned value) \
 	{ \
 		if(value == di_val) \
 		{ Data::doo = do_val; } \
 	});
 
-#define POST_INTERLOCK_MEMBER(di, di_val, mem_func) Data::di.AddUpdateSink([this](unsigned, unsigned value) \
+#define POST_INTERLOCK_MEMBER(di, di_val, mem_func) Data::di.AddChangeSink([this](unsigned, unsigned value) \
 	{ \
 		if(value == di_val) \
 		{ mem_func(); } \

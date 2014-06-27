@@ -32,6 +32,8 @@ namespace EVT
 	SystemEvent ArmTimeout(1037, EVENT_LEVEL_ERROR, "Arm move %s timeout.");
 	SystemEvent ForkTimeout(1038, EVENT_LEVEL_ERROR, "Rotate fork timeout.");
 	SystemEvent HeaterTempOutRange(1040, EVENT_LEVEL_WARNING, "Heater temperature is out of range.");
+	SystemEvent MonitorWarning(1043, EVENT_LEVEL_WARNING, "%s is out of warning range [%f, %f]-%f.");
+	SystemEvent MonitorAlarm(1045, EVENT_LEVEL_ERROR, "%s is out of alarm range [%f, %f]-%f.");
 
 }
 

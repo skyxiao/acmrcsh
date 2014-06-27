@@ -27,7 +27,7 @@ void Monitor::Terminate()
 	}
 
 	m_items.clear();
-	LogDebug("Terminate is terminated.");
+	LogDebug("Monitor is terminated.");
 }
 
 void Monitor::EnableAll()
@@ -70,25 +70,25 @@ void Monitor::Disable(const std::string& name)
 	}
 }
 
-void Monitor::Reset(const std::string& name, float setpoint, float warn_offset, float alarm_offset)
+void Monitor::Reset(const std::string& name, float delay, float setpoint, float warn_offset, float alarm_offset)
 {
 	boost::mutex::scoped_lock lock(m_mtx);
 	boost::shared_ptr<MonitorItem> item_ptr = m_items[name];
 	if(item_ptr)
 	{
-		item_ptr->Reset(setpoint, warn_offset, alarm_offset);
+		item_ptr->Reset(delay, setpoint, warn_offset, alarm_offset);
 	}
 }
 
-void Monitor::Reset(const std::string& name, float setpoint)
-{
-	boost::mutex::scoped_lock lock(m_mtx);
-	boost::shared_ptr<MonitorItem> item_ptr = m_items[name];
-	if(item_ptr)
-	{
-		item_ptr->Reset(setpoint);
-	}
-}
+// void Monitor::Reset(const std::string& name, float setpoint)
+// {
+// 	boost::mutex::scoped_lock lock(m_mtx);
+// 	boost::shared_ptr<MonitorItem> item_ptr = m_items[name];
+// 	if(item_ptr)
+// 	{
+// 		item_ptr->Reset(setpoint);
+// 	}
+// }
 
 bool Monitor::HasWarning()
 {
@@ -112,6 +112,24 @@ bool Monitor::HasAlarm()
 	}
 
 	return false;
+}
+
+void Monitor::Add(const std::string& name, boost::function<float ()> getter)
+{
+	boost::mutex::scoped_lock lock(m_mtx);
+	m_items[name] = boost::shared_ptr<MonitorItem>(new MonitorItem(name, getter));
+}
+
+void Monitor::Remove(const std::string& name)
+{
+	boost::mutex::scoped_lock lock(m_mtx);
+	m_items.erase(name);
+}
+
+void Monitor::Clear()
+{
+	boost::mutex::scoped_lock lock(m_mtx);
+	m_items.clear();
 }
 
 void Monitor::do_work()

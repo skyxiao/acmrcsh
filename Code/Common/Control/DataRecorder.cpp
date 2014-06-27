@@ -132,6 +132,12 @@ void DataRecorder::Remove(const std::string& id)
 	m_items[id] = nullptr;
 }
 
+void DataRecorder::Clear()
+{
+	boost::mutex::scoped_lock lock(m_mtx);
+	m_items.clear();
+}
+
 void DataRecorder::monitor()
 {
 	boost::this_thread::disable_interruption di;

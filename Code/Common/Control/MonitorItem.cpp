@@ -6,21 +6,20 @@
  */
 
 #include "MonitorItem.h"
+#include "Event.h"
 
 using namespace boost::chrono;
 
-MonitorItem::MonitorItem(boost::function<float ()> getter, float delay,
-		boost::function<void (float, float, float)> warn_evt,
-		boost::function<void (float, float, float)> alarm_evt)
-: m_getter(getter), m_setpoint(.0f), m_warn_offset(.0f), m_alarm_offset(.0f),
-  m_delay(delay),  m_warn_evt(warn_evt), m_alarm_evt(alarm_evt), m_enable_flag(false),
-  m_report_flag(0), m_level(0)
+MonitorItem::MonitorItem(const std::string& name, boost::function<float ()> getter)
+: m_name(name), m_getter(getter), m_setpoint(.0f), m_warn_offset(.0f), m_alarm_offset(.0f),
+  m_delay(.0f), m_enable_flag(false), m_report_flag(0), m_level(0)
 {
-	m_start_time = system_clock::now() + boost::chrono::milliseconds((int)(m_delay*1000));
+	m_start_time = system_clock::now();
 }
 
-void MonitorItem::Reset(float setpoint, float warn_offset, float alarm_offset)
+void MonitorItem::Reset(float delay, float setpoint, float warn_offset, float alarm_offset)
 {
+	m_delay = delay;
 	m_setpoint = setpoint;
 	m_warn_offset = warn_offset;
 	m_alarm_offset = alarm_offset;
@@ -30,14 +29,14 @@ void MonitorItem::Reset(float setpoint, float warn_offset, float alarm_offset)
 	m_level = 0;
 }
 
-void MonitorItem::Reset(float setpoint)
-{
-	m_setpoint = setpoint;
-	m_start_time = system_clock::now() + boost::chrono::milliseconds((int)(m_delay*1000));
-	m_enable_flag = true;
-	m_report_flag = 0;
-	m_level = 0;
-}
+// void MonitorItem::Reset(float setpoint)
+// {
+// 	m_setpoint = setpoint;
+// 	m_start_time = system_clock::now() + boost::chrono::milliseconds((int)(m_delay*1000));
+// 	m_enable_flag = true;
+// 	m_report_flag = 0;
+// 	m_level = 0;
+// }
 
 void MonitorItem::Enable()
 {
@@ -50,6 +49,8 @@ void MonitorItem::Enable()
 void MonitorItem::Disable()
 {
 	m_enable_flag = false;
+	m_report_flag = 0;
+	m_level = 0;
 }
 
 void MonitorItem::Monitor()
@@ -69,7 +70,7 @@ void MonitorItem::Monitor()
 	{
 		if(m_report_flag < 2)
 		{
-			m_alarm_evt(value, alarm_low, alarm_high);
+			EVT::MonitorAlarm.Report(m_name, alarm_low, alarm_high, value);
 			m_level = 2;
 		}
 		m_report_flag = 2;
@@ -80,7 +81,7 @@ void MonitorItem::Monitor()
 	{
 		if(m_report_flag < 1)
 		{
-			m_warn_evt(value, alarm_low, alarm_high);
+			EVT::MonitorWarning.Report(m_name, alarm_low, alarm_high, value);
 			if(m_level < 1)
 			{
 				m_level = 1;

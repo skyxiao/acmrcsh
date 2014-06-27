@@ -430,58 +430,95 @@ body
     top: 199px
 }
 
+.slot1
+{
+	background: url(../images/slot1.png);
+    width:150px;
+    height:150px;
+}
+
+.slot2
+{
+	background: url(../images/slot2.png);
+    width:150px;
+    height:150px;
+}
+
+.slot3
+{
+	background: url(../images/slot3.png);
+    width:150px;
+    height:150px;
+}
+
 .empty
 {
 	background: url(../images/empty.png);
-    width:150px;
-    height:150px;
+	width:120px;
+	height:120px;
+	margin-left:15px;
+	margin-top:15px;
 }
 
  .broken
 {
     background: url(../images/broken.png);
-    width:150px;
-    height:150px
+    width:120px;
+	height:120px;
+	margin-left:15px;
+	margin-top:15px;
 }
 
  .dummy
 {
     background: url(../images/dummy.png);
-    width:150px;
-    height:150px;
+    width:120px;
+	height:120px;
+	margin-left:15px;
+	margin-top:15px;
 }
 
  .empty
 {
     background: url(../images/empty.png);
-    width:150px;
-    height:150px;
+    width:120px;
+	height:120px;
+	margin-left:15px;
+	margin-top:15px;
 }
 
  .processed
 {
     background: url(../images/processed.png);
-    width:150px;
-    height:150px;
+    width:120px;
+	height:120px;
+	margin-left:15px;
+	margin-top:15px;
 }
 
  .processing
 {
     background: url(../images/processing.png);
-    width:150px;
-    height:150px;
+    width:120px;
+	height:120px;
+	margin-left:15px;
+	margin-top:15px;
 }
 
  .unprocessed
 {
     background: url(../images/unprocessed.png);
-    width:150px;
-    height:150px;
+    width:120px;
+	height:120px;
+	margin-left:15px;
+	margin-top:15px;
 }
 
  .semiprocessed
 {
     background: url(../images/semi-processed.png);
-    width:150px;
-    height:150px;  
+   width:120px;
+	height:120px;
+	margin-left:15px;
+	margin-top:15px; 
 }

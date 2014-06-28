@@ -167,13 +167,15 @@ function turntableRun()
 
 	if (doorClose == 0 && doorOpen == 1)
 	{
-		$(".door").removeClass("door_close");
-		$(".door").addClass("door_open");
+		$(".door").attr("class", "door door_open");
+	}
+	else if (doorClose == 0 && doorOpen == 0)
+	{
+		$(".door").attr("class", "door door_middle");
 	}
 	else
 	{
-		$(".door").removeClass("door_open");
-		$(".door").addClass("door_close");
+		$(".door").attr("class", "door door_close");
 	}
 
 	if (pickUp == 0 && pickDown == 0)

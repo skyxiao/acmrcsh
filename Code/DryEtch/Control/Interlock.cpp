@@ -52,16 +52,16 @@ void Interlock::Initialize()
 		}
 	})
 
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diPrcCbVacuumFail, 1)
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diGasBoxHFLeak, 1)
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diProcCbHFLeak, 1)
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diAlcoholGasLeak, 1)
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diAlcoholLeak, 1)
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diPrcCbDoorClose, 0)
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diCbLeftDoorClose, 0)
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diCbRightDoorClose, 0)
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diGasboxDoorClose, 0)
-	PRE_INTERLOCK(doPurgeAlcTank, 1, diExhaustAlarm, 1)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diPrcCbVacuumFail, 1)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diGasBoxHFLeak, 1)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diProcCbHFLeak, 1)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diAlcoholGasLeak, 1)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diAlcoholLeak, 1)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diPrcCbDoorClose, 0)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diCbLeftDoorClose, 0)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diCbRightDoorClose, 0)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diGasboxDoorClose, 0)
+//	PRE_INTERLOCK(doPurgeAlcTank, 1, diExhaustAlarm, 1)
 //	PRE_INTERLOCK(doPurgeAlcTank, 1, diFacVPrsSwtLLmt, 1)
 
 	PRE_INTERLOCK(doAlcTankOpen, 1, diPrcCbVacuumFail, 1)
@@ -170,7 +170,7 @@ void Interlock::Terminate()
 
 void Interlock::shut_chemical_except_n2()
 {
-	Data::doPurgeAlcTank = 0;
+//	Data::doPurgeAlcTank = 0;
 	Data::doAlcTankOpen = 0;
 	Data::doVaSupplyIPAValve = 0;
 	Data::doHFFacSupplyVal = 0;
@@ -178,7 +178,7 @@ void Interlock::shut_chemical_except_n2()
 
 void Interlock::shut_all_chemical()
 {
-	Data::doPurgeAlcTank = 0;
+//	Data::doPurgeAlcTank = 0;
 	Data::doAlcTankOpen = 0;
 	Data::doVaSupplyIPAValve = 0;
 	Data::doHFFacSupplyVal = 0;

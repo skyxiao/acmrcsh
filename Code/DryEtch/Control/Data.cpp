@@ -238,43 +238,43 @@ SystemData<float> aoAPCPosition(8038, "aoAPCPosition","DeviceNet",0,7000,1,0,8,3
 
 
 
-//user defined
-SystemData<unsigned> TotalSteps(100011, "TotalSteps", "UserDefine", 0, 1000);
-SystemData<unsigned> CurrentStep(100012, "CurrentStep", "UserDefine", 0, 1000);
-SystemData<std::string> RecipeName(100013, "RecipeName", "UserDefine");
-SystemData<unsigned> RecipeTotalTime(100014, "RecipeTotalTime", "UserDefine", 0, 1000, 0, "s");
-SystemData<unsigned> RecipeElapseTime(100015, "RecipeElapseTime", "UserDefine", 0, 1000, 0, "s");
-SystemData<unsigned> CurrentStepTime(100016, "CurrentStepTime", "UserDefine", 0, 1000, 0, "s");
-SystemData<unsigned> StepElapseTime(100017, "StepElapseTime", "UserDefine", 0, 1000, 0, "s");
+//system defined
+SystemData<unsigned> TotalSteps(100011, "TotalSteps", "System", 0, 1000);
+SystemData<unsigned> CurrentStep(100012, "CurrentStep", "System", 0, 1000);
+SystemData<std::string> RecipeName(100013, "RecipeName", "System");
+SystemData<unsigned> RecipeTotalTime(100014, "RecipeTotalTime", "System", 0, 1000, 0, "s");
+SystemData<unsigned> RecipeElapseTime(100015, "RecipeElapseTime", "System", 0, 1000, 0, "s");
+SystemData<unsigned> CurrentStepTime(100016, "CurrentStepTime", "System", 0, 1000, 0, "s");
+SystemData<unsigned> StepElapseTime(100017, "StepElapseTime", "System", 0, 1000, 0, "s");
 
-SystemData<unsigned> LoadUnloadState(100018, "LoadUnloadState", "UserDefine", 0, 1);
-SystemData<unsigned> LoadUnloadSkip(100019, "LoadUnloadSkip", "UserDefine", 0, 1);
-SystemData<unsigned> LoadUnloadOK(100020, "LoadUnloadOK", "UserDefine", 0, 1);
-SystemData<unsigned> WaferProcessedCount(100021, "WaferProcessedCount", "UserDefine", 0, 1000);
-SystemData<std::string> WaferBatchID(100022, "WaferBatchID", "UserDefine");
-SystemData<unsigned> WaferBatchCount(100023, "WaferBatchCount", "UserDefine", 0, 100000);
-SystemData<unsigned> WaferTotalCount(100024, "WaferTotalCount", "UserDefine", 0, 100000);
+SystemData<unsigned> LoadUnloadState(100018, "LoadUnloadState", "System", 0, 1);
+SystemData<unsigned> LoadUnloadSkip(100019, "LoadUnloadSkip", "System", 0, 1);
+SystemData<unsigned> LoadUnloadOK(100020, "LoadUnloadOK", "System", 0, 1);
+SystemData<unsigned> WaferProcessedCount(100021, "WaferProcessedCount", "System", 0, 1000);
+SystemData<std::string> WaferBatchID(100022, "WaferBatchID", "System");
+SystemData<unsigned> WaferBatchCount(100023, "WaferBatchCount", "System", 0, 100000);
+SystemData<unsigned> WaferTotalCount(100024, "WaferTotalCount", "System", 0, 100000);
 
-SystemData<std::string> LeakCheckResult(100030, "LeakCheckResult", "UserDefine");
-SystemData<float> LeakRate(100031, "LeakRate", "UserDefine", 0, 1000, 2, "torr/min");
+SystemData<std::string> LeakCheckResult(100030, "LeakCheckResult", "System");
+SystemData<float> LeakRate(100031, "LeakRate", "System", 0, 1000, 2, "torr/min");
 
-SystemData<std::string> Slot1WaferID(100040, "Slot1WaferID", "UserDefine");
-SystemData<std::string> Slot2WaferID(100041, "Slot2WaferID", "UserDefine");
-SystemData<std::string> Slot3WaferID(100042, "Slot3WaferID", "UserDefine");
-SystemData<unsigned> Slot1WaferState(100043, "Slot1WaferState", "UserDefine", 0, 5);
-SystemData<unsigned> Slot2WaferState(100044, "Slot2WaferState", "UserDefine", 0, 5);
-SystemData<unsigned> Slot3WaferState(100045, "Slot3WaferState", "UserDefine", 0, 5);
-SystemData<std::string> ForkWaferID(100046, "ForkWaferID", "UserDefine");
-SystemData<unsigned> ForkWaferState(100047, "ForkWaferState", "UserDefine", 0, 5);
+SystemData<std::string> Slot1WaferID(100040, "Slot1WaferID", "System");
+SystemData<std::string> Slot2WaferID(100041, "Slot2WaferID", "System");
+SystemData<std::string> Slot3WaferID(100042, "Slot3WaferID", "System");
+SystemData<unsigned> Slot1WaferState(100043, "Slot1WaferState", "System", 0, 5);
+SystemData<unsigned> Slot2WaferState(100044, "Slot2WaferState", "System", 0, 5);
+SystemData<unsigned> Slot3WaferState(100045, "Slot3WaferState", "System", 0, 5);
+SystemData<std::string> ForkWaferID(100046, "ForkWaferID", "System");
+SystemData<unsigned> ForkWaferState(100047, "ForkWaferState", "System", 0, 5);
 
-SystemData<unsigned> ProcUnitState(100050, "ProcUnitState", "UserDefine", 0, 2);
-SystemData<unsigned> ProcUnitRetryable(100051, "ProcUnitRetryable", "UserDefine", 0, 1);
-SystemData<unsigned> ProcUnitCommand(100052, "ProcUnitCommand", "UserDefine", 0, 10000);
-SystemData<unsigned> ProcUnitParam1(100053, "ProcUnitParam1", "UserDefine", 0, 10000);
-SystemData<unsigned> ProcUnitParam2(100054, "ProcUnitParam2", "UserDefine", 0, 10000);
-SystemData<std::string> ProcUnitStepName(100055, "ProcUnitStepName", "UserDefine");
+SystemData<unsigned> ProcUnitState(100050, "ProcUnitState", "System", 0, 2);
+SystemData<unsigned> ProcUnitRetryable(100051, "ProcUnitRetryable", "System", 0, 1);
+SystemData<unsigned> ProcUnitCommand(100052, "ProcUnitCommand", "System", 0, 10000);
+SystemData<unsigned> ProcUnitParam1(100053, "ProcUnitParam1", "System", 0, 10000);
+SystemData<unsigned> ProcUnitParam2(100054, "ProcUnitParam2", "System", 0, 10000);
+SystemData<std::string> ProcUnitStepName(100055, "ProcUnitStepName", "System");
 
-SystemData<unsigned> ProcChamberDirty(100060, "ProcChamberDirty", "UserDefine", 0, 1);
-SystemData<unsigned> ExpChamberDirty(100061, "ExpChamberDirty", "UserDefine", 0, 1);
+SystemData<unsigned> ProcChamberDirty(100060, "ProcChamberDirty", "System", 0, 1);
+SystemData<unsigned> ExpChamberDirty(100061, "ExpChamberDirty", "System", 0, 1);
 
 }

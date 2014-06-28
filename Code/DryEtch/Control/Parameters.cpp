@@ -44,7 +44,7 @@ ParameterItem<float> VacuumPressure(3002,"VacuumPressure","Pressure","Vacuum pre
 ParameterItem<float> PressureDiffAllowance(3003,"PressureDiffAllowance","Pressure","Pressure difference allowance",0,100,60,"torr");
 ParameterItem<float> PressureWarnOffset(3005, "PressureWarnOffset", "Pressure", "Relative pressure offset of warning to setting value.", 0, 50, 10, "torr");
 ParameterItem<float> PressureAlarmOffset(3006, "PressureAlarmOffset", "Pressure", "Relative pressure offset of alarm to setting value.", 0, 50, 20, "torr");
-ParameterItem<float> PressureMonitorDelay(3007, "PressureMonitorDelay", "Flow", "Delay time from recipe step start.", 0, 20, 5, "s");
+ParameterItem<float> PressureMonitorDelay(3007, "PressureMonitorDelay", "Pressure", "Delay time from recipe step start.", 0, 20, 5, "s");
 
 
 //Purge

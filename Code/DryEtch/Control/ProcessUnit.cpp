@@ -139,7 +139,13 @@ UnitTask ProcessUnit::GetNextTask()
 			}
 			else
 			{
-				return UnitTask{COMMAND_PROCESS, 0, 0};
+				if(Data::diAlcTkLow == 0)
+				{
+					EVT::GenericWarning.Report("Alcohol tank level is too low.");
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else
+					return UnitTask{COMMAND_PROCESS, 0, 0};
 			}
 		}
 	}
@@ -298,6 +304,8 @@ bool ProcessUnit::OnlinePrecheck()
 		return false;
 	}
 
+	Data::doPurgeAlcTank = 1;
+
 	return true;
 }
 
@@ -389,22 +397,12 @@ void ProcessUnit::TranslateTask(const UnitTask& task)
 
 void ProcessUnit::OnHome()
 {
-	if(Data::diArmOut == 0)
-	{
-		OnRetractArm();
-	}
+	OnRetractArm();
+	OnForkVertical();
+	OnCloseDoor();
+	OnPinDown();
 
-	if(Data::diPrcCbDoorClose == 0)
-	{
-		OnCloseDoor();
-	}
-
-	if(Data::diPinDown == 0)
-	{
-		OnPinDown();
-	}
-
-	NEW_UNIT_STEP("home", false)
+	NEW_UNIT_STEP("home chuck motor", false)
 		ADD_STEP_COMMAND([&](){	Data::doAxisServoOn = 1;})
 		ADD_STEP_WAIT_CONDITION([&]()->bool
 		{	return Data::diAxisServoDone == 1;},
@@ -1564,7 +1562,7 @@ void ProcessUnit::OnPurgeEtOH()
 			Data::doExpCbVacValve = 0;
 			Data::doVaSupplyIPAValve = 0;
 			Data::doAlcTankOpen = 0;
-			Data::doPurgeAlcTank = 0;
+			Data::doPurgeAlcTank = 1;
 			Data::doVapInletVal = 0;})
 	END_UNIT_STEP
 }

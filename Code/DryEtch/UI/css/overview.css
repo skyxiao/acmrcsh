@@ -511,6 +511,16 @@ body
 	top:366px;
 }
 
+.door_middle
+{
+	background:url(../images/door_m.png);
+	width:14px;
+	height:141px;
+	position:absolute;
+	left:404px;
+	top:366px;
+}
+
 .door_close
 {
 	background:url(../images/door.png);
@@ -652,6 +662,9 @@ body
 	background: url(../images/empty.png);
 	width:120px;
 	height:120px;
+	color:#fff;
+	text-align:center;
+	line-height:120px;
 	margin-left:15px;
 	margin-top:15px;
 }

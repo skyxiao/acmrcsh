@@ -339,6 +339,11 @@ void WaferManager::update_wafer_info(int unit, unsigned mapping)
 			Data::ForkWaferID = wf->GetID();
 			Data::ForkWaferState = wf->GetState() + 1;
 		}
+		else
+		{
+			Data::ForkWaferID = "";
+			Data::ForkWaferState = 0;
+		}
 
 		return;
 	}

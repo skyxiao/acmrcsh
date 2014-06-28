@@ -27,7 +27,7 @@ body
 	border-top:none;
 	border-bottom:1px solid #77BFD7;
 	height : 60px;
-	width:96%;
+	width:98%;
 	box-shadow: 1px 1px 3px #020B0B;
 	margin-left:auto;
 	margin-right:auto;
@@ -39,7 +39,7 @@ body
 	margin-left:auto;
 	margin-right:auto;
 	height : 700px;
-	width:96%;
+	width:98%;
 	border : 1px solid #011B1E;
 	border-top:none;
 	background-color:#002B3A;
@@ -50,24 +50,26 @@ body
 
 .overview_body > table
 {
+	height:700px;
 	padding-top:50px;	
 }
 
  .overview_turntable
  {
-	width : 44%;
-	height : 600px;
+	width : 50%;
+	height : 550px;
 }
  
 .overview_opreation
 {
-	height:40%;
+	height:95%;
 	width:500px;
 	border : 1px solid #158895;
 	-moz-border-radius : 8px;      /* Gecko browsers */
     -webkit-border-radius : 8px;   /* Webkit browsers */
     border-radius : 8px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
+	margin-top:-35px;
 }
 
 .overview_info
@@ -285,14 +287,13 @@ body
     border-radius : 8px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
 	width:130px;
-	height : 150px;
-	padding-top:10px;
+	height : 120px;
 	margin-top:-45px;
 }
 
 .turntable_btn
 {
-	margin-top:400px;
+	margin-top:480px;
 	margin-left:100px;
 }
 
@@ -314,7 +315,7 @@ body
 	-moz-border-radius : 5px;      /* Gecko browsers */
     -webkit-border-radius : 5px;   /* Webkit browsers */
     border-radius : 5px;            /* W3C syntax */
-	margin-top : 30px;
+	margin-top : 20px;
 	width : 80px;
 	height : 30px;
 	margin-left : 25px;
@@ -335,17 +336,48 @@ body
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
 }
 
+.long_btn_enable
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	margin-top : 10px;
+	width : 110px;
+	height : 30px;
+	margin-left:10px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
+}
+
+.long_btn_disable
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	margin-top : 10px;
+	width : 110px;
+	height : 30px;
+	margin-left:10px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#A9ABAB));
+}
+
+.long_btn_enable:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
+}
+
 /*
 .overview_btn button:hover
 {
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
 }
-*/
+
 .overview_recipe button:hover
 {
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
 }
-
+*/
 .recipe_list
 {
 	height:350px;
@@ -386,7 +418,7 @@ body
 	-moz-border-radius : 5px;      /* Gecko browsers */
     -webkit-border-radius : 5px;   /* Webkit browsers */
     border-radius : 5px;            /* W3C syntax */
-	margin-top : 30px;
+	margin-top : 20px;
 	width : 80px;
 	height : 30px;
 	margin-left : 25px;
@@ -404,7 +436,7 @@ body
 	-moz-border-radius : 5px;      /* Gecko browsers */
     -webkit-border-radius : 5px;   /* Webkit browsers */
     border-radius : 5px;            /* W3C syntax */
-	margin-top : 30px;
+	margin-top : 20px;
 	width : 80px;
 	height : 30px;
 	margin-left : 25px;
@@ -414,20 +446,164 @@ body
 
 .pinStatus
 {
-	width:200px;
+	width:410px;
 	position:relative;
-	left: 30px;
-	top: -520px;
+	left: 70px;
+	top: -560px;
+}
+
+.temp_pre_display
+{
+	width:210px;
+	float:right;
+}
+
+.temp_pre_display td
+{
+	border-top : 1px solid #0A98AE;
+	border-bottom : 1px solid #042A30;
+	border-left : 1px solid #07ABC4;
+	border-right : 1px solid #042A30;
+	background-color : #0F6C84;
+	padding-left : 5px;
+	color : #fff;
+	font-size : 14px;
+	height : 22px;
+	text-align:right;
 }
  
  #background
 {
     position:absolute;
     background: url(../images/chamber.png);
-    width:416px;
-    height:402px;
-    left:105px;
-    top: 199px
+    width:704px;
+    height:403px;
+    left:19px;
+    top: 235px
+}
+
+.door_open
+{
+	background:url(../images/door.png);
+	width:14px;
+	height:141px;
+	position:absolute;
+	left:404px;
+	top:366px;
+}
+
+.door_close
+{
+	width:14px;
+	height:141px;
+	position:absolute;
+	left:404px;
+	top:366px;
+}
+
+.arm_in
+{
+	background: url(../images/arm.png) no-repeat;
+	width:120px;
+	height:180px;
+	position:absolute;
+	left:417px;
+	top:346px;
+}
+
+.arm_middle
+{
+	background: url(../images/arm.png) no-repeat;
+	width:120px;
+	height:180px;
+	position:absolute;
+	left:553px;
+	top:346px;
+}
+
+.arm_out
+{
+	background: url(../images/arm.png) no-repeat;
+	width:120px;
+	height:180px;
+	position:absolute;
+	left:683px;
+	top:346px;
+}
+
+.fork_h
+{
+	background: url(../images/fork_h.png) no-repeat;
+	width:120px;
+	height:60px;
+	margin-top:60px;
+	margin-left:-105px;
+}
+
+.fork_v
+{
+	background: url(../images/fork_v.png) no-repeat;
+	width:60px;
+	height:120px;
+	margin-top:-30px;
+	margin-left:-15px;
+}
+
+.wafer_h
+{
+	width:120px;
+	height:120px;
+	line-height:120px;
+	margin-top:-90px;
+	margin-left:-150px;
+	color:#fff;
+	text-align:center;
+}
+
+.wafer_v
+{
+	width:120px;
+	height:120px;
+	line-height:120px;
+	margin-top:-180px;
+	margin-left:-45px;
+	color:#fff;
+	text-align:center;
+}
+
+.wafer_empty
+{
+	background: url(../images/empty.png) no-repeat;
+}
+
+.wafer_broken
+{
+	background: url(../images/broken.png) no-repeat;
+}
+
+.wafer_dummy
+{
+	background: url(../images/dummy.png) no-repeat;
+}
+
+.wafer_processed
+{
+	background: url(../images/processed.png) no-repeat;
+}
+
+.wafer_processing
+{
+	background: url(../images/processing.png) no-repeat;
+}
+
+.wafer_unprocessed
+{
+	background: url(../images/unprocessed.png) no-repeat;
+}
+
+.wafer_semiprocessed
+{
+	background: url(../images/semi-processed.png) no-repeat;
 }
 
 .slot1
@@ -472,15 +648,6 @@ body
  .dummy
 {
     background: url(../images/dummy.png);
-    width:120px;
-	height:120px;
-	margin-left:15px;
-	margin-top:15px;
-}
-
- .empty
-{
-    background: url(../images/empty.png);
     width:120px;
 	height:120px;
 	margin-left:15px;

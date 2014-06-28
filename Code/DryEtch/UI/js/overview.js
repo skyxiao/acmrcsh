@@ -135,9 +135,9 @@ function turntableRun()
 	$("#firstWinfer").find("label:first").text(Slot1WaferID);
 	$("#secondWinfer").find("label:first").text(Slot2WaferID);
 	$("#thirdWinfer").find("label:first").text(Slot3WaferID);
-	$("#firstWinfer").attr("class", arrayObj[Slot1WaferState]);
-	$("#secondWinfer").attr("class", arrayObj[Slot2WaferState]);
-	$("#thirdWinfer").attr("class", arrayObj[Slot3WaferState]);
+	$("#firstWinfer").find("div:first").attr("class", arrayObj[Slot1WaferState]);
+	$("#secondWinfer").find("div:first").attr("class", arrayObj[Slot2WaferState]);
+	$("#thirdWinfer").find("div:first").attr("class", arrayObj[Slot3WaferState]);
 
 	delete json;
 	delete systemdata;

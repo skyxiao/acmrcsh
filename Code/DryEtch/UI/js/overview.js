@@ -1,8 +1,8 @@
 ﻿var setIntervalID;
 //var x0 = 500;//大圈中心点
 //var y0 = 300;
-var x0 = 300;//大圈中心点
-var y0 = 400;
+var x0 = 210;//大圈中心点
+var y0 = 430;
 var r = 110;
 var lr = 70;
 var setIntervalID2;
@@ -32,7 +32,7 @@ var arrayObj = ["empty", "unprocessed", "processing", "processed", "semiprocesse
 function turntableRun() 
 {
 	var json = {};
-	var arr = [61, 62, 100040, 100041, 100042, 100043, 100044, 100045, 7044]
+	var arr = [61, 62, 37, 60, 100040, 100041, 100042, 100043, 100044, 100045, 7044, 65, 66, 63, 100046, 100047]
 	try
 	{
 		json = getControl().fetch_system_data(arr, false);
@@ -55,6 +55,13 @@ function turntableRun()
 	var angle = 0;
 	var pickUp = 0;
 	var pickDown = 0;
+	var doorClose = 0;
+	var doorOpen = 0;
+	var armIn = 0;
+	var armOut = 0;
+	var forkV = 0;
+	var waferId = "";
+	var waferState = 0;
 
 	for (var i = 0; i < systemdata.length; ++i)
 	{
@@ -66,6 +73,34 @@ function turntableRun()
 
 		case "62":
 			pickDown = parseInt(systemdata[i]["value"]);
+			break;
+
+		case "37":
+			doorClose = parseInt(systemdata[i]["value"]);
+			break;
+
+		case "60":
+			doorOpen = parseInt(systemdata[i]["value"]);
+			break;
+
+		case "66":
+			armOut = parseInt(systemdata[i]["value"]);
+			break;
+
+		case "63":
+			forkV = parseInt(systemdata[i]["value"]);
+			break;
+
+		case "65":
+			armIn = parseInt(systemdata[i]["value"]);
+			break;
+
+		case "100046":
+			waferId = systemdata[i]["value"];
+			break;
+
+		case "100047":
+			waferState = systemdata[i]["value"];
 			break;
 
 		case "100040":
@@ -104,6 +139,43 @@ function turntableRun()
 		}
 	}
 
+	if (armIn == 1 && armOut == 0)
+	{
+		$(".arm").attr("class", "arm arm_in");
+	}
+	else if (armIn == 0 && armOut == 0)
+	{
+		$(".arm").attr("class", "arm arm_middle");
+	}
+	else if (armIn == 0 && armOut == 1)
+	{
+		$(".arm").attr("class", "arm arm_out");
+	}
+
+	$(".wafer").text(waferId);
+
+	if (forkV == 0)
+	{
+		$(".fork").attr("class", "fork fork_v");
+		$(".wafer").attr("class", "wafer wafer_v wafer_" + arrayObj[waferState]);
+	}
+	else if (forkV == 1)
+	{
+		$(".fork").attr("class", "fork fork_h");
+		$(".wafer").attr("class", "wafer wafer_h wafer_" + arrayObj[waferState]);
+	}
+
+	if (doorClose == 0 && doorOpen == 1)
+	{
+		$(".door").removeClass("door_close");
+		$(".door").addClass("door_open");
+	}
+	else
+	{
+		$(".door").removeClass("door_open");
+		$(".door").addClass("door_close");
+	}
+
 	if (pickUp == 0 && pickDown == 0)
 	{
 		$(".pinStatus").find("img:first").attr("src", "../images/pin_normal.png");
@@ -130,8 +202,8 @@ function turntableRun()
 	var p2 = getPoints((i + 120) % 360 + k);
 	var p3 = getPoints((i + 240) % 360 + k);
 	$("#secondWinfer").attr("style", "position: absolute; left:" + p1[0] + "px; top:" + p1[1] + "px");
-	$("#thirdWinfer").attr("style", "position: absolute; left:" + p2[0] + "px; top:" + p2[1] + "px");
-	$("#firstWinfer").attr("style", "position: absolute; left:" + p3[0] + "px; top:" + p3[1] + "px");
+	$("#firstWinfer").attr("style", "position: absolute; left:" + p2[0] + "px; top:" + p2[1] + "px");
+	$("#thirdWinfer").attr("style", "position: absolute; left:" + p3[0] + "px; top:" + p3[1] + "px");
 	$("#firstWinfer").find("label:first").text(Slot1WaferID);
 	$("#secondWinfer").find("label:first").text(Slot2WaferID);
 	$("#thirdWinfer").find("label:first").text(Slot3WaferID);
@@ -369,7 +441,7 @@ function selectRecipeCancel()
 
 function getInitData()
 {
-	var arr = [100024, 100013, 100014, 100015, 100016, 100017, 100050, 100018, 100055];
+	var arr = [100024, 100013, 100014, 100015, 100016, 100017, 100050, 100018, 100055, 4000, 5000, 6000, 8020, 8023];
 	var json = {};
 	try
 	{
@@ -431,6 +503,9 @@ function getInitData()
 				$(".abort").attr("disabled", "disabled");
 				$(".abort").removeClass("enable_button");
 				$(".abort").addClass("disabled_button");
+				$(".recipe_opreation").removeClass("long_btn_disable");
+				$(".recipe_opreation").removeAttr("disabled");
+				$(".recipe_opreation").addClass("long_btn_enable");
 			}
 			else if (system_data[i]["value"] == 1)
 			{
@@ -460,6 +535,13 @@ function getInitData()
 				$(".abort").addClass("enable_button");
 				$(".abort").removeAttr("disabled");
 			}
+
+			if (system_data[i]["value"] != 0)
+			{
+				$(".recipe_opreation").removeClass("long_btn_enable");
+				$(".recipe_opreation").attr("disabled", "disabled");
+				$(".recipe_opreation").addClass("long_btn_disable");
+			}
 			break;
 
 		case "100018":
@@ -479,6 +561,26 @@ function getInitData()
 
 		case "100055":
 			$(".current_step").text(system_data[i]["value"]);
+			break;
+
+		case "4000":
+			$(".aiBodyHTTemp").text(system_data[i]["value"] + " ℃");
+			break;
+
+		case "5000":
+			$(".aiLidHTTemp").text(system_data[i]["value"] + " ℃");
+			break;
+
+		case "6000":
+			$(".aiChuckHTTemp").text(system_data[i]["value"] + " ℃");
+			break;
+
+		case "8020":
+			$(".aiProcChamPressure").text(system_data[i]["value"] + " torr");
+			break;
+
+		case "8023":
+			$(".aiExpChamPressure").text(system_data[i]["value"] + " torr");
 			break;
 
 		default:

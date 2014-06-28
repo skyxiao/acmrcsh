@@ -270,12 +270,13 @@ $(document).ready(function () {
     $("#thirdWinfer").attr("style", "position: absolute; left:" + three[0] + "px; top:" + three[1] + "px");
     //console.log("three,position: absolute; left:" + three[0] + "px; top:" + three[1] + "px");
 
-    $("#background,#firstWinfer,#secondWinfer,#thirdWinfer").contextMenu('myMenu1',
+    $(".Mask1").contextMenu('myMenu1',
     {
 		shadow:false,
 		menuStyle: {
 			border:'1px solid #158895',
 			width : '150px',
+			"z-index":900,
 			'border-radius' : '5px',
 			background:'-webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F))'
 		},
@@ -333,6 +334,47 @@ $(document).ready(function () {
 			},
 			'UNLOAD': function (t) {
 				getControl().invoke(0, 1003);
+			}
+		}
+	});
+
+	$(".Mask2").contextMenu('myMenu2',
+    {
+		shadow:false,
+		menuStyle: {
+			border:'1px solid #158895',
+			width : '150px',
+			"z-index":900,
+			'border-radius' : '5px',
+			background:'-webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F))'
+		},
+		itemStyle: {
+			background:"none",
+			color: 'white',
+			border: 'none',
+			'font-weight':'normal',
+			'padding-left':'5px'
+
+		},
+		itemHoverStyle: {
+			color: '#fff',
+			background: '-webkit-gradient(linear, left top, left bottom, from(#0A68BA), to(#044D71))',
+			border: 'none',
+			'font-weight':'bold'
+		},
+        bindings:
+        {
+			'ARM_IN': function (t) {
+				getControl().invoke(0, 1019);
+			},
+			'ARM_OUT': function (t) {
+				getControl().invoke(0, 1020);
+			},
+			'FORK_VERTICAL': function (t) {
+				getControl().invoke(0, 1021);
+			},
+			'FORK_HORIZONTAL': function (t) {
+				getControl().invoke(0, 1022);
 			}
 		}
 	});

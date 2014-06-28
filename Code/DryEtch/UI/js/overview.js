@@ -204,9 +204,9 @@ function turntableRun()
 	$("#secondWinfer").attr("style", "position: absolute; left:" + p1[0] + "px; top:" + p1[1] + "px");
 	$("#firstWinfer").attr("style", "position: absolute; left:" + p2[0] + "px; top:" + p2[1] + "px");
 	$("#thirdWinfer").attr("style", "position: absolute; left:" + p3[0] + "px; top:" + p3[1] + "px");
-	$("#firstWinfer").find("label:first").text(Slot1WaferID);
-	$("#secondWinfer").find("label:first").text(Slot2WaferID);
-	$("#thirdWinfer").find("label:first").text(Slot3WaferID);
+	$("#firstWinfer").find("div:first").text(Slot1WaferID);
+	$("#secondWinfer").find("div:first").text(Slot2WaferID);
+	$("#thirdWinfer").find("div:first").text(Slot3WaferID);
 	$("#firstWinfer").find("div:first").attr("class", arrayObj[Slot1WaferState]);
 	$("#secondWinfer").find("div:first").attr("class", arrayObj[Slot2WaferState]);
 	$("#thirdWinfer").find("div:first").attr("class", arrayObj[Slot3WaferState]);

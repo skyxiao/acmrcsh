@@ -27,7 +27,6 @@ ParameterItem<float> ChuckPos3(1003,"ChuckPos3","Chuck","chuck position3",-160,1
 
 
 //Flow
-ParameterItem<unsigned> PurgeN2Flow(2010,"PurgeN2Flow","Flow","Purge N2 flow value",0,1000,300,"sccm");
 ParameterItem<unsigned> FlowWarnProportion(2011,"FlowWarnProportion","Flow","Warning proportion of flow rate.",0,100,5,"%");
 ParameterItem<unsigned> FlowWarnMinimum(2012,"FlowWarnMinimum","Flow","Minimum warning of flow rate.",0,1000,50,"sccm");
 ParameterItem<unsigned> FlowAlarmProportion(2013,"FlowAlarmProportion","Flow","Alarm proportion of flow rate.",0,100,5,"%");
@@ -51,7 +50,7 @@ ParameterItem<float> PressureMonitorDelay(3007, "PressureMonitorDelay", "Pressur
 
 //Purge
 ParameterItem<unsigned> N2PurgeFlow(4000,"N2PurgeFlow","Purge","N2 purge flowrate.",0,5000,1000,"sccm");
-ParameterItem<unsigned> PurgeRepeatTimes(4002,"PurgeRepeatTimes","Purge","Repeat times for purge.",0,20,3,"times");
+ParameterItem<unsigned> PurgeRepeatTimes(4002,"PurgeRepeatTimes","Purge","Repeat times for purge.",3,20,3,"times");
 ParameterItem<float> PurgeTargetPressure(4003,"PurgeTargetPressure","Purge","Purge target pressure.",0,500,400,"torr");
 ParameterItem<unsigned> FlushTime(4004,"FlushTime","Purge","Flush time after purge.",0,100,30,"s");
 ParameterItem<unsigned> FlushFlowrate(4005,"FlushFlowrate","Purge","Flush flowrate of N2.",0,5000,1000,"sccm");

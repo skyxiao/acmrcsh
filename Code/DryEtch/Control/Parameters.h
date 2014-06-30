@@ -21,7 +21,6 @@ extern ParameterItem<float> ChuckPos3;
 
 
 //Flow
-extern ParameterItem<unsigned> PurgeN2Flow;
 extern ParameterItem<unsigned> FlowWarnProportion;
 extern ParameterItem<unsigned> FlowWarnMinimum;
 extern ParameterItem<unsigned> FlowAlarmProportion;

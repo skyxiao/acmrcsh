@@ -242,10 +242,10 @@ SystemData<float> aoAPCPosition(8038, "aoAPCPosition","DeviceNet",0,7000,1,0,8,3
 SystemData<unsigned> TotalSteps(100011, "TotalSteps", "System", 0, 1000);
 SystemData<unsigned> CurrentStep(100012, "CurrentStep", "System", 0, 1000);
 SystemData<std::string> RecipeName(100013, "RecipeName", "System");
-SystemData<unsigned> RecipeTotalTime(100014, "RecipeTotalTime", "System", 0, 1000, 0, "s");
-SystemData<unsigned> RecipeElapseTime(100015, "RecipeElapseTime", "System", 0, 1000, 0, "s");
-SystemData<unsigned> CurrentStepTime(100016, "CurrentStepTime", "System", 0, 1000, 0, "s");
-SystemData<unsigned> StepElapseTime(100017, "StepElapseTime", "System", 0, 1000, 0, "s");
+SystemData<unsigned> RecipeTotalTime(100014, "RecipeTotalTime", "System", 0, 10000, 0, "s");
+SystemData<unsigned> RecipeElapseTime(100015, "RecipeElapseTime", "System", 0, 10000, 0, "s");
+SystemData<unsigned> CurrentStepTime(100016, "CurrentStepTime", "System", 0, 3000, 0, "s");
+SystemData<unsigned> StepElapseTime(100017, "StepElapseTime", "System", 0, 3000, 0, "s");
 
 SystemData<unsigned> LoadUnloadState(100018, "LoadUnloadState", "System", 0, 1);
 SystemData<unsigned> LoadUnloadSkip(100019, "LoadUnloadSkip", "System", 0, 1);

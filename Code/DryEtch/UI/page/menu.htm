@@ -26,21 +26,27 @@
 
 		if (top.frames["leaktest"].clearSetInterval)
 		{
+			clearInterval(top.frames["leaktest"].intervalTimeId);
 			top.frames["leaktest"].clearSetInterval();
 		}	
 
 		if (top.frames["overview"].clearSetInterval)
 		{
+			clearInterval(top.frames["overview"].setIntervalID);
+			clearInterval(top.frames["overview"].setIntervalID2);
 			top.frames["overview"].clearSetInterval();
 		}
 
 		if (top.frames["gasbox"].clearSetInterval)
 		{
+			clearInterval(top.frames["gasbox"].setIntervalID2);
+			clearInterval(top.frames["gasbox"].setIntervalID);
 			top.frames["gasbox"].clearSetInterval();
 		}
 
 		if (top.frames["systemdata"].clearSetInterval)
 		{
+			clearInterval(top.frames["systemdata"].setIntervalID);
 			top.frames["systemdata"].clearSetInterval();
 		}	
 		

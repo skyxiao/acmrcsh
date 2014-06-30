@@ -440,6 +440,8 @@ function getVoleStatus()
             alert(e);
             clearInterval(setIntervalID);
         }
+
+		delete data;
 }
 
 function clearSetInterval()

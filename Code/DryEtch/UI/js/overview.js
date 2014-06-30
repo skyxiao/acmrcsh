@@ -41,6 +41,7 @@ function turntableRun()
 	catch (e)
 	{
 		delete json;
+		delete arr;
 		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
 		return;
 	}
@@ -214,6 +215,7 @@ function turntableRun()
 	$("#thirdWinfer").find("div:first").attr("class", arrayObj[Slot3WaferState]);
 
 	delete json;
+	delete arr;
 	delete systemdata;
 }
 

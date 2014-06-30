@@ -17,7 +17,7 @@ ParameterItem<float> BodyTemp(21, "BodyTemp", "Heater", "Chamber body temperatur
 ParameterItem<float> ChuckTemp(22, "ChuckTemp", "Heater", "Chamber chuck temperature", 0, 70, 40, "Cels");
 ParameterItem<float> TempWarnOffset(25, "TempWarnOffset", "Heater", "Relative temperature offset of warning to setting value.", 0, 10, 0.5, "Cels");
 ParameterItem<float> TempAlarmOffset(26, "TempAlarmOffset", "Heater", "Relative temperature offset of alarm to setting value.", 0, 10, 1.0, "Cels");
-ParameterItem<float> TempMonitorDelay(27, "TempMonitorDelay", "Flow", "Delay time from recipe step start.", 0, 20, 5, "s");
+ParameterItem<float> TempMonitorDelay(27, "TempMonitorDelay", "Heater", "Delay time from recipe step start.", 0, 20, 5, "s");
 
 
 //Chuck position
@@ -27,15 +27,17 @@ ParameterItem<float> ChuckPos3(1003,"ChuckPos3","Chuck","chuck position3",-160,1
 
 
 //Flow
-ParameterItem<unsigned> EtOHFlow(2001,"EtOHFlow","Flow","Etoh flow value",0,1000,300,"sccm");
-ParameterItem<unsigned> HFFlow(2004,"HFFlow","Flow","HF flow value",0,1000,300,"sccm");
-ParameterItem<unsigned> N2Flow(2007,"N2Flow","Flow","N2 flow value",0,1000,300,"sccm");
 ParameterItem<unsigned> PurgeN2Flow(2010,"PurgeN2Flow","Flow","Purge N2 flow value",0,1000,300,"sccm");
 ParameterItem<unsigned> FlowWarnProportion(2011,"FlowWarnProportion","Flow","Warning proportion of flow rate.",0,100,5,"%");
 ParameterItem<unsigned> FlowWarnMinimum(2012,"FlowWarnMinimum","Flow","Minimum warning of flow rate.",0,1000,50,"sccm");
 ParameterItem<unsigned> FlowAlarmProportion(2013,"FlowAlarmProportion","Flow","Alarm proportion of flow rate.",0,100,5,"%");
 ParameterItem<unsigned> FlowAlarmMinimum(2014,"FlowAlarmMinimum","Flow","Minimum alarm of flow rate.",0,1000,50,"sccm");
-ParameterItem<float> FlowMonitorDelay(2015, "FlowMonitorDelay", "Flow", "Delay time from recipe step start.", 0, 20, 5, "s");
+ParameterItem<float> FlowMonitorDelay(2015, "FlowMonitorDelay", "Flow", "Delay time for gas flow.", 0, 100, 5, "s");
+ParameterItem<unsigned> EtOHWarnProportion(2021,"EtOHWarnProportion","Flow","Warning proportion of EtOH flow rate.",0,100,10,"%");
+ParameterItem<unsigned> EtOHWarnMinimum(2022,"EtOHWarnMinimum","Flow","Minimum warning of EtOH flow rate.",0,1000,50,"sccm");
+ParameterItem<unsigned> EtOHAlarmProportion(2023,"EtOHAlarmProportion","Flow","Alarm proportion of EtOH flow rate.",0,100,20,"%");
+ParameterItem<unsigned> EtOHAlarmMinimum(2024,"EtOHAlarmMinimum","Flow","Minimum alarm of EtOH flow rate.",0,1000,50,"sccm");
+ParameterItem<float> EtOHMonitorDelay(2025, "EtOHMonitorDelay", "Flow", "Delay time for EtOH flow.", 0, 300, 20, "s");
 
 
 //Pressure

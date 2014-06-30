@@ -732,19 +732,10 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		Data::doExpCbHFInletVal = 0;
 		Data::doVaHFValve = 0;
 		Data::aoHFFlowSetpoint = 0;
+		Monitor::Instance().Disable("HF flowrate");
 	}
 	else
 	{
-		if (bps_mode == BypassMode_Bypass)
-		{
-			Data::doExpCbHFInletVal = 0;
-			Data::doVaHFValve = 1;
-		}
-		else
-		{
-			Data::doExpCbHFInletVal = 1;
-			Data::doVaHFValve = 0;
-		}
 
 		flowrate = recipe_step.HFFlowrate();
 		flow_warn_offset = 0.01 * flowrate * Parameters::FlowWarnProportion;
@@ -752,7 +743,18 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		flow_alarm_offset = 0.01 * flowrate * Parameters::FlowAlarmProportion;
 		flow_alarm_offset = std::max<float>(Parameters::FlowAlarmMinimum, flow_alarm_offset);
 		Data::aoHFFlowSetpoint = flowrate;
-		Monitor::Instance().Reset("HF flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
+		if (bps_mode == BypassMode_Bypass)
+		{
+			Data::doExpCbHFInletVal = 0;
+			Data::doVaHFValve = 1;
+			Monitor::Instance().Disable("HF flowrate");
+		}
+		else
+		{
+			Data::doExpCbHFInletVal = 1;
+			Data::doVaHFValve = 0;
+			Monitor::Instance().Reset("HF flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
+		}
 	}
 	Data::doHFMFCVal1 = 1;
 	Data::doHFMFCVal2 = 1;
@@ -763,26 +765,28 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		Data::doExpCbVacIPASupply = 0;
 		Data::doVaVapValve = 0;
 		Data::aoEtOHFlowSetpoint = 0;
+		Monitor::Instance().Disable("EtOH flowrate");
 	}
 	else
 	{
+		flowrate = recipe_step.EtOHFlowrate();
+		flow_warn_offset = 0.01 * flowrate * Parameters::EtOHWarnProportion;
+		flow_warn_offset = std::max<float>(Parameters::EtOHWarnMinimum, flow_warn_offset);
+		flow_alarm_offset = 0.01 * flowrate * Parameters::EtOHAlarmProportion;
+		flow_alarm_offset = std::max<float>(Parameters::EtOHAlarmMinimum, flow_alarm_offset);
+		Data::aoEtOHFlowSetpoint = flowrate;
 		if (bps_mode == BypassMode_Bypass)
 		{
 			Data::doExpCbVacIPASupply = 0;
 			Data::doVaVapValve = 1;
+			Monitor::Instance().Disable("EtOH flowrate");
 		}
 		else
 		{
 			Data::doExpCbVacIPASupply = 1;
 			Data::doVaVapValve = 0;
+			Monitor::Instance().Reset("EtOH flowrate", Parameters::EtOHMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
 		}
-		flowrate = recipe_step.EtOHFlowrate();
-		flow_warn_offset = 0.01 * flowrate * Parameters::FlowWarnProportion;
-		flow_warn_offset = std::max<float>(Parameters::FlowWarnMinimum, flow_warn_offset);
-		flow_alarm_offset = 0.01 * flowrate * Parameters::FlowAlarmProportion;
-		flow_alarm_offset = std::max<float>(Parameters::FlowAlarmMinimum, flow_alarm_offset);
-		Data::aoEtOHFlowSetpoint = flowrate;
-		Monitor::Instance().Reset("EtOH flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
 	}
 	Data::doAlcMFCVal1 = 1;
 	Data::doAlcMFCVal2 = 1;

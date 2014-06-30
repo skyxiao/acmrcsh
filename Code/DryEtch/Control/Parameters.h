@@ -21,15 +21,17 @@ extern ParameterItem<float> ChuckPos3;
 
 
 //Flow
-extern ParameterItem<unsigned> EtOHFlow;
-extern ParameterItem<unsigned> HFFlow;
-extern ParameterItem<unsigned> N2Flow;
 extern ParameterItem<unsigned> PurgeN2Flow;
 extern ParameterItem<unsigned> FlowWarnProportion;
 extern ParameterItem<unsigned> FlowWarnMinimum;
 extern ParameterItem<unsigned> FlowAlarmProportion;
 extern ParameterItem<unsigned> FlowAlarmMinimum;
 extern ParameterItem<float> FlowMonitorDelay;
+extern ParameterItem<unsigned> EtOHWarnProportion;
+extern ParameterItem<unsigned> EtOHWarnMinimum;
+extern ParameterItem<unsigned> EtOHAlarmProportion;
+extern ParameterItem<unsigned> EtOHAlarmMinimum;
+extern ParameterItem<float> EtOHMonitorDelay;
 
 
 //Pressure

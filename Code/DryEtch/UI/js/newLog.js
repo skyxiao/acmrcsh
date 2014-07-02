@@ -191,6 +191,26 @@ function init()
 			top.frames["menu"].SelectMenu("Log", null, "log", eRecentTime);
 		}
 	});
+
+	$(".username").text(top.user_arr[0]);
+	$(".logout").click(function(){
+		$(".tooltip").remove();
+		if (confirm("Are you sure sign out?"))
+		{
+			top.window.location.href = "Login.htm";
+		}
+	});
+
+	$(".logout").mouseover(function(){
+		var e = event || window.event;
+		var tooltip = "<div class='tooltip' style='position:absolute;left:" + (e.clientX - 40) + "px;top:" + (e.clientY + 10) + "px;'>Sign out</div>";
+		$("body").append(tooltip);
+	});
+
+
+	$(".logout").mouseleave(function(){
+		$(".tooltip").remove();
+	});
 }
 
 setInterval("getRecentLog()", 1000);

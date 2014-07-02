@@ -203,7 +203,7 @@ function init()
 
 	$(".logout").mouseover(function(){
 		var e = event || window.event;
-		var tooltip = "<div class='tooltip' style='position:absolute;left:" + (e.clientX - 40) + "px;top:" + (e.clientY + 10) + "px;'>Sign out</div>";
+		var tooltip = "<div class='tooltip' style='position:absolute;left:" + (e.clientX - 40) + "px;top:" + (e.clientY + 10) + "px;'><label>Sign out</label></div>";
 		$("body").append(tooltip);
 	});
 

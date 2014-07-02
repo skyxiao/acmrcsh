@@ -11,6 +11,20 @@ var range = {
 	"N2 Purge" : [0, 5000]
 };
 
+function  permissionCheck()
+{
+	var user_info = top.USER_INFO;
+	if (user_info["recipe"] && user_info["recipe"] == "readonly")
+	{
+		$("input").attr("disabled", "disabled");
+		$("select").attr("disabled", "disabled");
+		$(".recipebtn").find("button").attr("class", "recipe_disable_btn");
+		$(".recipebtn").find("button").attr("disabled", "disabled");
+		$(".stepbtn").find("button").attr("class", "step_disable_btn");
+		$(".stepbtn").find("button").attr("disabled", "disabled");
+	}
+}
+
 function checkSelectRecipe()
 {
 	if (jQuery(".recipeselect").length > 0)
@@ -457,6 +471,7 @@ function showSelectRecipe(fs, This)
 			jQuery(".recipeselect").css("color", "#AF0505");
 			jQuery(".recipeselect").attr("isSave", "false");
 		});
+		permissionCheck();
 	}
 }
 

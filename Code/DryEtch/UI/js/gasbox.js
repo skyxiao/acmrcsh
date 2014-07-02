@@ -22,6 +22,20 @@ var unit = {
 	"8032" : "sccm"
 };
 
+var user_info = {};
+
+function  permissionCheck()
+{
+	user_info = top.USER_INFO;
+	if (user_info["gasbox"] && user_info["gasbox"] == "readonly")
+	{
+		$(".btn_box").find("button").attr("disabled", "disabled");
+		$(".btn_box").find("button").removeClass("enable_button");
+		$(".btn_box").find("button").addClass("disabled_button");
+		$(".btn_box").find("button").attr("isable", "false");		
+	}
+}
+
 function valve(left, top,class1,class2,id) {
     this.left = left - 7;
     this.top = top - 7;
@@ -30,6 +44,11 @@ function valve(left, top,class1,class2,id) {
     this.class2 = class2;
     this.click = function () {
 		//clearInterval(setIntervalID);
+		if (user_info["gasbox"] && user_info["gasbox"] == "readonly")
+		{
+			return;
+		}
+
         if (prpos[id] == "1") {
             modifySystemData(id, "0");
         }
@@ -394,6 +413,8 @@ function getSettingsData()
 		$(".btn_box").find("button").addClass("disabled_button");
 		$(".btn_box").find("button").attr("isable", "false");
 	}
+
+	permissionCheck();
 
 	delete json;
 	delete arr;

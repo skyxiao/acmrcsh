@@ -1,4 +1,30 @@
-﻿function getControl() {
+﻿function getSqlConnection()
+{
+	var fs = require("fs");
+	var connect = $.parseJSON(fs.readFileSync('./config/database.json'));
+	var mysql = require('mysql');
+	var TEST_DATABASE = connect.database.database;
+
+	var connection = mysql.createConnection({
+		host: connect.database.host,
+		user: connect.database.user,
+		password: connect.database.password,
+		port: connect.database.port
+	});
+		
+	connection.query('USE ' + TEST_DATABASE, function(err){
+		if (err)
+		{
+			writeLog("error", err);
+			connection.end();
+			return;
+		}
+	});
+
+	return connection;
+}
+
+function getControl() {
     return top.control;
 }
 

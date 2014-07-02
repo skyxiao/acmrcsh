@@ -1,4 +1,15 @@
-﻿$(document).ready(function () {
+﻿function  permissionCheck()
+{
+	var user_info = top.USER_INFO;
+	console.log(user_info);
+	if (user_info["config"] && user_info["config"] == "readonly")
+	{
+		$(".conf_btn").attr("class", "conf_btn disable_btn");
+		$(".conf_btn").attr("disabled", "disabled");		
+	}
+}
+
+$(document).ready(function () {
     var xmlDom = getSyncXmlData('./config/parameters.xml');
     for (var i = 0; i < xmlDom.firstChild.children.length; i++) {
         getHtml(xmlDom.firstChild.children[i], $('#tree')[0]);
@@ -59,6 +70,7 @@ function getHtml(node, element) {
             $("#data").empty();
             createFromGroup(node);
             initContent(node.attributes["lb"].textContent, node.attributes["hb"].textContent);
+			permissionCheck();
         }
         var textnode = document.createTextNode(node.tagName);
         el.appendChild(textnode);
@@ -80,6 +92,7 @@ function getHtml(node, element) {
             $("#data").empty();
             createFromGroup(node);
             initContent(node.attributes["lb"].textContent, node.attributes["hb"].textContent);
+			permissionCheck();
         }
     }
 }
@@ -104,7 +117,6 @@ function createFromGroup(node) {
             createDataEx(node.children[i], i, i == node.children.length-1);
         }
     }
-    console.log(htmlText);
     $("#data").append(htmlText);
 }
 
@@ -113,11 +125,11 @@ function getContent(title, name, text, unit, min, max, i,id) {
    {
        return '<td>' + id + '</td><td width="80px" style="text-align:left"><span title="' + title + '">' + name + '</span></td><td  width="80px"><input class="conf_input" type="text" id="'
               + id + '" value="' + text + '" /></td><td  width="50px">'+unit+'</td><td style="text-align:left">'
-               + '<input class="conf_btn" pid="' + id + '" max="' + max + '" min="' + min + '"  txtID="' + id + '" type="button" onclick="buttonClick(this);" value="set" /></td></tr>';
+               + '<input class="conf_btn enable_btn" pid="' + id + '" max="' + max + '" min="' + min + '"  txtID="' + id + '" type="button" onclick="buttonClick(this);" value="set" /></td></tr>';
    }
    return '<tr><td>' + id + '</td><td width="80px"  style="text-align:left"><span title="' + title + '">' + name + '</span></td><td  width="80px"><input class="conf_input"  type="text" id="'
               + id + '" value="' + text + '" /></td><td  width="50px">'+unit+'</td><td style="text-align:left">'
-               + '<input class="conf_btn" pid="' + id + '" max="' + max + '" min="' + min + '"  txtID="' + id + '" type="button" onclick="buttonClick(this);" value="set" /></td>';
+               + '<input class="conf_btn enable_btn" pid="' + id + '" max="' + max + '" min="' + min + '"  txtID="' + id + '" type="button" onclick="buttonClick(this);" value="set" /></td>';
 }
 
 function createDataEx(node, i,islast) {

@@ -1,5 +1,17 @@
 ﻿var Chart1, scroller,tip;
 
+function  permissionCheck()
+{
+	var user_info = top.USER_INFO;
+	if (user_info["history"] && user_info["history"] == "readonly")
+	{
+		$("#Button1").attr("class", "get_data_disable");
+		$("#Button1").attr("disabled", "disabled");
+		$(".historydata_content").find("input").attr("disabled", "disabled");
+		$(".historydata_content").find("select").attr("disabled", "disabled");
+	}
+}
+
 function initChart() {
     Chart1 = new Tee.Chart("canvas");
     Chart1.axes.bottom.labels.dateFormat = "isoTime";

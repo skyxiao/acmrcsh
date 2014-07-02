@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Recipe</title>
+		<link rel="stylesheet" type="text/css" href="../css/user.css" />
+		<script language="javascript" type="text/javascript" src="../js/jquery-2.1.0.js"></script>
+		<script language="javascript" type="text/javascript" src="../js/common.js"></script>
+	</head>
+	<body>
+	<div style="padding-top:30px;">
+	<div class="mainWin">
+		<div class="logo"></div>
+		<div class="messagealert"></div>
+		<div class="mainContent">
+		<div class="head">User</div>
+		<table>
+			<tr>
+				<td class="user">
+					<div class="userbox">
+						<ul class="userlist">
+						</ul>
+						<div class="userbtn" align="center">
+							<button onclick="newUser()" class="user_enable_btn">new</button>
+							<button onclick="deleteUser()" class="user_enable_btn">delete</button>
+						</div>
+					</div>
+				</td>
+				<td class="userinfo">
+					<div class="userinfobox">
+						<div class='userinfobox1'>
+							<table cellspacing="5">
+								<tr>
+								</tr>
+							</table>
+						</div>
+						<div class="sure_btn_box">
+							<button class="sure_enable_btn" onclick="saveUser()">Save</button>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</div>
+	</div>
+	<div class="mask_fade" style="position:absolute;left:0px;top:0px;filter:Alpha(Opacity=30);opacity:0.3;background-color:#000000;z-index:4; text-align:center; vertical-align:middle;width:100%;height:100%;display:none;"></div>
+	<div class="new_user">
+		<div class="new_head">Create User</div>
+		<div class="new_content">
+			<span style="font-size:12px;position:absolute;left:364px;top:175px;width:250px;color:#D50E32;display:none;" class="pcw_error">Password doesn't match the confirmation</span>
+			<span style="font-size:12px;position:absolute;left:364px;top:140px;width:250px;color:#D50E32;display:none;" class="pw_error">Password can't be blank</span>
+			<span style="font-size:12px;position:absolute;left:364px;top:105px;width:150px;color:#D50E32;display:none;" class="un_error">Username is already taken</span>
+			<table cellspacing="5">
+				<tr>
+					<td><label>Username:</label></td>
+					<td><input class='add_uname' /></td>
+				</tr>
+				<tr>
+					<td><label>Password:</label></td>
+					<td><input class='add_pword' type="password"/></td>
+				</tr>
+				<tr>
+					<td><label>Confirm your password:</label></td>
+					<td><input class='add_cpword' type="password"/></td>
+				</tr>
+				<tr>
+					<td>
+						<label>overview:</label>
+					</td>
+					<td>
+						<select class='add_overview'>
+							<option value='invisible'>invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable' selected="selected">operable</option>
+						</select>
+					</td>
+					<td>
+						<label>systemconfig:</label>
+					</td>
+					<td>
+						<select class='add_config'>
+							<option value='invisible' selected="selected">invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable'>operable</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>systemdata:</label>
+					</td>
+					<td>
+						<select class='add_data'>
+							<option value='invisible' selected="selected">invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable'>operable</option>
+						</select>
+					</td>
+					<td>
+						<label>gasbox:</label>
+					</td>
+					<td>
+						<select class='add_gasbox'>
+							<option value='invisible'>invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable' selected="selected">operable</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>recipe:</label>
+					</td>
+					<td>
+						<select class='add_recipe'>
+							<option value='invisible' selected="selected">invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable'>operable</option>
+						</select>
+					</td>
+					<td>
+						<label>historydata:</label>
+					</td>
+					<td>
+						<select class='add_history'>
+							<option value='invisible'>invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable' selected="selected">operable</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>log:</label>
+					</td>
+					<td>
+						<select class='add_log'>
+							<option value='invisible'>invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable' selected="selected">operable</option>
+						</select>
+					</td>
+					<td>
+						<label>leakcheck:</label>
+					</td>
+					<td>
+						<select class='add_leakcheck'>
+							<option value='invisible' selected="selected">invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable'>operable</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label>monitor:</label>
+					</td>
+					<td>
+						<select class='add_monitor'>
+							<option value='invisible' selected="selected">invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable'>operable</option>
+						</select>
+					</td>
+					<td>
+						<label>user:</label>
+					</td>
+					<td>
+						<select class='add_user'>
+							<option value='invisible' selected="selected">invisible</option>
+							<option value='readonly'>readonly</option>
+							<option value='operable'>operable</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="new_btn">
+			<button onclick="resetNewUserBox()">Cancel</button>
+			<button onclick="addUser()">Ok</button>
+		</div>
+	</div>
+	<div>
+	</div>
+		<script language="javascript" type="text/javascript" src="../js/user.js"></script>
+		<script>
+			getAllUser();
+			permissionCheck();
+		</script>
+	</body>
+</html>

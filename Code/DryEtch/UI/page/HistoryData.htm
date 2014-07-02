@@ -29,7 +29,7 @@
 						<option value="HF">HF</option>
 						<option value="Pressure">Pressure</option>
 					</select>
-					<input id="Button1" type="button" value="GetData" onclick="getData();" />
+					<input id="Button1" type="button" value="GetData" onclick="getData();" class="get_data_enable"/>
 				</div>
 				<canvas id="canvas" width="1000" height="400">
 					This browser does not seem to support HTML5 Canvas.
@@ -43,4 +43,7 @@
 		</div>
 	</div>
 </body>
+<script>
+	permissionCheck();
+</script>
 </html>

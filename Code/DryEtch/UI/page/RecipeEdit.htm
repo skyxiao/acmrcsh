@@ -22,10 +22,10 @@
 						<ul class="recipelist">
 						</ul>
 						<div class="recipebtn" align="center">
-							<button onclick="recipeAdd()">add</button>
-							<button onclick="recipeDelete()">delete</button>
-							<button onclick="recipeSave()">save</button>
-							<button onclick="recipeSaveAs()">save as</button>
+							<button onclick="recipeAdd()" class="recipe_enable_btn">add</button>
+							<button onclick="recipeDelete()" class="recipe_enable_btn">delete</button>
+							<button onclick="recipeSave()" class="recipe_enable_btn">save</button>
+							<button onclick="recipeSaveAs()" class="recipe_enable_btn">save as</button>
 						</div>
 					</div>
 				</td>
@@ -80,11 +80,11 @@
 							</table>
 						</div>
 						<div class="stepbtn" align="center">
-							<button onclick="addOneStep()">add</button>
-							<button onclick="deleteStep()">delete</button>
-							<button onclick="copyStep()">copy</button>
-							<button onclick="pasteStep()">paste</button>
-							<button onclick="cutStep()">cut</button>
+							<button onclick="addOneStep()" class="step_enable_btn">add</button>
+							<button onclick="deleteStep()" class="step_enable_btn">delete</button>
+							<button onclick="copyStep()" class="step_enable_btn">copy</button>
+							<button onclick="pasteStep()" class="step_enable_btn">paste</button>
+							<button onclick="cutStep()" class="step_enable_btn">cut</button>
 						</div>
 					</div>
 				</td>
@@ -95,6 +95,7 @@
 	</div>
 		<script>
 			loadRecipe();
+			 permissionCheck();
 		</script>
 	</body>
 </html>

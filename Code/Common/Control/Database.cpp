@@ -1,13 +1,11 @@
 /*
  * Database.cpp
  *
- *  Created on: 2014Äê3ÔÂ24ÈÕ
+ *  Created on: 2014Ã„Ãª3Ã”Ã‚24ÃˆÃ•
  *      Author: acm
  */
 
 #include "boost/chrono.hpp"
-#include "boost/property_tree/ptree.hpp"
-#include "boost/property_tree/json_parser.hpp"
 
 #include "Database.h"
 #include "EventLevel.h"
@@ -102,19 +100,19 @@ void Database::WaferExit(const std::string& id, const std::string& state)
 	m_sql_list.push_back(ss.str());
 }
 
-void Database::ProcessStart(const std::string& id, int unit, const std::string& recipe)
+void Database::ProcessStart(const std::string& id, int unit, unsigned short slot, const std::string& recipe)
 {
 	std::stringstream ss;
-	ss<<"call process_start('"<<id<<"', "<<unit<<", '"<<local_time_string()<<"', '"<<recipe<<"');";
+	ss<<"call process_start('"<<id<<"', "<<unit<<", "<<slot<<", '"<<local_time_string()<<"', '"<<recipe<<"');";
 
 	boost::mutex::scoped_lock lock(m_list_mtx);
 	m_sql_list.push_back(ss.str());
 }
 
-void Database::ProcessEnd(const std::string& id)
+void Database::ProcessEnd(const std::string& id, const std::string& state)
 {
 	std::stringstream ss;
-	ss<<"call process_end('"<<id<<"', '"<<local_time_string()<<"');";
+	ss<<"call process_end('"<<id<<"', '"<<state<<"', '"<<local_time_string()<<"');";
 
 	boost::mutex::scoped_lock lock(m_list_mtx);
 	m_sql_list.push_back(ss.str());
@@ -138,23 +136,11 @@ void Database::RemoveWafer(const std::string& id)
 	m_sql_list.push_back(ss.str());
 }
 
-std::string Database::QueryLog(const time_point& start_time, const time_point& end_time, unsigned level_mask)
+std::list<boost::shared_ptr<wafer_info>> Database::QueryLoadedWafers()
 {
-	std::stringstream ss;
-	ss<<"select * from 'dry_etch'.'event_log' where ('time' between '"<<start_time<<"' and '"<<end_time<<"') and ('level' in (";
-	if(level_mask & EVENT_LEVEL_INFO)
-		ss<<"'info', ";
-	if(level_mask & EVENT_LEVEL_WARNING)
-		ss<<"'warning', ";
-	if(level_mask & EVENT_LEVEL_ERROR)
-		ss<<"'error', ";
-	if(level_mask & EVENT_LEVEL_FATAL)
-		ss<<"'fatal', ";
-
-	ss<<"'')) order by 'time' desc limit 1000;";
-	std::string sql = ss.str();
-	ss.str("");
-	ss.clear();
+	std::string sql = "call query_loaded_wafer();";
+	
+	std::list<boost::shared_ptr<wafer_info>> loaded_wafers;
 
 	MYSQL_RES* result_set;
 	{
@@ -162,83 +148,43 @@ std::string Database::QueryLog(const time_point& start_time, const time_point& e
 		LogInfo(sql);
 		boost::mutex::scoped_lock lock(m_db_mtx);
 		int rtv = mysql_query(&m_mysql, sql.c_str());
-		if(!rtv)
+		if(rtv)
 		{
-			LogError("mysql query log failed.");
-			return "";
+			LogDebug(sql);
+			auto error_code = mysql_error(&m_mysql);
+			std::stringstream ss;
+			ss<<"mysql query failed, error: "<<error_code<<".";
+			LogError(ss.str());
+			return loaded_wafers;
 		}
 
 		result_set = mysql_store_result(&m_mysql);
-	}
 
-	ptree pt;
-
-	int rows = mysql_num_rows(result_set);
-//	int fields = mysql_num_fields(result_set);
-	MYSQL_ROW row;
-	for(int i=0; i<rows; i++)
-	{
-		row = mysql_fetch_row(result_set);
-		ptree pt_child;
-		pt.put("Time", row[0]);
-		pt.put("ID", row[1]);
-		pt.put("Level", row[2]);
-		pt.put("Info", row[3]);
-		pt.push_back(make_pair("", pt_child));
-	}
-	mysql_free_result(result_set);
-
-	ptree root;
-	root.add_child("LogItems", pt);
-	json_parser::write_json(ss, root);
-
-	return ss.str();
-}
-
-std::string Database::QueryData(const time_point& start_time, const time_point& end_time, const std::string& type)
-{
-	std::stringstream ss;
-	ss<<"select * from 'dry_etch'.'process_data' where ('time' between '"<<start_time<<"' and '"<<end_time<<"') and ('type' = '"<<type<<"') order by 'time' incs limit 1000;";
-	std::string sql = ss.str();
-	ss.str("");
-	ss.clear();
-
-	MYSQL_RES* result_set;
-	{
-		//execute query
-		LogInfo(sql);
-		boost::mutex::scoped_lock lock(m_db_mtx);
-		int rtv = mysql_query(&m_mysql, sql.c_str());
-		if(!rtv)
+		int rows = mysql_num_rows(result_set);
+	//	int fields = mysql_num_fields(result_set);
+		MYSQL_ROW row;
+		for(int i=0; i<rows; i++)
 		{
-			LogError("mysql query data failed.");
-			return "";
+			row = mysql_fetch_row(result_set);
+
+			auto wafer_info_ptr = boost::shared_ptr<wafer_info>(new wafer_info);
+			wafer_info_ptr->id = row[0];
+			wafer_info_ptr->unit = row[1];
+			wafer_info_ptr->slot = row[2];
+			wafer_info_ptr->size = row[3];
+			wafer_info_ptr->type = row[4];
+			wafer_info_ptr->state = row[5];
+			loaded_wafers.push_back(wafer_info_ptr);
 		}
-
-		result_set = mysql_store_result(&m_mysql);
+		mysql_free_result(result_set);
+		do 
+		{ 
+		    result_set = mysql_store_result(&m_mysql); 
+		    mysql_free_result(result_set); 
+		}while(!mysql_next_result(&m_mysql));
 	}
 
-	ptree pt;
-
-	int rows = mysql_num_rows(result_set);
-//	int fields = mysql_num_fields(result_set);
-	MYSQL_ROW row;
-	for(int i=0; i<rows; i++)
-	{
-		row = mysql_fetch_row(result_set);
-		ptree pt_child;
-		pt.put("Time", row[0]);
-		pt.put("Type", row[1]);
-		pt.put("Value", row[2]);
-		pt.push_back(make_pair("", pt_child));
-	}
-	mysql_free_result(result_set);
-
-	ptree root;
-	root.add_child("DataRecords", pt);
-	json_parser::write_json(ss, root);
-
-	return ss.str();
+	return loaded_wafers;
 }
 
 void Database::do_work()
@@ -264,13 +210,13 @@ void Database::do_work()
 		{
 			boost::mutex::scoped_lock lock(m_db_mtx);
 			int rtv = mysql_query(&m_mysql, sql.c_str());
-			ss.str("");
-			ss<<"database queue size: "<<size-1<<".";
-			LogDebug(ss.str());
 			if(rtv)
 			{
 				LogDebug(sql);
-				LogError("mysql insert failed.");
+				auto error_code = mysql_error(&m_mysql);
+				ss.str("");
+				ss<<"mysql insert failed, error: "<<error_code<<".";
+				LogError(ss.str());
 			}
 
 			continue;

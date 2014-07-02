@@ -14,14 +14,29 @@
 #include "WaferManager.h"
 #include "Data.h"
 #include "LogFile.h"
+#include "Database.h"
 
 void WaferManager::Initialize()
 {
+	auto loaded_wafers = Database::Instance().QueryLoadedWafers();
+	for(auto& wafer_info_ptr : loaded_wafers)
+	{
+		std::string id = wafer_info_ptr->id;
+		int unit = boost::lexical_cast<int>(wafer_info_ptr->unit);
+		unsigned short slot = boost::lexical_cast<unsigned short>(wafer_info_ptr->slot);
+		WaferSize size = wafer_info_convertor::wafer_size_from_string(wafer_info_ptr->size);
+		WaferType type = wafer_info_convertor::wafer_type_from_string(wafer_info_ptr->type);
+		WaferState state = wafer_info_convertor::wafer_state_from_string(wafer_info_ptr->state);
+		m_wafers[unit*100+slot] = boost::shared_ptr<Wafer>(new Wafer(id, unit, slot, size, type, state));
+	}
+	loaded_wafers.clear();
 
+	update_wafer_info(0, 0x7);
 }
 
 void WaferManager::Terminate()
 {
+	m_wafers.clear();
 	LogDebug("WaferManager is terminated.");
 }
 

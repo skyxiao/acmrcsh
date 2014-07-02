@@ -18,6 +18,34 @@ body
 	background:url(../images/logo.png) no-repeat;
 }
 
+.user_info
+{
+	margin-left:20px;
+	margin-top:5px;
+	width:160px;
+}
+
+.logout
+{
+	cursor:pointer;
+}
+
+.tooltip
+{
+	background:url(../images/tooltip.png) no-repeat;
+	width:80px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#fff;
+}
+
+.user_info img
+{
+	width:16px;
+	height:16px;
+}
+
 
 .log_content
 {

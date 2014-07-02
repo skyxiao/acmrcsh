@@ -99,7 +99,7 @@ body
 	padding-left : 3px;
 }
 
-.conf_btn
+.enable_btn
 {
 	-moz-border-radius : 5px;      /* Gecko browsers */
     -webkit-border-radius : 5px;   /* Webkit browsers */
@@ -107,6 +107,16 @@ body
 	width : 70px;
 	font-weight : bold;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
+}
+
+.disable_btn
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	width : 70px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#A9ABAB));
 }
   
 #tree, #tree ul

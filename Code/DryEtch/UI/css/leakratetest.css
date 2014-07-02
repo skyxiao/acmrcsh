@@ -101,18 +101,6 @@ body
 	margin-right:auto;
 }
 
-.btn_box
-{
-	border : 1px solid #014A52;
-	-moz-border-radius : 10px;      /* Gecko browsers */
-    -webkit-border-radius : 10px;   /* Webkit browsers */
-    border-radius : 10px;            /* W3C syntax */
-	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
-	height: 40%;
-	width:98%;
-	margin-top:10px;
-}
-
 .enable_button
 {
 	-moz-border-radius : 5px;      /* Gecko browsers */

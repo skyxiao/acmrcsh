@@ -18,6 +18,40 @@ body
 	background:url(../images/logo.png) no-repeat;
 }
 
+.user_info
+{
+	margin-left:20px;
+	margin-top:5px;
+	width:130px;
+}
+
+.logout
+{
+	cursor:pointer;
+}
+
+.tooltip
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	background-color:#000;
+	box-shadow: 1px 1px 1px #9DA5A8;
+	text-align:center;
+	width:80px;
+	height:30px;
+	color:#fff;
+	line-height:30px;
+	filter:Alpha(Opacity=70);
+	opacity:0.7;
+}
+
+.user_info img
+{
+	width:16px;
+	height:16px;
+}
+
 
 .log_content
 {

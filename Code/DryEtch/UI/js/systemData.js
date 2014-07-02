@@ -1,4 +1,16 @@
 ﻿var setIntervalID;
+
+function  permissionCheck()
+{
+	var user_info = top.USER_INFO;
+	console.log(user_info);
+	if (user_info["data"] && user_info["data"] == "readonly")
+	{
+		$(".conf_btn").attr("class", "conf_btn disable_btn");
+		$(".conf_btn").attr("disabled", "disabled");		
+	}
+}
+
 $(document).ready(function () {
     var xmlDom = getSyncXmlData('./config/systemdata.xml');
     for (var i = 0; i < xmlDom.firstChild.children.length; i++) {
@@ -80,6 +92,7 @@ function getHtml(node, element) {
             beginID = node.attributes["lb"].textContent;
             endID = node.attributes["hb"].textContent;
             isFetchAll = false;
+			permissionCheck();
         }
         var textnode = document.createTextNode(node.tagName);
         el.appendChild(textnode);
@@ -103,6 +116,7 @@ function getHtml(node, element) {
             beginID = node.attributes["lb"];
             endID = node.attributes["hb"];
             isFetchAll = false;
+			permissionCheck();
         }
     }
 }
@@ -131,11 +145,11 @@ function getContent(name,min, max, precision, readonly, id, unit, i) {
         if (i % 2 == 1) {
             return '<td>' + id + '</td><td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input  class="conf_disable" type="text" id=' + id + ' disabled /></td><td  width="80px"><input class="conf_input"   type="text" id="textbox'
               + i + '" /></td><td  width="50px">' + unit + '</td><td style="text-align:left">'
-               + '<input class="conf_btn" pid="' + id + '" precision="' + precision + '" max="' + max + '" min="' + min + '"  txtID="textbox' + i + '" type="button" onclick="buttonClick(this);" value="set" /></td></tr>';
+               + '<input class="conf_btn enable_btn" pid="' + id + '" precision="' + precision + '" max="' + max + '" min="' + min + '"  txtID="textbox' + i + '" type="button" onclick="buttonClick(this);" value="set" /></td></tr>';
         }
         return '<tr><td>' + id + '</td><td width="80px"  style="text-align:left">' + name + '</td><td width="70px"><input class="conf_disable" type="text" id=' + id + ' disabled /></td><td  width="80px"><input class="conf_input"   type="text" id="textbox'
               + i + '" /></td><td  width="50px">' + unit + '</td><td style="text-align:left">'
-               + '<input class="conf_btn" pid="' + id + '" precision="' + precision + '" max="' + max + '" min="' + min + '"  txtID="textbox' + i + '" type="button" onclick="buttonClick(this);" value="set" /></td>';
+               + '<input class="conf_btn enable_btn" pid="' + id + '" precision="' + precision + '" max="' + max + '" min="' + min + '"  txtID="textbox' + i + '" type="button" onclick="buttonClick(this);" value="set" /></td>';
     }
    
 }

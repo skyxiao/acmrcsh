@@ -54,7 +54,7 @@ body
 	margin-right:auto;
 }
 
-#Button1
+.get_data_enable
 {
 	margin-left:20px;
 	-moz-border-radius : 5px;      /* Gecko browsers */
@@ -65,7 +65,18 @@ body
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
 }
 
-#Button1:hover
+.get_data_disable
+{
+	margin-left:20px;
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	width : 80px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#A9ABAB));
+}
+
+.get_data_enable:hover
 {
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
 }

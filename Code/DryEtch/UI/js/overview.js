@@ -7,6 +7,26 @@ var r = 110;
 var lr = 70;
 var setIntervalID2;
 
+function  permissionCheck()
+{
+	var user_info = top.USER_INFO;
+	if (user_info["overview"] && user_info["overview"] == "readonly")
+	{
+		$(".auto").attr("disabled", "disabled");
+		$(".auto").removeClass("enable_button");
+		$(".auto").addClass("disabled_button");
+		$(".abort").removeClass("enable_button");
+		$(".abort").addClass("disabled_button");
+		$(".abort").attr("disabled", "disabled");
+		$(".recipe_opreation").removeClass("long_btn_enable");
+		$(".recipe_opreation").attr("disabled", "disabled");
+		$(".recipe_opreation").addClass("long_btn_disable");
+		$(".btn_ok").attr("disabled", "disabled");
+		$(".btn_ok").removeClass("enable_button");
+		$(".btn_ok").addClass("disabled_button");
+	}
+}
+
 function clearSetInterval()
 {
 	clearInterval(setIntervalID);
@@ -274,116 +294,121 @@ $(document).ready(function () {
     $("#thirdWinfer").attr("style", "position: absolute; left:" + three[0] + "px; top:" + three[1] + "px");
     //console.log("three,position: absolute; left:" + three[0] + "px; top:" + three[1] + "px");
 
-    $(".Mask1").contextMenu('myMenu1',
-    {
-		shadow:false,
-		menuStyle: {
-			border:'1px solid #158895',
-			width : '150px',
-			"z-index":900,
-			'border-radius' : '5px',
-			background:'-webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F))'
-		},
-		itemStyle: {
-			background:"none",
-			color: 'white',
-			border: 'none',
-			'font-weight':'normal',
-			'padding-left':'5px'
+	function initMenu()
+	{
+		$(".Mask1").contextMenu('myMenu1',
+		{
+			shadow:false,
+			menuStyle: {
+				border:'1px solid #158895',
+				width : '150px',
+				"z-index":900,
+				'border-radius' : '5px',
+				display: top.USER_INFO.overview && top.USER_INFO.overview == "readonly" ? "none" : "",
+				background:'-webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F))'
+			},
+			itemStyle: {
+				background:"none",
+				color: 'white',
+				border: 'none',
+				'font-weight':'normal',
+				'padding-left':'5px'
 
-		},
-		itemHoverStyle: {
-			color: '#fff',
-			background: '-webkit-gradient(linear, left top, left bottom, from(#0A68BA), to(#044D71))',
-			border: 'none',
-			'font-weight':'bold'
-		},
-        bindings:
-        {
-			'HOME': function (t) {
-				getControl().invoke(0, 1001);
-            },
-            'PUMP': function (t) {
-				getControl().invoke(0, 1007, 0);
-            },
-            'VENT': function (t) {
-				getControl().invoke(0, 1008, 0);
-            },
-            'PINUP': function (t) {
-                getControl().invoke(0, 1010);
-            },
-			'PINDOWN': function (t){
-				getControl().invoke(0, 1011);
 			},
-			'OPEN_DOOR': function (t){
-				getControl().invoke(0, 1017);
+			itemHoverStyle: {
+				color: '#fff',
+				background: '-webkit-gradient(linear, left top, left bottom, from(#0A68BA), to(#044D71))',
+				border: 'none',
+				'font-weight':'bold'
 			},
-			'CLOSE_DOOR': function (t) {
-				getControl().invoke(0, 1018);
-			},
-			'TURNON_HEATER': function (t) {
-				getControl().invoke(0, 1012);
-			},
-			'TURNOFF_HEATER': function (t) {
-				getControl().invoke(0, 1013);
-			},
-			'ROTATE_FORWARD': function (t) {
-				getControl().invoke(0, 1015);
-			},
-			'ROTATE_BACKWARD': function (t) {
-				getControl().invoke(0, 1016);
-			},
-			'LOAD': function (t) {
-				getControl().invoke(0, 1002);
-			},
-			'UNLOAD': function (t) {
-				getControl().invoke(0, 1003);
+			bindings:
+			{
+				'HOME': function (t) {
+					getControl().invoke(0, 1001);
+				},
+				'PUMP': function (t) {
+					getControl().invoke(0, 1007, 0);
+				},
+				'VENT': function (t) {
+					getControl().invoke(0, 1008, 0);
+				},
+				'PINUP': function (t) {
+					getControl().invoke(0, 1010);
+				},
+				'PINDOWN': function (t){
+					getControl().invoke(0, 1011);
+				},
+				'OPEN_DOOR': function (t){
+					getControl().invoke(0, 1017);
+				},
+				'CLOSE_DOOR': function (t) {
+					getControl().invoke(0, 1018);
+				},
+				'TURNON_HEATER': function (t) {
+					getControl().invoke(0, 1012);
+				},
+				'TURNOFF_HEATER': function (t) {
+					getControl().invoke(0, 1013);
+				},
+				'ROTATE_FORWARD': function (t) {
+					getControl().invoke(0, 1015);
+				},
+				'ROTATE_BACKWARD': function (t) {
+					getControl().invoke(0, 1016);
+				},
+				'LOAD': function (t) {
+					getControl().invoke(0, 1002);
+				},
+				'UNLOAD': function (t) {
+					getControl().invoke(0, 1003);
+				}
 			}
-		}
-	});
+		});
 
-	$(".Mask2").contextMenu('myMenu2',
-    {
-		shadow:false,
-		menuStyle: {
-			border:'1px solid #158895',
-			width : '150px',
-			"z-index":900,
-			'border-radius' : '5px',
-			background:'-webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F))'
-		},
-		itemStyle: {
-			background:"none",
-			color: 'white',
-			border: 'none',
-			'font-weight':'normal',
-			'padding-left':'5px'
+		$(".Mask2").contextMenu('myMenu2',
+		{
+			shadow:false,
+			menuStyle: {
+				border:'1px solid #158895',
+				width : '150px',
+				"z-index":900,
+				display: top.USER_INFO.overview && top.USER_INFO.overview == "readonly" ? "none" : "",
+				'border-radius' : '5px',
+				background:'-webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F))'
+			},
+			itemStyle: {
+				background:"none",
+				color: 'white',
+				border: 'none',
+				'font-weight':'normal',
+				'padding-left':'5px'
 
-		},
-		itemHoverStyle: {
-			color: '#fff',
-			background: '-webkit-gradient(linear, left top, left bottom, from(#0A68BA), to(#044D71))',
-			border: 'none',
-			'font-weight':'bold'
-		},
-        bindings:
-        {
-			'ARM_IN': function (t) {
-				getControl().invoke(0, 1019);
 			},
-			'ARM_OUT': function (t) {
-				getControl().invoke(0, 1020);
+			itemHoverStyle: {
+				color: '#fff',
+				background: '-webkit-gradient(linear, left top, left bottom, from(#0A68BA), to(#044D71))',
+				border: 'none',
+				'font-weight':'bold'
 			},
-			'FORK_VERTICAL': function (t) {
-				getControl().invoke(0, 1021);
-			},
-			'FORK_HORIZONTAL': function (t) {
-				getControl().invoke(0, 1022);
+			bindings:
+			{
+				'ARM_IN': function (t) {
+					getControl().invoke(0, 1019);
+				},
+				'ARM_OUT': function (t) {
+					getControl().invoke(0, 1020);
+				},
+				'FORK_VERTICAL': function (t) {
+					getControl().invoke(0, 1021);
+				},
+				'FORK_HORIZONTAL': function (t) {
+					getControl().invoke(0, 1022);
+				}
 			}
-		}
-	});
+		});
+	}
 
-   
+	setTimeout(initMenu, 200);   
 //    setPropertyChange(updateProperty);
 
 });

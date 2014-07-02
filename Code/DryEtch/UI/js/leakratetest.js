@@ -11,6 +11,21 @@ var range = {
 	"LeakCheckPumpHTime" : [0, 600]
 };
 
+function  permissionCheck()
+{
+	var user_info = top.USER_INFO;
+	if (user_info["leakcheck"] && user_info["leakcheck"] == "readonly")
+	{
+		$("input").attr("disabled", "disabled");
+		$(".exp_chamber_btn").text("Expansion chamber test start");
+		$(".pro_chamber_btn").text("Process chamber test start");
+		$(".pro_chamber_btn").attr("disabled", "disabled");
+		$(".exp_chamber_btn").attr("disabled", "disabled");
+		$(".btn_box").find("button").removeClass("enable_button");
+		$(".btn_box").find("button").addClass("disabled_button");
+	}
+}
+
 function getParam()
 {
 	var confJson = {};
@@ -154,6 +169,11 @@ function getSettings()
 		
 		}
 	}*/
+
+	if (top.USER_INFO.leakcheck && top.USER_INFO.leakcheck == "readonly")
+	{
+		return;
+	}
 
 	if (status == 0)
 	{

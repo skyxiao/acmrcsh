@@ -29,6 +29,17 @@ var lineColor = {
 	"6000" : "#24F41D"
 };
 
+function  permissionCheck()
+{
+	var user_info = top.USER_INFO;
+	if (user_info["monitor"] && user_info["monitor"] == "readonly")
+	{
+		$("input").attr("disabled", "disabled");
+		$("button").attr("class", "disable_btn");
+		$("button").attr("disabled", "disabled");
+	}
+}
+
 function initChart() {
 	$("#canvas").remove();
 	$(".canvas_box").append('<canvas id="canvas" width="850" height="600" style="padding:0px;">This browser does not seem to support HTML5 Canvas.</canvas>');

@@ -29,15 +29,15 @@ function valve(left, top,class1,class2,id) {
     this.class1 = class1;
     this.class2 = class2;
     this.click = function () {
-		clearInterval(setIntervalID);
+		//clearInterval(setIntervalID);
         if (prpos[id] == "1") {
             modifySystemData(id, "0");
         }
         else {
             modifySystemData(id, "1");
         }
-		getVoleStatus();
-		setIntervalID = setInterval(getVoleStatus, 500);
+		//getVoleStatus();
+		//setIntervalID = setInterval(getVoleStatus, 500);
     }
 }
 $(document).ready(function () {
@@ -440,6 +440,8 @@ function getVoleStatus()
             alert(e);
             clearInterval(setIntervalID);
         }
+
+		delete data;
 }
 
 function clearSetInterval()

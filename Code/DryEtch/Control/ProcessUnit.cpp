@@ -1696,7 +1696,8 @@ bool ProcessUnit::OnOpenDoor()
 
 	NEW_UNIT_STEP("open door", true)
 		ADD_STEP_COMMAND([&]()
-		{	Data::doCbGateVal = 1;})
+		{	Data::doCbGateOpen = 1;
+			Data::doCbGateClose = 0;})
 		ADD_STEP_WAIT_CONDITION([&]()->bool
 		{	return Data::diPrcCbDoorOpen == 1 && Data::diPrcCbDoorClose == 0;},
 			Parameters::GateValveTimeout,
@@ -1715,7 +1716,8 @@ void ProcessUnit::OnCloseDoor()
 
 	NEW_UNIT_STEP("close door", true)
 		ADD_STEP_COMMAND([&]()
-		{	Data::doCbGateVal = 0;})
+		{	Data::doCbGateOpen = 0;
+			Data::doCbGateClose = 1;})
 		ADD_STEP_WAIT_CONDITION([&]()->bool
 		{	return Data::diPrcCbDoorOpen == 0 && Data::diPrcCbDoorClose == 1;},
 			Parameters::GateValveTimeout,

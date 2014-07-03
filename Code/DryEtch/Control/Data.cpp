@@ -124,7 +124,8 @@ SystemData<unsigned> doPinDown(1063,"doPinDown","DO",0,1,0,0,1,63,0,1,true);
 SystemData<unsigned> doArmOut(1064,"doArmOut","DO",0,1,0,0,1,64,0,1,true);
 SystemData<unsigned> doForkHorizontal(1065,"doForkHorizontal","DO",0,1,0,0,1,65,0,1,true);
 SystemData<unsigned> doVapInletVal(1067,"doVapInletVal","DO",0,1,0,0,1,67,0,1,true);
-SystemData<unsigned> doCbGateVal(1071,"doCbGateVal","DO",0,1,0,0,1,71,0,1,true);
+SystemData<unsigned> doCbGateOpen(1071,"doCbGateOpen","DO",0,1,0,0,1,71,0,1,true);
+SystemData<unsigned> doCbGateClose(1072,"doCbGateClose","DO",0,1,0,0,1,72,0,1,true);
 
 
 

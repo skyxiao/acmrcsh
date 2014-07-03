@@ -141,9 +141,9 @@ void Interlock::Initialize()
 	PRE_INTERLOCK(doExpCbVacIPASupply, 1, diCbLeftDoorClose, 0)
 	PRE_INTERLOCK(doExpCbVacIPASupply, 1, diCbRightDoorClose, 0)
 
-	PRE_INTERLOCK(doCbGateVal, 0, diArmOut, 0)
-	PRE_INTERLOCK(doCbGateVal, 1, ProcChamberDirty, 1)
-	PRE_INTERLOCK_AI_LT(doCbGateVal, 1, aiProcChamPressure, Parameters::ATMPressure)
+	PRE_INTERLOCK(doCbGateClose, 1, diArmOut, 0)
+	PRE_INTERLOCK(doCbGateOpen, 1, ProcChamberDirty, 1)
+	PRE_INTERLOCK_AI_LT(doCbGateOpen, 1, aiProcChamPressure, Parameters::ATMPressure)
 
 	PRE_INTERLOCK(doAxisExecute, 0, diPinDown, 0)
 	PRE_INTERLOCK(doAxisExecute, 0, diPinUp, 1)

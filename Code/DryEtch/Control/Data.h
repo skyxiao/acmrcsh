@@ -133,8 +133,8 @@ extern SystemData<unsigned> doPinDown;
 extern SystemData<unsigned> doArmOut;
 extern SystemData<unsigned> doForkHorizontal;
 extern SystemData<unsigned> doVapInletVal;
-extern SystemData<unsigned> doCbGateVal;
-
+extern SystemData<unsigned> doCbGateOpen;
+extern SystemData<unsigned> doCbGateClose;
 
 //AI
 extern SystemData<float> aiFacPressure;

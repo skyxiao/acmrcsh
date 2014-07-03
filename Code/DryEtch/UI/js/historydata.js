@@ -1,4 +1,15 @@
 ﻿var Chart1, scroller,tip;
+var drawType = [];
+var currentData = {};
+var TypeMax = {
+	"N2": 5000,
+	"EtOH": 700,
+	"HF": 2000,
+	"Pressure": 5000,
+	"Chuck": 1000,
+	"Lid":1000,
+	"Body":1000
+};
 
 function  permissionCheck()
 {
@@ -9,6 +20,7 @@ function  permissionCheck()
 		$("#Button1").attr("disabled", "disabled");
 		$(".historydata_content").find("input").attr("disabled", "disabled");
 		$(".historydata_content").find("select").attr("disabled", "disabled");
+		$(".typelist").find("input").attr("disabled", "disabled");
 	}
 }
 
@@ -34,9 +46,9 @@ function initChart() {
     Chart1.axes.bottom.setMinMax(x1[2], x1[5]);
     Chart1.axes.bottom.labels.roundFirst = true;
     Chart1.zoom.enabled = false;
-    Chart1.scroll.mouseButton = 0;
-    Chart1.scroll.direction = "horizontal";
-    scroller = new Tee.Scroller("canvas2", Chart1);
+   // Chart1.scroll.mouseButton = 0;
+    //Chart1.scroll.direction = "horizontal";
+    //scroller = new Tee.Scroller("canvas2", Chart1);
    
     Chart1.draw();
 }
@@ -44,155 +56,245 @@ function initChart() {
 function draw(results) {
     Chart1 = new Tee.Chart("canvas");
     Chart1.title.visible = false;
-    Chart1.axes.bottom.labels.dateFormat = "isoTime";
+    Chart1.axes.bottom.labels.dateFormat = "isoDateTime1";
 	Chart1.axes.bottom.labels.format.font.fill = "white";
 	Chart1.axes.left.labels.format.font.fill = "white";	
+	var flag = false;
     //var series1 = Chart1.addSeries(new Tee.Line());
-	var series1 = Chart1.addSeries(new Tee.PointXY());
-	series1.pointer.width = 3;
-	series1.pointer.height = 3;
-	//series1.pointer.style = "circular";
-    series1.addRandom(results.length);
-    series1.title = $("#ddlType").val();
-    series1.data.x = new Array(series1.count());
-    for (t = 0; t < series1.count(); t++) {
-        tmp = new Date(results[t]['time']);
-        series1.data.x[t] = tmp;
-        series1.data.values[t] = results[t]['data'];
+	for (var i = 0; i < drawType.length; ++i)
+	{
+		var res = results[drawType[i]];
+		if (!res || res.length == 0)
+		{
+			continue;
+		}
+
+		flag = true;
+		var series1 = Chart1.addSeries(new Tee.PointXY());
+		//var series1 = Chart1.addSeries(new Tee.Line());
+		series1.pointer.format.stroke.fill = "";
+		series1.pointer.format.shadow.color = "";
+		series1.pointer.width = 4;
+		series1.pointer.height = 4;
+
+		series1.addRandom(res.length);
+		series1.title = drawType[i];
+		series1.data.x = new Array(series1.count());
+
+		for (t = 0; t < series1.count(); t++) 
+		{
+			var tmp = new Date(res[t]['time']);
+			series1.data.x[t] = tmp;
+			series1.data.values[t] = parseFloat(res[t]['data']) / TypeMax[drawType[i]];
+		}
+
+		series1["typeFlag"] = drawType[i];
     }
+	
+	if (!flag)
+	{
+		var series1 = Chart1.addSeries(new Tee.Line());
+		series1.pointer.width = 0;
+		series1.pointer.height = 0;
+		series1.addRandom(10);
+		series1.data.x = new Array(series1.count());
+		for (t = 0; t < series1.count(); t++) {
+			series1.data.x[t] = t;
+			series1.data.values[t] = 0;
+		}
+	}
+    
     Chart1.title.text = $("#ddlType").val();
     Chart1.panel.transparent = true;
-    Chart1.legend.visible = false;
-    var x1 = series1.data.x;
-    var length = x1.length;
-    Chart1.axes.bottom.setMinMax(x1[0].getTime(), x1[length - 1].getTime());
+    Chart1.legend.visible = true;
+	if (!flag)
+	{
+		Chart1.legend.visible = false;
+	}
+	
     Chart1.axes.bottom.labels.roundFirst = true;
-    Chart1.zoom.enabled = false;
-    Chart1.scroll.mouseButton = 0;
-    Chart1.scroll.direction = "horizontal";
-    scroller = new Tee.Scroller("canvas2", Chart1);
-    scroller.onChanging = function (s, min, max) {
-//        var mi = new Date(min);//.toDateString(),
-//        ma = new Date(max);//.toDateString();
-//        document.getElementById("data").textContent = "Showing data from " + mi + " to " + ma;
-    }
+	Chart1.zoom.direction = "horizontal";
+	Chart1.zoom.enabled = true;
+	if (!flag)
+	{
+		Chart1.zoom.enabled = false;
+		Chart1.scroll.enabled = false;
+	}
+    //Chart1.scroll.mouseButton = 0;
+
+	Chart1.scroll.direction = "horizontal";
+   // scroller = new Tee.Scroller("canvas2", Chart1);
     tip = new Tee.ToolTip(Chart1);
     Chart1.tools.add(tip);
     tip.ongettext = function (tool, text, series, index) {
-        if (tip.render == "dom")
-            return 'Value: ' + series.data.values[index];
-        else
-            return 'Value: ' + series.data.values[index];
+		var value = "";
+		if (series["typeFlag"])
+		{
+			value += "Value: " + (parseFloat(series.data.values[index]) * TypeMax[series["typeFlag"]]);
+		}
+		
+		return value;
     }
-    Chart1.legend.visible = true;
+
+    //Chart1.legend.visible = true;
+	//Chart1.scroll.enabled = true;
     Chart1.legend.legendStyle = "series";
     Chart1.legend.position = "right";
     Chart1.draw();
 }
 
+function checkDrawType()
+{
+	drawType = [];
+	$(".typelist").find("input").each(function(){
+		if (this.checked)
+		{
+			var type = $(this).next().text().trim();
+			drawType.push(type);
+		}
+	});
+}
 
-function testConnectMysql() {
-    var fs = require('fs');
-	try
-	{
-		var connect = $.parseJSON(fs.readFileSync('./config/database.json'));
-		var mysql = require('mysql');
-		var TEST_DATABASE = connect.database.database; //  'test';
+function getAllWafer()
+{
+	init();
+	var connection = getSqlConnection();
+	var sql = "select id from wafer_process where 1";
+		
+	connection.query(
+		sql,
+		function selectCb(err, results, fields) {
+		if (err)
+		{
+			writeLog("error", err);
+			connection.end();
+			return;
+		}
 
-		var connection = mysql.createConnection({
-			host: connect.database.host,
-			user: connect.database.user,
-			password: connect.database.password,
-			port: connect.database.port
+		var option = "";
+
+		for (var i = 0; i < results.length; ++i)
+		{
+			if (i == 0)
+			{
+				option += "<option value='" + results[i]["id"] + "' selected='selected'>" + results[i]["id"] + "</option>";
+			}
+			else
+			{
+				option += "<option value='" + results[i]["id"] + "'>" + results[i]["id"] + "</option>";
+			}
+		}
+
+		$("#ddlType").empty();
+		$("#ddlType").append(option);
+		$("#ddlType").change(function(){
+			var id = $(this).val().trim();
+			displayData(id);
 		});
 
-		connection.query('USE ' + TEST_DATABASE, function(err){
+		var curId = $("#ddlType").val();
+		if (curId)
+		{
+			displayData(curId.trim());
+		}
+
+		connection.end();
+	});
+}
+
+function displayData(id)
+{
+	checkDrawType();
+	var connection = getSqlConnection();
+	var sql = "select start_time, end_time from wafer_process where id='" + id + "'";
+	connection.query(
+		sql,
+		function selectCb(err, results, fields) {
 			if (err)
 			{
 				writeLog("error", err);
 				connection.end();
 				return;
 			}
-		});
-		//var data = Math.random() * 100;
-		//console.log('call dry_etch.record_data(DATE_ADD(now(), INTERVAL ' + 1 + ' SECOND), "HF",' + data + ');');
-		//connection.query('call dry_etch.record_data(DATE_ADD(now(), INTERVAL ' + 1 + ' SECOND), "HF",' + data + ');');
-		for (var i = 0; i < 10000; i++) {
-			var data = Math.random() * 100;
-			connection.query('call dry_etch.record_data(DATE_ADD(now(), INTERVAL ' + i + ' SECOND), "HF",' + data + ');', function(err){
+
+			if (results.length > 0)
+			{
+				var startTime = (new Date(results[0]["start_time"])).format("yyyy-mm-dd HH:MM:ss");
+				var endTime = (new Date(results[0]["end_time"])).format("yyyy-mm-dd HH:MM:ss");
+
+				$("#txBeginTime").val(startTime);
+				$("#txEndTime").val(endTime);
+				drawData(startTime, endTime);
+			}
+
+			connection.end();
+	});
+}
+
+function drawData(startTime, endTime)
+{
+	var connection = getSqlConnection();
+	var dataCount = 0;
+	var relData = {};
+	var typeArr = ["N2", "EtOH", "HF", "Pressure", "Chuck", "Lid", "Body"];
+
+	for (var i = 0; i < typeArr.length; ++i)
+	{
+		var sql = "select time, type, data from process_data where type='" + typeArr[i] + "' and time >= '" + startTime + "' and time <= '" + endTime + "'";
+		connection.query(
+			sql,
+			function selectCb(err, results, fields) {
 				if (err)
 				{
 					writeLog("error", err);
 					connection.end();
 					return;
 				}
-			});
-		}
+
+				if (results.length > 0)
+				{
+					var type = results[0]["type"];
+					relData[type] = results;
+				}
+
+				dataCount += 1;
+				if (dataCount == 7)
+				{
+					connection.end();
+					currentData = relData;
+					draw(relData);
+				}
+		});
 	}
-	catch (e)
-	{
-		writeLog("exception", e);
-	}
-    
 }
 
-function getData() {
-    var begin = $("#txBeginTime").val();
-    var end = $("#txEndTime").val();
-    if (begin == "") {
-        alert("Begin Time can be null,please input begin time");
-        return;
-    }
-    if (end == "") {
-        alert("End Time can be null,please input end time");
-        return;
-    }
-    var type = $("#ddlType").val();
-    var fs = require('fs');
-	try
-	{
-		var connect = $.parseJSON(fs.readFileSync('./config/database.json'));
-		var mysql = require('mysql');
-		var TEST_DATABASE = connect.database.database; //  'test';
+function init()
+{
+	$(".typelist").find("input").click(function(){
+		checkDrawType();
+		draw(currentData);
+	});
+}
 
-		var connection = mysql.createConnection({
-			host: connect.database.host,
-			user: connect.database.user,
-			password: connect.database.password,
-			port: connect.database.port
-		});
-		connection.query('USE ' + TEST_DATABASE, function(err){
-			if (err)
-			{
-				writeLog("error", err);
-				connection.end();
-				return;
-			}
-		});
-		var sql = 'SELECT  * FROM process_data where type="' + type + '" and time>="' + begin + '" and time <="' + end + '" limit 1500';
-		console.log(sql);
-		connection.query(
-		  sql,
-		  function selectCb(err, results, fields) {
-			if (err) 
-			{ 
-				writeLog("error", err);
-				connection.end();
-				return; 
-			}
-			
-			if (results.length > 0) {
-				  draw(results);
-			}
-			else {
-				alert("No data get it");
-			}
-			connection.end();
-		 }
-	   );
-	}
-	catch (e)
+function Refresh()
+{
+	getAllWafer();
+	/*
+	var startTime = $("#txBeginTime").val();
+	if (startTime)
 	{
-		writeLog("exception", e);
+		startTime = startTime.trim();
 	}
+
+	var endTime = $("#txEndTime").val();
+
+	if (endTime)
+	{
+		endTime = endTime.trim();
+	}
+
+	if (startTime || endTime)
+	{
+		drawData(startTime, endTime);
+	}*/
 }

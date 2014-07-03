@@ -191,6 +191,8 @@ function showUserInfo(This)
 		$(".userselect").attr("isSave", "false");
 	});
 
+	$(".overview").attr("disabled", "disabled");
+
 	permissionCheck();
 }
 

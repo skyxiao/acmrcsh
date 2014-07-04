@@ -59,6 +59,7 @@ function draw(results) {
     Chart1.axes.bottom.labels.dateFormat = "isoDateTime1";
 	Chart1.axes.bottom.labels.format.font.fill = "white";
 	Chart1.axes.left.labels.format.font.fill = "white";	
+	Chart1.axes.left.labels.visible = false;
 	var flag = false;
     //var series1 = Chart1.addSeries(new Tee.Line());
 	for (var i = 0; i < drawType.length; ++i)

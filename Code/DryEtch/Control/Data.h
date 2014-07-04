@@ -63,6 +63,11 @@ extern SystemData<unsigned> diAlcTkHighHigh;
 extern SystemData<unsigned> diAlcTkOverfill;
 extern SystemData<unsigned> diVPumpWarning;
 extern SystemData<unsigned> diVPumpAlarm;
+extern SystemData<unsigned> diPlumbing1Alarm;
+extern SystemData<unsigned> diPlumbing2Alarm;
+extern SystemData<unsigned> diPlumbing3Alarm;
+extern SystemData<unsigned> diPlumbing4Alarm;
+extern SystemData<unsigned> diPlumbing5Alarm;
 extern SystemData<unsigned> diProcCbBodyHeater;
 extern SystemData<unsigned> diProcCbLidHeater;
 extern SystemData<unsigned> diProcCbChuckHeater;
@@ -87,6 +92,7 @@ extern SystemData<unsigned> diCbLeftDoorClose;
 extern SystemData<unsigned> diCbRightDoorClose;
 extern SystemData<unsigned> diProcCbHFLeak;
 extern SystemData<unsigned> diCDAInletAlarm;
+extern SystemData<unsigned> diEStop;
 
 //DO
 extern SystemData<unsigned> aoRedLight;
@@ -133,8 +139,8 @@ extern SystemData<unsigned> doPinDown;
 extern SystemData<unsigned> doArmOut;
 extern SystemData<unsigned> doForkHorizontal;
 extern SystemData<unsigned> doVapInletVal;
-extern SystemData<unsigned> doCbGateVal;
-
+extern SystemData<unsigned> doCbGateOpen;
+extern SystemData<unsigned> doCbGateClose;
 
 //AI
 extern SystemData<float> aiFacPressure;
@@ -145,7 +151,8 @@ extern SystemData<float> aiHFSupplyPressure;
 extern SystemData<float> aiAlcGasLeak;
 extern SystemData<float> aiHFGasboxPPM;
 extern SystemData<float> aiHFChamberPPM;
-
+extern SystemData<float> aiGasboxTC;
+extern SystemData<float> aiPipelineTC;
 
 //AO
 

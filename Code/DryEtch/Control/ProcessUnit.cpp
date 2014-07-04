@@ -73,6 +73,8 @@ void ProcessUnit::Initialize()
 		IntervalRecordItem("Lid", 1000, [&](){return (float)Data::aiLidHTTemp;})));
 	DataRecorder::Instance().Add("Body", boost::shared_ptr<RecordItem>(new 
 		IntervalRecordItem("Body", 1000, [&](){return (float)Data::aiBodyHTTemp;})));
+	DataRecorder::Instance().Add("Tank", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("Tank", 1000, [&](){return (float)Data::aiAlcTankPressure;})));
 	DataRecorder::Instance().Add("ChuckLF", boost::shared_ptr<RecordItem>(new 
 		IntervalRecordItem("Chuck", 60000, [&](){return (float)Data::aiChuckHTTemp;}, true)));
 	DataRecorder::Instance().Add("LidLF", boost::shared_ptr<RecordItem>(new 
@@ -139,7 +141,43 @@ UnitTask ProcessUnit::GetNextTask()
 			}
 			else
 			{
-				return UnitTask{COMMAND_PROCESS, 0, 0};
+				if(Data::diAlcTkLow == 1)
+				{
+					EVT::GenericWarning.Report("Alcohol tank level is too low.");
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else
+					return UnitTask{COMMAND_PROCESS, 0, 0};
 			}
 		}
 	}
@@ -230,6 +268,7 @@ void ProcessUnit::SafeHandle()
 		DataRecorder::Instance().Disable("Chuck");
 		DataRecorder::Instance().Disable("Lid");
 		DataRecorder::Instance().Disable("Body");
+		DataRecorder::Instance().Disable("Tank");
 		DataRecorder::Instance().Enable("ChuckLF");
 		DataRecorder::Instance().Enable("LidLF");
 		DataRecorder::Instance().Enable("BodyLF");
@@ -297,6 +336,14 @@ bool ProcessUnit::OnlinePrecheck()
 		EVT::HeaterTempOutRange.Report();
 		return false;
 	}
+
+	if(Data::diAlcPrsLLmt)
+	{
+		EVT::AlcGasPressureLow.Report();
+		return false;
+	}
+
+	Data::doPurgeAlcTank = 1;
 
 	return true;
 }
@@ -389,22 +436,12 @@ void ProcessUnit::TranslateTask(const UnitTask& task)
 
 void ProcessUnit::OnHome()
 {
-	if(Data::diArmOut == 0)
-	{
-		OnRetractArm();
-	}
+	OnRetractArm();
+	OnForkVertical();
+	OnCloseDoor();
+	OnPinDown();
 
-	if(Data::diPrcCbDoorClose == 0)
-	{
-		OnCloseDoor();
-	}
-
-	if(Data::diPinDown == 0)
-	{
-		OnPinDown();
-	}
-
-	NEW_UNIT_STEP("home", false)
+	NEW_UNIT_STEP("home chuck motor", false)
 		ADD_STEP_COMMAND([&](){	Data::doAxisServoOn = 1;})
 		ADD_STEP_WAIT_CONDITION([&]()->bool
 		{	return Data::diAxisServoDone == 1;},
@@ -734,19 +771,10 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		Data::doExpCbHFInletVal = 0;
 		Data::doVaHFValve = 0;
 		Data::aoHFFlowSetpoint = 0;
+		Monitor::Instance().Disable("HF flowrate");
 	}
 	else
 	{
-		if (bps_mode == BypassMode_Bypass)
-		{
-			Data::doExpCbHFInletVal = 0;
-			Data::doVaHFValve = 1;
-		}
-		else
-		{
-			Data::doExpCbHFInletVal = 1;
-			Data::doVaHFValve = 0;
-		}
 
 		flowrate = recipe_step.HFFlowrate();
 		flow_warn_offset = 0.01 * flowrate * Parameters::FlowWarnProportion;
@@ -754,7 +782,18 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		flow_alarm_offset = 0.01 * flowrate * Parameters::FlowAlarmProportion;
 		flow_alarm_offset = std::max<float>(Parameters::FlowAlarmMinimum, flow_alarm_offset);
 		Data::aoHFFlowSetpoint = flowrate;
-		Monitor::Instance().Reset("HF flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
+		if (bps_mode == BypassMode_Bypass)
+		{
+			Data::doExpCbHFInletVal = 0;
+			Data::doVaHFValve = 1;
+			Monitor::Instance().Disable("HF flowrate");
+		}
+		else
+		{
+			Data::doExpCbHFInletVal = 1;
+			Data::doVaHFValve = 0;
+			Monitor::Instance().Reset("HF flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
+		}
 	}
 	Data::doHFMFCVal1 = 1;
 	Data::doHFMFCVal2 = 1;
@@ -765,26 +804,28 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		Data::doExpCbVacIPASupply = 0;
 		Data::doVaVapValve = 0;
 		Data::aoEtOHFlowSetpoint = 0;
+		Monitor::Instance().Disable("EtOH flowrate");
 	}
 	else
 	{
+		flowrate = recipe_step.EtOHFlowrate();
+		flow_warn_offset = 0.01 * flowrate * Parameters::EtOHWarnProportion;
+		flow_warn_offset = std::max<float>(Parameters::EtOHWarnMinimum, flow_warn_offset);
+		flow_alarm_offset = 0.01 * flowrate * Parameters::EtOHAlarmProportion;
+		flow_alarm_offset = std::max<float>(Parameters::EtOHAlarmMinimum, flow_alarm_offset);
+		Data::aoEtOHFlowSetpoint = flowrate;
 		if (bps_mode == BypassMode_Bypass)
 		{
 			Data::doExpCbVacIPASupply = 0;
 			Data::doVaVapValve = 1;
+			Monitor::Instance().Disable("EtOH flowrate");
 		}
 		else
 		{
 			Data::doExpCbVacIPASupply = 1;
 			Data::doVaVapValve = 0;
+			Monitor::Instance().Reset("EtOH flowrate", Parameters::EtOHMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
 		}
-		flowrate = recipe_step.EtOHFlowrate();
-		flow_warn_offset = 0.01 * flowrate * Parameters::FlowWarnProportion;
-		flow_warn_offset = std::max<float>(Parameters::FlowWarnMinimum, flow_warn_offset);
-		flow_alarm_offset = 0.01 * flowrate * Parameters::FlowAlarmProportion;
-		flow_alarm_offset = std::max<float>(Parameters::FlowAlarmMinimum, flow_alarm_offset);
-		Data::aoEtOHFlowSetpoint = flowrate;
-		Monitor::Instance().Reset("EtOH flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
 	}
 	Data::doAlcMFCVal1 = 1;
 	Data::doAlcMFCVal2 = 1;
@@ -865,6 +906,7 @@ void ProcessUnit::OnProcess()
 			DataRecorder::Instance().Enable("Chuck");
 			DataRecorder::Instance().Enable("Lid");
 			DataRecorder::Instance().Enable("Body");
+			DataRecorder::Instance().Enable("Tank");
 			//start monitor heater when process start.
 			Monitor::Instance().Reset("Chuck temperature", Parameters::TempMonitorDelay, Parameters::ChuckTemp, 
 				Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
@@ -917,6 +959,7 @@ void ProcessUnit::OnProcess()
 			DataRecorder::Instance().Disable("Chuck");
 			DataRecorder::Instance().Disable("Lid");
 			DataRecorder::Instance().Disable("Body");
+			DataRecorder::Instance().Disable("Tank");
 			DataRecorder::Instance().Enable("ChuckLF");
 			DataRecorder::Instance().Enable("LidLF");
 			DataRecorder::Instance().Enable("BodyLF");
@@ -1564,7 +1607,7 @@ void ProcessUnit::OnPurgeEtOH()
 			Data::doExpCbVacValve = 0;
 			Data::doVaSupplyIPAValve = 0;
 			Data::doAlcTankOpen = 0;
-			Data::doPurgeAlcTank = 0;
+			Data::doPurgeAlcTank = 1;
 			Data::doVapInletVal = 0;})
 	END_UNIT_STEP
 }
@@ -1694,7 +1737,8 @@ bool ProcessUnit::OnOpenDoor()
 
 	NEW_UNIT_STEP("open door", true)
 		ADD_STEP_COMMAND([&]()
-		{	Data::doCbGateVal = 1;})
+		{	Data::doCbGateOpen = 1;
+			Data::doCbGateClose = 0;})
 		ADD_STEP_WAIT_CONDITION([&]()->bool
 		{	return Data::diPrcCbDoorOpen == 1 && Data::diPrcCbDoorClose == 0;},
 			Parameters::GateValveTimeout,
@@ -1713,7 +1757,8 @@ void ProcessUnit::OnCloseDoor()
 
 	NEW_UNIT_STEP("close door", true)
 		ADD_STEP_COMMAND([&]()
-		{	Data::doCbGateVal = 0;})
+		{	Data::doCbGateOpen = 0;
+			Data::doCbGateClose = 1;})
 		ADD_STEP_WAIT_CONDITION([&]()->bool
 		{	return Data::diPrcCbDoorOpen == 0 && Data::diPrcCbDoorClose == 1;},
 			Parameters::GateValveTimeout,

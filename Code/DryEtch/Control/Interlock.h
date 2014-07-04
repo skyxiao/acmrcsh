@@ -27,6 +27,7 @@ public:
 private:
 	void shut_chemical_except_n2();
 	void shut_all_chemical();
+	void report_alcohol_alarm();
 };
 
 #define POST_INTERLOCK_EX(di, func) Data::di.AddChangeSink(func);

@@ -35,6 +35,18 @@ enum WaferSize
 	WaferSize_300mm,
 };
 
+class wafer_info_convertor
+{
+public:
+	static std::string wafer_type_to_string(WaferType type);
+	static std::string wafer_size_to_string(WaferSize size);
+	static std::string wafer_state_to_string(WaferState state);
+
+	static WaferType wafer_type_from_string(const std::string& type);
+	static WaferSize wafer_size_from_string(const std::string& size);
+	static WaferState wafer_state_from_string(const std::string& state);
+};
+
 typedef std::pair<int, unsigned short> WaferSite;
 typedef boost::chrono::time_point<boost::chrono::system_clock> TimePoint;
 
@@ -65,11 +77,6 @@ public:
 	bool IsProcessed();
 	bool IsUnprocessed();
 	bool IsDummy();
-
-private:
-	std::string wafer_type_to_string(WaferType type);
-	std::string wafer_size_to_string(WaferSize size);
-	std::string wafer_state_to_string(WaferState state);
 
 private:
 	std::string m_id;

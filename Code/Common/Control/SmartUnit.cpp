@@ -39,33 +39,8 @@ void SmartUnit::Invoke(unsigned cmd, unsigned param1, unsigned param2)
 {
 	//high priority command can be execute any time
 	boost::recursive_mutex::scoped_lock lock(m_mtx);
-	if(cmd < COMMAND_DELIMITER)
-	{
-		switch(cmd)
-		{
-		case COMMAND_ONLINE:
-			Online();
-			break;
-		case COMMAND_OFFLINE:
-			Offline();
-			break;
-		case COMMAND_RETRY:
-			Retry();
-			break;
-		case COMMAND_ABORT:
-			Abort();
-			break;
-		case COMMAND_PAUSE:
-			Pause();
-			break;
-		case COMMAND_RESUME:
-			Resume();
-			break;
-		}
-		return;
-	}
 
-	if(!CanManualOperate())
+	if(cmd > COMMAND_DELIMITER && !CanManualOperate())
 	{
 		Notify("Unit is busy or online, operation is aborted.");
 		return;
@@ -133,6 +108,36 @@ void SmartUnit::Translate(const UnitTask& task)
 	if (task.command == COMMAND_NONE)
 		return;
 
+	std::stringstream ss;
+	ss<<"Translate task ["<<task.command<<", "<<task.para1<<", "<<task.para2<<"].";
+	LogDebug(ss.str());
+
+	if(task.command < COMMAND_DELIMITER)
+	{
+		switch(task.command)
+		{
+		case COMMAND_ONLINE:
+			Online();
+			break;
+		case COMMAND_OFFLINE:
+			Offline();
+			break;
+		case COMMAND_RETRY:
+			Retry();
+			break;
+		case COMMAND_ABORT:
+			Abort();
+			break;
+		case COMMAND_PAUSE:
+			Pause();
+			break;
+		case COMMAND_RESUME:
+			Resume();
+			break;
+		}
+		return;
+	}
+
 	if(!TaskPrecheck(task))
 		return;
 
@@ -145,10 +150,6 @@ void SmartUnit::Translate(const UnitTask& task)
 	{
 		m_hp--;
 	}
-
-	std::stringstream ss;
-	ss<<"Translate task ["<<task.command<<", "<<task.para1<<", "<<task.para2<<"].";
-	LogDebug(ss.str());
 
 	TranslateTask(task);
 }

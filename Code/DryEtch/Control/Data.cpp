@@ -62,6 +62,11 @@ SystemData<unsigned> diAlcTkHighHigh(48, "diAlcTkHighHigh", "DI", 0, 1, 0, 0, 0,
 SystemData<unsigned> diAlcTkOverfill(49, "diAlcTkOverfill", "DI", 0, 1, 0, 0, 0, 49, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diVPumpWarning(50, "diVPumpWarning", "DI", 0, 1, 0, 0, 0, 50, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diVPumpAlarm(51, "diVPumpAlarm", "DI", 0, 1, 0, 0, 0, 51, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing1Alarm(52, "diPlumbing1Alarm", "DI", 0, 1, 0, 0, 0, 52, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing2Alarm(53, "diPlumbing2Alarm", "DI", 0, 1, 0, 0, 0, 53, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing3Alarm(54, "diPlumbing3Alarm", "DI", 0, 1, 0, 0, 0, 54, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing4Alarm(55, "diPlumbing4Alarm", "DI", 0, 1, 0, 0, 0, 55, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing5Alarm(56, "diPlumbing5Alarm", "DI", 0, 1, 0, 0, 0, 56, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diPrcCbDoorOpen(60, "diPrcCbDoorOpen", "DI", 0, 1, 0, 0, 0, 60, 0, 1, false);
 SystemData<unsigned> diPinUp(61, "diPinUp", "DI", 0, 1, 0, 0, 0, 61, 0, 1, false);
 SystemData<unsigned> diPinDown(62, "diPinDown", "DI", 0, 1, 0, 0, 0, 62, 0, 1, false);
@@ -77,6 +82,7 @@ SystemData<unsigned> diCbLeftDoorClose(76, "diCbLeftDoorClose", "DI", 0, 1, 0, 0
 SystemData<unsigned> diCbRightDoorClose(77, "diCbRightDoorClose", "DI", 0, 1, 0, 0, 0, 77, 0, 1, false);
 SystemData<unsigned> diProcCbHFLeak(78, "diProcCbHFLeak","DI",0,1,0,0,0,78,0,1,false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diCDAInletAlarm(79, "diCDAInletAlarm", "DI", 0, 1, 0, 0, 0, 79, 0, 1, false, "", ConvertNot<unsigned>);
+SystemData<unsigned> diEStop(80, "diEStop", "DI", 0, 1, 0, 0, 0, 80, 0, 1, false, "", ConvertNot<unsigned>);
 
 
 //DO
@@ -124,7 +130,8 @@ SystemData<unsigned> doPinDown(1063,"doPinDown","DO",0,1,0,0,1,63,0,1,true);
 SystemData<unsigned> doArmOut(1064,"doArmOut","DO",0,1,0,0,1,64,0,1,true);
 SystemData<unsigned> doForkHorizontal(1065,"doForkHorizontal","DO",0,1,0,0,1,65,0,1,true);
 SystemData<unsigned> doVapInletVal(1067,"doVapInletVal","DO",0,1,0,0,1,67,0,1,true);
-SystemData<unsigned> doCbGateVal(1071,"doCbGateVal","DO",0,1,0,0,1,71,0,1,true);
+SystemData<unsigned> doCbGateOpen(1071,"doCbGateOpen","DO",0,1,0,0,1,71,0,1,true);
+SystemData<unsigned> doCbGateClose(1072,"doCbGateClose","DO",0,1,0,0,1,72,0,1,true);
 
 
 
@@ -137,6 +144,8 @@ SystemData<float> aiHFSupplyPressure(2008,"aiHFSupplyPressure","AI",0,0,2,0,2,8,
 SystemData<float> aiAlcGasLeak(2010,"aiAlcGasLeak","AI",0,0,1,0,2,10,0,16,false,"%lel", ConvertLinear<float,unsigned>(6540, 32701, 0.0f, 100.0f));
 SystemData<float> aiHFGasboxPPM(2012,"aiHFGasboxPPM","AI",0,0,2,0,2,12,0,16,false,"ppm", ConvertLinear<float,unsigned>(6540, 32701, 0.0f, 10.0f));
 SystemData<float> aiHFChamberPPM(2014,"aiHFChamberPPM","AI",0,0,2,0,2,14,0,16,false,"ppm", ConvertLinear<float,unsigned>(6540, 32701, 0.0f, 10.0f));
+SystemData<float> aiGasboxTC(2022,"aiGasboxTC","AI",0,0,1,0,2,22,0,16,false,"Cels", ConvertRatio<float,short>(10.0f));
+SystemData<float> aiPipelineTC(2024,"aiPipelineTC","AI",0,0,1,0,2,24,0,16,false,"Cels", ConvertRatio<float,short>(10.0f));
 
 
 //AO
@@ -238,43 +247,43 @@ SystemData<float> aoAPCPosition(8038, "aoAPCPosition","DeviceNet",0,7000,1,0,8,3
 
 
 
-//user defined
-SystemData<unsigned> TotalSteps(100011, "TotalSteps", "UserDefine", 0, 1000);
-SystemData<unsigned> CurrentStep(100012, "CurrentStep", "UserDefine", 0, 1000);
-SystemData<std::string> RecipeName(100013, "RecipeName", "UserDefine");
-SystemData<unsigned> RecipeTotalTime(100014, "RecipeTotalTime", "UserDefine", 0, 1000, 0, "s");
-SystemData<unsigned> RecipeElapseTime(100015, "RecipeElapseTime", "UserDefine", 0, 1000, 0, "s");
-SystemData<unsigned> CurrentStepTime(100016, "CurrentStepTime", "UserDefine", 0, 1000, 0, "s");
-SystemData<unsigned> StepElapseTime(100017, "StepElapseTime", "UserDefine", 0, 1000, 0, "s");
+//system defined
+SystemData<unsigned> TotalSteps(100011, "TotalSteps", "System", 0, 1000);
+SystemData<unsigned> CurrentStep(100012, "CurrentStep", "System", 0, 1000);
+SystemData<std::string> RecipeName(100013, "RecipeName", "System");
+SystemData<unsigned> RecipeTotalTime(100014, "RecipeTotalTime", "System", 0, 10000, 0, "s");
+SystemData<unsigned> RecipeElapseTime(100015, "RecipeElapseTime", "System", 0, 10000, 0, "s");
+SystemData<unsigned> CurrentStepTime(100016, "CurrentStepTime", "System", 0, 3000, 0, "s");
+SystemData<unsigned> StepElapseTime(100017, "StepElapseTime", "System", 0, 3000, 0, "s");
 
-SystemData<unsigned> LoadUnloadState(100018, "LoadUnloadState", "UserDefine", 0, 1);
-SystemData<unsigned> LoadUnloadSkip(100019, "LoadUnloadSkip", "UserDefine", 0, 1);
-SystemData<unsigned> LoadUnloadOK(100020, "LoadUnloadOK", "UserDefine", 0, 1);
-SystemData<unsigned> WaferProcessedCount(100021, "WaferProcessedCount", "UserDefine", 0, 1000);
-SystemData<std::string> WaferBatchID(100022, "WaferBatchID", "UserDefine");
-SystemData<unsigned> WaferBatchCount(100023, "WaferBatchCount", "UserDefine", 0, 100000);
-SystemData<unsigned> WaferTotalCount(100024, "WaferTotalCount", "UserDefine", 0, 100000);
+SystemData<unsigned> LoadUnloadState(100018, "LoadUnloadState", "System", 0, 1);
+SystemData<unsigned> LoadUnloadSkip(100019, "LoadUnloadSkip", "System", 0, 1);
+SystemData<unsigned> LoadUnloadOK(100020, "LoadUnloadOK", "System", 0, 1);
+SystemData<unsigned> WaferProcessedCount(100021, "WaferProcessedCount", "System", 0, 1000);
+SystemData<std::string> WaferBatchID(100022, "WaferBatchID", "System");
+SystemData<unsigned> WaferBatchCount(100023, "WaferBatchCount", "System", 0, 100000);
+SystemData<unsigned> WaferTotalCount(100024, "WaferTotalCount", "System", 0, 100000);
 
-SystemData<std::string> LeakCheckResult(100030, "LeakCheckResult", "UserDefine");
-SystemData<float> LeakRate(100031, "LeakRate", "UserDefine", 0, 1000, 2, "torr/min");
+SystemData<std::string> LeakCheckResult(100030, "LeakCheckResult", "System");
+SystemData<float> LeakRate(100031, "LeakRate", "System", 0, 1000, 2, "torr/min");
 
-SystemData<std::string> Slot1WaferID(100040, "Slot1WaferID", "UserDefine");
-SystemData<std::string> Slot2WaferID(100041, "Slot2WaferID", "UserDefine");
-SystemData<std::string> Slot3WaferID(100042, "Slot3WaferID", "UserDefine");
-SystemData<unsigned> Slot1WaferState(100043, "Slot1WaferState", "UserDefine", 0, 5);
-SystemData<unsigned> Slot2WaferState(100044, "Slot2WaferState", "UserDefine", 0, 5);
-SystemData<unsigned> Slot3WaferState(100045, "Slot3WaferState", "UserDefine", 0, 5);
-SystemData<std::string> ForkWaferID(100046, "ForkWaferID", "UserDefine");
-SystemData<unsigned> ForkWaferState(100047, "ForkWaferState", "UserDefine", 0, 5);
+SystemData<std::string> Slot1WaferID(100040, "Slot1WaferID", "System");
+SystemData<std::string> Slot2WaferID(100041, "Slot2WaferID", "System");
+SystemData<std::string> Slot3WaferID(100042, "Slot3WaferID", "System");
+SystemData<unsigned> Slot1WaferState(100043, "Slot1WaferState", "System", 0, 5);
+SystemData<unsigned> Slot2WaferState(100044, "Slot2WaferState", "System", 0, 5);
+SystemData<unsigned> Slot3WaferState(100045, "Slot3WaferState", "System", 0, 5);
+SystemData<std::string> ForkWaferID(100046, "ForkWaferID", "System");
+SystemData<unsigned> ForkWaferState(100047, "ForkWaferState", "System", 0, 5);
 
-SystemData<unsigned> ProcUnitState(100050, "ProcUnitState", "UserDefine", 0, 2);
-SystemData<unsigned> ProcUnitRetryable(100051, "ProcUnitRetryable", "UserDefine", 0, 1);
-SystemData<unsigned> ProcUnitCommand(100052, "ProcUnitCommand", "UserDefine", 0, 10000);
-SystemData<unsigned> ProcUnitParam1(100053, "ProcUnitParam1", "UserDefine", 0, 10000);
-SystemData<unsigned> ProcUnitParam2(100054, "ProcUnitParam2", "UserDefine", 0, 10000);
-SystemData<std::string> ProcUnitStepName(100055, "ProcUnitStepName", "UserDefine");
+SystemData<unsigned> ProcUnitState(100050, "ProcUnitState", "System", 0, 2);
+SystemData<unsigned> ProcUnitRetryable(100051, "ProcUnitRetryable", "System", 0, 1);
+SystemData<unsigned> ProcUnitCommand(100052, "ProcUnitCommand", "System", 0, 10000);
+SystemData<unsigned> ProcUnitParam1(100053, "ProcUnitParam1", "System", 0, 10000);
+SystemData<unsigned> ProcUnitParam2(100054, "ProcUnitParam2", "System", 0, 10000);
+SystemData<std::string> ProcUnitStepName(100055, "ProcUnitStepName", "System");
 
-SystemData<unsigned> ProcChamberDirty(100060, "ProcChamberDirty", "UserDefine", 0, 1);
-SystemData<unsigned> ExpChamberDirty(100061, "ExpChamberDirty", "UserDefine", 0, 1);
+SystemData<unsigned> ProcChamberDirty(100060, "ProcChamberDirty", "System", 0, 1);
+SystemData<unsigned> ExpChamberDirty(100061, "ExpChamberDirty", "System", 0, 1);
 
 }

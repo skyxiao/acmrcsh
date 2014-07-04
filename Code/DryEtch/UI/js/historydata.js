@@ -8,7 +8,8 @@ var TypeMax = {
 	"Pressure": 5000,
 	"Chuck": 1000,
 	"Lid":1000,
-	"Body":1000
+	"Body":1000,
+	"Tank":2000
 };
 
 function  permissionCheck()
@@ -159,8 +160,16 @@ function checkDrawType()
 function getAllWafer()
 {
 	init();
+	var WaferLotID = "";
+	var json = getControl().fetch_system_data([100022], false);
+	json = $.parseJSON(json);
+	if (json && json["systemdata"])
+	{
+		WaferLotID = json["systemdata"][0]["value"];
+	}
 	var connection = getSqlConnection();
-	var sql = "select id from wafer_process where 1";
+	//var sql = "select id from wafer_process where 1";
+	var sql = "call query_batch_wafer('" + WaferLotID + "')"
 		
 	connection.query(
 		sql,
@@ -173,6 +182,7 @@ function getAllWafer()
 		}
 
 		var option = "";
+		var results = results[0];
 
 		for (var i = 0; i < results.length; ++i)
 		{
@@ -237,7 +247,7 @@ function drawData(startTime, endTime)
 	var connection = getSqlConnection();
 	var dataCount = 0;
 	var relData = {};
-	var typeArr = ["N2", "EtOH", "HF", "Pressure", "Chuck", "Lid", "Body"];
+	var typeArr = ["N2", "EtOH", "HF", "Pressure", "Chuck", "Lid", "Body","Tank"];
 
 	for (var i = 0; i < typeArr.length; ++i)
 	{
@@ -259,7 +269,7 @@ function drawData(startTime, endTime)
 				}
 
 				dataCount += 1;
-				if (dataCount == 7)
+				if (dataCount == typeArr.length)
 				{
 					connection.end();
 					currentData = relData;

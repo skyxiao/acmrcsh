@@ -30,5 +30,6 @@ extern SystemEvent ForkTimeout;
 extern SystemEvent HeaterTempOutRange;
 extern SystemEvent MonitorWarning;
 extern SystemEvent MonitorAlarm;
+extern SystemEvent AlcGasPressureLow;
 
 }

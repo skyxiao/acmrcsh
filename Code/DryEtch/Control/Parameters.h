@@ -13,6 +13,9 @@ extern ParameterItem<float> ChuckTemp;
 extern ParameterItem<float> TempWarnOffset;
 extern ParameterItem<float> TempAlarmOffset;
 extern ParameterItem<float> TempMonitorDelay;
+extern ParameterItem<float> GasboxWarnTemp;
+extern ParameterItem<float> PipeWarnTemp;
+
 
 //Chuck position
 extern ParameterItem<float> ChuckPos1;

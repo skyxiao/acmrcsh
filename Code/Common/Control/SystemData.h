@@ -93,6 +93,22 @@ private:
 	T1 m_output_high;
 };
 
+template<typename T1, typename T2>
+class ConvertRatio
+{
+public:
+	ConvertRatio(T1 ratio) : m_ratio(ratio) {};
+
+	T1 operator()(unsigned input)
+	{
+		T2 tmp = *(T2*)(&input);
+		return tmp/m_ratio;
+	}
+
+private:
+	T1 m_ratio;
+};
+
 class BaseSystemData
 {
 public:

@@ -18,6 +18,8 @@ ParameterItem<float> ChuckTemp(22, "ChuckTemp", "Heater", "Chamber chuck tempera
 ParameterItem<float> TempWarnOffset(25, "TempWarnOffset", "Heater", "Relative temperature offset of warning to setting value.", 0, 10, 0.5, "Cels");
 ParameterItem<float> TempAlarmOffset(26, "TempAlarmOffset", "Heater", "Relative temperature offset of alarm to setting value.", 0, 10, 1.0, "Cels");
 ParameterItem<float> TempMonitorDelay(27, "TempMonitorDelay", "Heater", "Delay time from recipe step start.", 0, 20, 5, "s");
+ParameterItem<float> GasboxWarnTemp(28, "GasboxWarnTemp", "Heater", "Warning temperature for gasbox.", 0, 100, 40, "Cels");
+ParameterItem<float> PipeWarnTemp(29, "PipeWarnTemp", "Heater", "Warning temperature for pipe.", 0, 100, 40, "Cels");
 
 
 //Chuck position

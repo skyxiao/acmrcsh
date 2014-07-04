@@ -73,6 +73,8 @@ void ProcessUnit::Initialize()
 		IntervalRecordItem("Lid", 1000, [&](){return (float)Data::aiLidHTTemp;})));
 	DataRecorder::Instance().Add("Body", boost::shared_ptr<RecordItem>(new 
 		IntervalRecordItem("Body", 1000, [&](){return (float)Data::aiBodyHTTemp;})));
+	DataRecorder::Instance().Add("Tank", boost::shared_ptr<RecordItem>(new 
+		IntervalRecordItem("Tank", 1000, [&](){return (float)Data::aiAlcTankPressure;})));
 	DataRecorder::Instance().Add("ChuckLF", boost::shared_ptr<RecordItem>(new 
 		IntervalRecordItem("Chuck", 60000, [&](){return (float)Data::aiChuckHTTemp;}, true)));
 	DataRecorder::Instance().Add("LidLF", boost::shared_ptr<RecordItem>(new 
@@ -139,9 +141,39 @@ UnitTask ProcessUnit::GetNextTask()
 			}
 			else
 			{
-				if(Data::diAlcTkLow == 0)
+				if(Data::diAlcTkLow == 1)
 				{
 					EVT::GenericWarning.Report("Alcohol tank level is too low.");
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
+					return UnitTask{COMMAND_OFFLINE, 0, 0};
+				}
+				else if(Data::diAlcPrsLLmt == 1)
+				{
+					EVT::AlcGasPressureLow.Report();
 					return UnitTask{COMMAND_OFFLINE, 0, 0};
 				}
 				else
@@ -236,6 +268,7 @@ void ProcessUnit::SafeHandle()
 		DataRecorder::Instance().Disable("Chuck");
 		DataRecorder::Instance().Disable("Lid");
 		DataRecorder::Instance().Disable("Body");
+		DataRecorder::Instance().Disable("Tank");
 		DataRecorder::Instance().Enable("ChuckLF");
 		DataRecorder::Instance().Enable("LidLF");
 		DataRecorder::Instance().Enable("BodyLF");
@@ -301,6 +334,12 @@ bool ProcessUnit::OnlinePrecheck()
 	if(lid_offset>error_offset || body_offset>error_offset || chuck_offset>error_offset)
 	{
 		EVT::HeaterTempOutRange.Report();
+		return false;
+	}
+
+	if(Data::diAlcPrsLLmt)
+	{
+		EVT::AlcGasPressureLow.Report();
 		return false;
 	}
 
@@ -867,6 +906,7 @@ void ProcessUnit::OnProcess()
 			DataRecorder::Instance().Enable("Chuck");
 			DataRecorder::Instance().Enable("Lid");
 			DataRecorder::Instance().Enable("Body");
+			DataRecorder::Instance().Enable("Tank");
 			//start monitor heater when process start.
 			Monitor::Instance().Reset("Chuck temperature", Parameters::TempMonitorDelay, Parameters::ChuckTemp, 
 				Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
@@ -919,6 +959,7 @@ void ProcessUnit::OnProcess()
 			DataRecorder::Instance().Disable("Chuck");
 			DataRecorder::Instance().Disable("Lid");
 			DataRecorder::Instance().Disable("Body");
+			DataRecorder::Instance().Disable("Tank");
 			DataRecorder::Instance().Enable("ChuckLF");
 			DataRecorder::Instance().Enable("LidLF");
 			DataRecorder::Instance().Enable("BodyLF");

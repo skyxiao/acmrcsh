@@ -65,7 +65,7 @@ DELIMITER ;
 -- 导出  表 dry_etch.process_data 结构
 CREATE TABLE IF NOT EXISTS `process_data` (
   `time` datetime NOT NULL,
-  `type` enum('N2','EtOH','HF','Pressure','Chuck','Lid','Body') NOT NULL,
+  `type` enum('N2','EtOH','HF','Pressure','Chuck','Lid','Body','Tank') NOT NULL,
   `data` float NOT NULL DEFAULT '0',
   KEY `type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -88,6 +88,15 @@ DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `process_start`(IN `p_id` CHAR(20), IN `p_unit` TINYINT, IN `p_slot` TINYINT, IN `p_start_time` DATETIME, IN `p_recipe` CHAR(50))
 BEGIN
 	insert into wafer_process values(p_id, p_unit, p_slot, p_start_time, null, p_recipe);
+END//
+DELIMITER ;
+
+
+-- 导出  过程 dry_etch.query_batch_wafer 结构
+DELIMITER //
+CREATE DEFINER=`acm`@`localhost` PROCEDURE `query_batch_wafer`(IN `p_batch_id` CHAR(10))
+BEGIN
+	select * from wafer_info where wafer_info.id like concat(p_batch_id, '-%');
 END//
 DELIMITER ;
 

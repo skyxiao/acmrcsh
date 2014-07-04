@@ -62,6 +62,11 @@ SystemData<unsigned> diAlcTkHighHigh(48, "diAlcTkHighHigh", "DI", 0, 1, 0, 0, 0,
 SystemData<unsigned> diAlcTkOverfill(49, "diAlcTkOverfill", "DI", 0, 1, 0, 0, 0, 49, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diVPumpWarning(50, "diVPumpWarning", "DI", 0, 1, 0, 0, 0, 50, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diVPumpAlarm(51, "diVPumpAlarm", "DI", 0, 1, 0, 0, 0, 51, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing1Alarm(52, "diPlumbing1Alarm", "DI", 0, 1, 0, 0, 0, 52, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing2Alarm(53, "diPlumbing2Alarm", "DI", 0, 1, 0, 0, 0, 53, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing3Alarm(54, "diPlumbing3Alarm", "DI", 0, 1, 0, 0, 0, 54, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing4Alarm(55, "diPlumbing4Alarm", "DI", 0, 1, 0, 0, 0, 55, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diPlumbing5Alarm(56, "diPlumbing5Alarm", "DI", 0, 1, 0, 0, 0, 56, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diPrcCbDoorOpen(60, "diPrcCbDoorOpen", "DI", 0, 1, 0, 0, 0, 60, 0, 1, false);
 SystemData<unsigned> diPinUp(61, "diPinUp", "DI", 0, 1, 0, 0, 0, 61, 0, 1, false);
 SystemData<unsigned> diPinDown(62, "diPinDown", "DI", 0, 1, 0, 0, 0, 62, 0, 1, false);
@@ -77,6 +82,7 @@ SystemData<unsigned> diCbLeftDoorClose(76, "diCbLeftDoorClose", "DI", 0, 1, 0, 0
 SystemData<unsigned> diCbRightDoorClose(77, "diCbRightDoorClose", "DI", 0, 1, 0, 0, 0, 77, 0, 1, false);
 SystemData<unsigned> diProcCbHFLeak(78, "diProcCbHFLeak","DI",0,1,0,0,0,78,0,1,false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diCDAInletAlarm(79, "diCDAInletAlarm", "DI", 0, 1, 0, 0, 0, 79, 0, 1, false, "", ConvertNot<unsigned>);
+SystemData<unsigned> diEStop(80, "diEStop", "DI", 0, 1, 0, 0, 0, 80, 0, 1, false, "", ConvertNot<unsigned>);
 
 
 //DO
@@ -138,6 +144,8 @@ SystemData<float> aiHFSupplyPressure(2008,"aiHFSupplyPressure","AI",0,0,2,0,2,8,
 SystemData<float> aiAlcGasLeak(2010,"aiAlcGasLeak","AI",0,0,1,0,2,10,0,16,false,"%lel", ConvertLinear<float,unsigned>(6540, 32701, 0.0f, 100.0f));
 SystemData<float> aiHFGasboxPPM(2012,"aiHFGasboxPPM","AI",0,0,2,0,2,12,0,16,false,"ppm", ConvertLinear<float,unsigned>(6540, 32701, 0.0f, 10.0f));
 SystemData<float> aiHFChamberPPM(2014,"aiHFChamberPPM","AI",0,0,2,0,2,14,0,16,false,"ppm", ConvertLinear<float,unsigned>(6540, 32701, 0.0f, 10.0f));
+SystemData<float> aiGasboxTC(2022,"aiGasboxTC","AI",0,0,1,0,2,22,0,16,false,"Cels", ConvertRatio<float,short>(10.0f));
+SystemData<float> aiPipelineTC(2024,"aiPipelineTC","AI",0,0,1,0,2,24,0,16,false,"Cels", ConvertRatio<float,short>(10.0f));
 
 
 //AO

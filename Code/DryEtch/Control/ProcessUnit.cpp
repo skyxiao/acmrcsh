@@ -296,7 +296,7 @@ void ProcessUnit::OnAbort()
 
 bool ProcessUnit::alarm_check()
 {
-	if(Data::diAlcTkLow == 1)
+	if(Data::diAlcTkLow == 0)
 	{
 		EVT::AlcoholTankLow.Report();
 		return false;

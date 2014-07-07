@@ -91,7 +91,7 @@ SystemData<unsigned> aoYellowLight(1002,"aoYellowLight","DO",0,256,0,0,1,2,0,16,
 SystemData<unsigned> aoGreenLight(1004,"aoGreenLight","DO",0,256,0,0,1,4,0,16,true);
 SystemData<unsigned> aoBlueLight(1006,"aoBlueLight","DO",0,256,0,0,1,6,0,16,true);
 SystemData<unsigned> aoBuzzer(1008,"aoBuzzerWarn","DO",0,256,0,0,1,8,0,16,true);
-SystemData<unsigned> doHeartBeat(1010,"doHeartBeat","DO",0,1,0,0,1,10,0,1,true);
+SystemData<unsigned> doHeartbeat(1010,"doHeartbeat","DO",0,1,0,0,1,10,0,1,true);
 SystemData<unsigned> doEnableVPump(1011,"doEnableVPump","DO",0,1,0,0,1,11,0,1,true);
 SystemData<unsigned> doHFRequest(1012,"doHFRequest","DO",0,1,0,0,1,12,0,1,true);
 SystemData<unsigned> doN2PurgeGBValve(1016,"doN2PurgeGBValve","DO",0,1,0,0,1,16,0,1,true);

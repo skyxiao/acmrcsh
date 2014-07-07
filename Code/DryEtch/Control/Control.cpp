@@ -15,6 +15,7 @@
 #include "RecipeManager.h"
 #include "UnitManager.h"
 #include "SignalTower.h"
+#include "Heartbeat.h"
 
 extern "C" void Initialize()
 {
@@ -33,6 +34,7 @@ extern "C" void Initialize()
 		WaferManager::Instance().Initialize();
 		RecipeManager::Instance().Initialize();
 		UnitManager::Instance().Initialize();
+		Heartbeat::Instance().Initialize();
 	}
 	catch(std::exception& e)
 	{
@@ -46,6 +48,7 @@ extern "C" void Terminate()
 {
 	try
 	{
+		Heartbeat::Instance().Terminate();
 		UnitManager::Instance().Terminate();
 		RecipeManager::Instance().Terminate();
 		WaferManager::Instance().Terminate();

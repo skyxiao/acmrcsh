@@ -75,7 +75,7 @@ void Interlock::Initialize()
 	POST_INTERLOCK_EVT(diGasboxDoorClose, 0, GasboxDoorOpen)
 	POST_INTERLOCK_EVT(diGasBoxHFLeak, 1, GasboxHFLeak)
 	POST_INTERLOCK_EVT(diHWInterlock, 1, HardwareInterlock)
-	POST_INTERLOCK_EVT(diAlcTkLow, 1, AlcoholTankLow)
+	POST_INTERLOCK_EVT(diAlcTkLow, 0, AlcoholTankLow)
 	POST_INTERLOCK_EVT(diVPumpWarning, 1, PumpWarning)
 	POST_INTERLOCK_EVT(diVPumpAlarm, 1, PumpAlarm)
 	

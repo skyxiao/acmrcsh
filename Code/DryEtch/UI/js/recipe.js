@@ -4,7 +4,7 @@ var recipedir = "./recipe";
 var unSaveRecipeList = {};
 var range = {
 	position : [0, 100],
-	pressure : [0, 5000],
+	pressure : [0, 200],
 	etoh : [0, 700],
 	HF : [0, 2000],
 	N2 : [0, 5000],

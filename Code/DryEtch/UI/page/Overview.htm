@@ -85,7 +85,7 @@
 					</div>
 					<div class="turntable_btn">
 						<label>WaferLotID:</label>
-						<input class="WaferLotID" />
+						<input class="WaferLotID" onkeyup="value=value.replace(/[^A-Z a-z 0-9]/ig,'')"/>
 						<!--<button onclick="overViewSkip()">Skip</button>-->
 						<button onclick="overViewOk()" class="short_btn btn_ok">Ok</button>
 					</div>
@@ -184,5 +184,13 @@
 <script>
 	getInitData();
 	setTimeout(permissionCheck, 200);
+	$(".WaferLotID").keyup(function(){
+		var text = $(this).val();
+		if (text.length > 10)
+		{
+			var str = text.substring(0, 10);
+			$(this).val(str);
+		}
+	});
 </script>
 </html>

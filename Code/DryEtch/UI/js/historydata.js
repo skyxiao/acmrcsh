@@ -8,7 +8,8 @@ var TypeMax = {
 	"Pressure": 5000,
 	"Chuck": 1000,
 	"Lid":1000,
-	"Body":1000
+	"Body":1000,
+	"Tank":2000
 };
 
 function  permissionCheck()
@@ -59,6 +60,7 @@ function draw(results) {
     Chart1.axes.bottom.labels.dateFormat = "isoDateTime1";
 	Chart1.axes.bottom.labels.format.font.fill = "white";
 	Chart1.axes.left.labels.format.font.fill = "white";	
+	Chart1.axes.left.labels.visible = false;
 	var flag = false;
     //var series1 = Chart1.addSeries(new Tee.Line());
 	for (var i = 0; i < drawType.length; ++i)
@@ -158,8 +160,16 @@ function checkDrawType()
 function getAllWafer()
 {
 	init();
+	var WaferLotID = "";
+	var json = getControl().fetch_system_data([100022], false);
+	json = $.parseJSON(json);
+	if (json && json["systemdata"])
+	{
+		WaferLotID = json["systemdata"][0]["value"];
+	}
 	var connection = getSqlConnection();
-	var sql = "select id from wafer_process where 1";
+	//var sql = "select id from wafer_process where 1";
+	var sql = "call query_batch_wafer('" + WaferLotID + "')"
 		
 	connection.query(
 		sql,
@@ -172,6 +182,7 @@ function getAllWafer()
 		}
 
 		var option = "";
+		var results = results[0];
 
 		for (var i = 0; i < results.length; ++i)
 		{
@@ -220,7 +231,11 @@ function displayData(id)
 			if (results.length > 0)
 			{
 				var startTime = (new Date(results[0]["start_time"])).format("yyyy-mm-dd HH:MM:ss");
-				var endTime = (new Date(results[0]["end_time"])).format("yyyy-mm-dd HH:MM:ss");
+				var endTime = "";
+				if (results[0]["end_time"])
+				{
+					endTime = (new Date(results[0]["end_time"])).format("yyyy-mm-dd HH:MM:ss");
+				}
 
 				$("#txBeginTime").val(startTime);
 				$("#txEndTime").val(endTime);
@@ -236,11 +251,16 @@ function drawData(startTime, endTime)
 	var connection = getSqlConnection();
 	var dataCount = 0;
 	var relData = {};
-	var typeArr = ["N2", "EtOH", "HF", "Pressure", "Chuck", "Lid", "Body"];
+	var typeArr = ["N2", "EtOH", "HF", "Pressure", "Chuck", "Lid", "Body","Tank"];
 
 	for (var i = 0; i < typeArr.length; ++i)
 	{
 		var sql = "select time, type, data from process_data where type='" + typeArr[i] + "' and time >= '" + startTime + "' and time <= '" + endTime + "'";
+		if (endTime == "")
+		{
+			sql = "select time, type, data from process_data where type='" + typeArr[i] + "' and time >= '" + startTime + "'";
+		}
+
 		connection.query(
 			sql,
 			function selectCb(err, results, fields) {
@@ -258,7 +278,7 @@ function drawData(startTime, endTime)
 				}
 
 				dataCount += 1;
-				if (dataCount == 7)
+				if (dataCount == typeArr.length)
 				{
 					connection.end();
 					currentData = relData;

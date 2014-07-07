@@ -213,7 +213,7 @@ function displayData(id)
 {
 	checkDrawType();
 	var connection = getSqlConnection();
-	var sql = "select start_time, end_time from wafer_process where id='" + id + "'";
+	var sql = "select start_time, end_time, recipe from wafer_process where id='" + id + "'";
 	connection.query(
 		sql,
 		function selectCb(err, results, fields) {
@@ -235,12 +235,14 @@ function displayData(id)
 
 				$("#txBeginTime").val(startTime);
 				$("#txEndTime").val(endTime);
+				$(".recipe").val(results[0]["recipe"]);
 				drawData(startTime, endTime);
 			}
 			else
 			{
 				$("#txBeginTime").val("");
 				$("#txEndTime").val("");
+				$(".recipe").val("");
 			}
 
 			connection.end();

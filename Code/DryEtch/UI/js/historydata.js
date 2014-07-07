@@ -157,16 +157,8 @@ function checkDrawType()
 	});
 }
 
-function getAllWafer()
+function getAllWafer(WaferLotID)
 {
-	init();
-	var WaferLotID = "";
-	var json = getControl().fetch_system_data([100022], false);
-	json = $.parseJSON(json);
-	if (json && json["systemdata"])
-	{
-		WaferLotID = json["systemdata"][0]["value"];
-	}
 	var connection = getSqlConnection();
 	//var sql = "select id from wafer_process where 1";
 	var sql = "call query_batch_wafer('" + WaferLotID + "')"
@@ -181,32 +173,36 @@ function getAllWafer()
 			return;
 		}
 
-		var option = "";
+		var waferList = "<tr>";
 		var results = results[0];
 
 		for (var i = 0; i < results.length; ++i)
 		{
-			if (i == 0)
+			if (i != 0 && i % 3 == 0)
 			{
-				option += "<option value='" + results[i]["id"] + "' selected='selected'>" + results[i]["id"] + "</option>";
+				waferList += "</tr><tr>";
 			}
-			else
-			{
-				option += "<option value='" + results[i]["id"] + "'>" + results[i]["id"] + "</option>";
-			}
+
+			waferList += "<td align='center'>" + results[i]["id"] + "</td>";
 		}
 
-		$("#ddlType").empty();
-		$("#ddlType").append(option);
-		$("#ddlType").change(function(){
-			var id = $(this).val().trim();
-			displayData(id);
-		});
+		waferList += "</tr>";
 
-		var curId = $("#ddlType").val();
-		if (curId)
+		if (results.length != 0)
 		{
-			displayData(curId.trim());
+			$(".wafer_list").find("table").empty();
+			$(".wafer_list").find("table").append(waferList);
+			$(".wafer_list").show();
+			$(".wafer_list").find("table").find("td").click(function(){
+				var text = $(this).text().trim();
+				$(".batch_id").val(text);
+				$(".wafer_list").hide();
+				displayData(text);
+			});
+		}
+		else
+		{
+			$(".wafer_list").hide();
 		}
 
 		connection.end();
@@ -240,6 +236,11 @@ function displayData(id)
 				$("#txBeginTime").val(startTime);
 				$("#txEndTime").val(endTime);
 				drawData(startTime, endTime);
+			}
+			else
+			{
+				$("#txBeginTime").val("");
+				$("#txEndTime").val("");
 			}
 
 			connection.end();
@@ -294,11 +295,20 @@ function init()
 		checkDrawType();
 		draw(currentData);
 	});
+
+	$(".batch_id").keyup(function(){
+		var text = $(this).val().trim();
+		if (text != "")
+		{
+			getAllWafer(text);
+		}
+	});
 }
 
-function Refresh()
+function Query()
 {
-	getAllWafer();
+	var id = $(".batch_id").val().trim();
+	displayData(id);
 	/*
 	var startTime = $("#txBeginTime").val();
 	if (startTime)

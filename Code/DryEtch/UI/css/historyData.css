@@ -81,3 +81,32 @@ body
 {
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
 }
+
+.wafer_list
+{
+	position:absolute;
+	left:820px;
+	top:180px;
+	/*height:250px;*/
+	border:1px solid #158895;
+	/*width:400px;*/
+	border-radius:5px;
+	background-color : #0F6C84;
+	-webkit-box-shadow:  0 0 6px rgba(0,0,0,0.8);
+	display:none;
+	overflow:auto;
+	color:#fff;
+	min-width: 200px;
+	min-height: 100px;
+}
+
+.wafer_list table
+{
+	width:100%;
+	height:100%;
+}
+
+.wafer_list table td:hover
+{
+	background-color:#28C9E9;
+}

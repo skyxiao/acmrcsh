@@ -48,9 +48,15 @@
 										class="info-input" readonly="true" style=" width:174px;cursor: pointer"  />
 				   <span class="time_label" style="margin-left:20px;">Endtime:</span> <input type="text" maxlength="100" id="txEndTime" runat="server" onclick="SelectDate(this,'yyyy-MM-dd hh:mm:ss');"
 										class="info-input" readonly="true" style="width:174px;cursor: pointer"  />
-					<select id="ddlType" style="width:120px;margin-left:40px;">
-					</select>
-					<input id="Button1" type="button" value="Refresh" onclick="Refresh();" class="get_data_enable"/>
+					<!--<select id="ddlType" style="width:120px;margin-left:40px;">
+					</select>-->
+					<label style="margin-left:40px;color:#fff;">waferId:</label>
+					<input class="batch_id" style="width:120px;padding-left:5px;"/>
+					<div class="wafer_list">
+						<table cellspacing="10">
+						</table>
+					</div>
+					<input id="Button1" type="button" value="Query" onclick="Query();" class="get_data_enable"/>
 				</div>
 				<canvas id="canvas" width="1020" height="520">
 					This browser does not seem to support HTML5 Canvas.
@@ -65,7 +71,7 @@
 	</div>
 </body>
 <script>
-	getAllWafer();
+	init();
 	permissionCheck();
 </script>
 </html>

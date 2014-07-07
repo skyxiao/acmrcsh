@@ -103,6 +103,7 @@ private:
 	void shut_all_chemical();
 	void stop_motor();
 	void open_apc();
+	bool alarm_check();
 
 private:
 	float m_leak_check_init_pressure;

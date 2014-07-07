@@ -38,6 +38,24 @@ private:
 		{ Data::doo = do_val; } \
 	});
 
+#define POST_INTERLOCK_EVT(di, di_val, evt) Data::di.AddChangeSink([&](unsigned, unsigned value) \
+	{ \
+		if(value == di_val) \
+		{ EVT::evt.Report(); } \
+	});
+
+#define POST_INTERLOCK_EVT_STRING(di, di_val, evt_str) Data::di.AddChangeSink([&](unsigned, unsigned value) \
+	{ \
+		if(value == di_val) \
+		{ EVT::GenericWarning.Report(evt_str); } \
+	});
+
+#define POST_INTERLOCK_AI_EVT(ai, param, evt, name) Data::ai.AddChangeSink([&](unsigned last_value, unsigned value) \
+	{ \
+		if(value>Parameters::param && last_value<Parameters::param) \
+		{ EVT::evt.Report(name, value); } \
+	});
+
 #define POST_INTERLOCK_MEMBER(di, di_val, mem_func) Data::di.AddChangeSink([this](unsigned, unsigned value) \
 	{ \
 		if(value == di_val) \

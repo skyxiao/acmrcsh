@@ -29,6 +29,67 @@ void Interlock::Initialize()
 	POST_INTERLOCK_MEMBER(diCbLeftDoorClose, 0, shut_all_chemical)
 	POST_INTERLOCK_MEMBER(diCbRightDoorClose, 0, shut_all_chemical)
 	POST_INTERLOCK_MEMBER(diAlcTkLow, 1, report_alcohol_alarm)
+	
+	POST_INTERLOCK_EVT(diAlcPrsLLmt, 1, AlcGasPressureLow)
+
+	POST_INTERLOCK_EVT_STRING(diN2PgHFPrsULmt, 1, "N2 purge HF tube pressure is over upper limit.")
+	POST_INTERLOCK_EVT_STRING(diN2PgHFPrsLLmt, 1, "N2 purge HF tube pressure is below lower limit.")
+	
+	POST_INTERLOCK_EVT_STRING(diN2PgAlcTkPrsULmt, 1, "N2 purge alcohol tank pressure is over upper limit.")
+	POST_INTERLOCK_EVT_STRING(diN2PgAlcTkPrsLLmt, 1, "N2 purge alcohol tank pressure is below lower limit.")
+	
+	POST_INTERLOCK_EVT_STRING(diN2PgExpCbPrsULmt, 1, "N2 purge expansion chamber pressure is over upper limit.")
+	POST_INTERLOCK_EVT_STRING(diN2PgExpCbPrsLLmt, 1, "N2 purge expansion chamber pressure is below lower limit.")
+	
+	POST_INTERLOCK_EVT_STRING(diN2SplVPumpPrsULmt, 1, "N2 supply vacuum pump pressure is over upper limit.")
+	POST_INTERLOCK_EVT_STRING(diN2SplVPumpPrsLLmt, 1, "N2 supply vacuum pump pressure is below lower limit.")
+	
+	POST_INTERLOCK_EVT_STRING(diN2PgPrcCbPrsULmt, 1, "N2 purge process chamber pressure is over upper limit.")
+	POST_INTERLOCK_EVT_STRING(diN2PgPrcCbPrsLLmt, 1, "N2 purge process chamber pressure is below lower limit.")
+	
+	POST_INTERLOCK_EVT(diN2FacSplPrsULmt, 1, N2FacPressureHigh)
+	POST_INTERLOCK_EVT(diN2FacSplPrsLLmt, 1, N2FacPressureLow)
+	
+	POST_INTERLOCK_EVT_STRING(diN2PgVapPrsULmt, 1, "N2 purge vaporizer pressure is over upper limit.")
+	POST_INTERLOCK_EVT_STRING(diN2PgVapPrsLLmt, 1, "N2 purge vaporizer pressure is below lower limit.")
+	
+	POST_INTERLOCK_EVT(diFacVPrsSwtLLmt, 1, FacVacuumPressureLow)
+
+	POST_INTERLOCK_EVT_STRING(diExpCbVPrsSwtULmt, 1, "Expansion chamber vacuum pressure is over upper limit.")
+	POST_INTERLOCK_EVT(diExpCbVPrsSwtLLmt, 1, ExpVacuumPressureLow)
+	
+	POST_INTERLOCK_EVT_STRING(diIODoorClose, 0, "IO door is open.")
+	POST_INTERLOCK_EVT_STRING(diPCDoorClose, 0, "PC door is open.")
+	POST_INTERLOCK_EVT_STRING(diPneuDoorClose, 0, "Pneumatic door is open.")
+	POST_INTERLOCK_EVT_STRING(diAcFrmDoorClose, 0, "AC frame door is open.")
+	POST_INTERLOCK_EVT_STRING(diAcDoorOverride, 1, "AC door override.")
+
+	POST_INTERLOCK_EVT(diVaporMHeaterAlarm, 1, VapMainHeaterAlarm)
+	POST_INTERLOCK_EVT(diVaporVHeaterAlarm, 1, VapVapHeaterAlarm)
+	POST_INTERLOCK_EVT(diHeartbeatFail, 1, HeartbeatFail)
+	POST_INTERLOCK_EVT(diExhaustAlarm, 1, GasboxExhaustPresAlarm)
+	POST_INTERLOCK_EVT(diFacInletVPrsULmt, 1, FacMainInletVacPresHigh)
+	POST_INTERLOCK_EVT(diAlcoholLeak, 1, AlcoholLeak)
+	POST_INTERLOCK_EVT(diAlcoholGasLeak, 1, AlcoholGasLeak)
+	POST_INTERLOCK_EVT(diExhaustPresAlarm, 1, FrameExhaustPresAlarm)
+	POST_INTERLOCK_EVT(diGasboxDoorClose, 0, GasboxDoorOpen)
+	POST_INTERLOCK_EVT(diGasBoxHFLeak, 1, GasboxHFLeak)
+	POST_INTERLOCK_EVT(diHWInterlock, 1, HardwareInterlock)
+	POST_INTERLOCK_EVT(diAlcTkLow, 1, AlcoholTankLow)
+	POST_INTERLOCK_EVT(diVPumpWarning, 1, PumpWarning)
+	POST_INTERLOCK_EVT(diVPumpAlarm, 1, PumpAlarm)
+	
+	POST_INTERLOCK_EVT(diPlumbing1Alarm, 1, PlumbingHeaterAlarm)
+	POST_INTERLOCK_EVT(diPlumbing2Alarm, 1, PlumbingHeaterAlarm)
+	POST_INTERLOCK_EVT(diPlumbing3Alarm, 1, PlumbingHeaterAlarm)
+	POST_INTERLOCK_EVT(diPlumbing4Alarm, 1, PlumbingHeaterAlarm)
+	POST_INTERLOCK_EVT(diPlumbing5Alarm, 1, PlumbingHeaterAlarm)
+	
+	POST_INTERLOCK_EVT(diProcCbHFLeak, 1, ChamberHFLeak)
+	POST_INTERLOCK_EVT(diEStop, 1, ArmVacuumDoorEStop)
+
+	POST_INTERLOCK_AI_EVT(aiGasboxTC, GasboxWarnTemp, OverTemp, "Gasbox TC")
+	POST_INTERLOCK_AI_EVT(aiPipelineTC, PipeWarnTemp, OverTemp, "Pipeline TC")
 
 	//PRE_INTERLOCK(doExpCbSupplyCbVal, 1, diPrcCbVacuumFail, 1)
 	PRE_INTERLOCK(doExpCbSupplyCbVal, 1, diGasBoxHFLeak, 1)

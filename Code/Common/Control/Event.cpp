@@ -34,27 +34,29 @@ namespace EVT
 	SystemEvent HeaterTempOutRange(1040, EVENT_LEVEL_WARNING, "Heater temperature is out of range.");
 	SystemEvent MonitorWarning(1043, EVENT_LEVEL_WARNING, "%f is out of warning range [%f, %f] of %s.");
 	SystemEvent MonitorAlarm(1045, EVENT_LEVEL_ERROR, "%f is out of alarm range [%f, %f] of %s.");
+	SystemEvent OverTemp(1046, EVENT_LEVEL_WARNING, "%s over temperature, current temperature is %f ¡æ.");
+
 	SystemEvent AlcGasPressureLow(1050, EVENT_LEVEL_WARNING, "Alcohol gas pressure is below lower limit.");
-	SystemEvent N2FacPressureHigh(1051, EVENT_LEVEL_WARNING, "N2 facility supply pressure is upon upper limit.");
+	SystemEvent N2FacPressureHigh(1051, EVENT_LEVEL_WARNING, "N2 facility supply pressure is over upper limit.");
 	SystemEvent N2FacPressureLow(1052, EVENT_LEVEL_WARNING, "N2 facility supply pressure is below lower limit.");
 	SystemEvent FacVacuumPressureLow(1053, EVENT_LEVEL_WARNING, "Facility vacuum pressure is below lower limit.");
 	SystemEvent ExpVacuumPressureLow(1054, EVENT_LEVEL_WARNING, "Expansion chamber vacuum pressure is below lower limit.");
-	SystemEvent VapMainHeaterAlarm(1055, EVENT_LEVEL_WARNING, "Vaporizer main heater alarm.");
-	SystemEvent VapVapHeaterAlarm(1056, EVENT_LEVEL_WARNING, "Vaporizer vapor heater alarm.");
-	SystemEvent HeartbeatFail(1057, EVENT_LEVEL_WARNING, "Heartbeat signal failed.");
-	SystemEvent GasboxExhaustPresAlarm(1058, EVENT_LEVEL_WARNING, "Gasbox exhaust pressure alarm.");
-	SystemEvent FacMainInletVacPresHigh(1059, EVENT_LEVEL_WARNING, "Facility main inlet vacuum pressure is upon upper limit.");
+	SystemEvent VapMainHeaterAlarm(1055, EVENT_LEVEL_ERROR, "Vaporizer main heater alarm.");
+	SystemEvent VapVapHeaterAlarm(1056, EVENT_LEVEL_ERROR, "Vaporizer vapor heater alarm.");
+	SystemEvent HeartbeatFail(1057, EVENT_LEVEL_ERROR, "Heartbeat failed.");
+	SystemEvent GasboxExhaustPresAlarm(1058, EVENT_LEVEL_ERROR, "Gasbox exhaust pressure alarm.");
+	SystemEvent FacMainInletVacPresHigh(1059, EVENT_LEVEL_WARNING, "Facility main inlet vacuum pressure is over upper limit.");
 	SystemEvent AlcoholLeak(1060, EVENT_LEVEL_WARNING, "Alcohol leak.");
 	SystemEvent AlcoholGasLeak(1061, EVENT_LEVEL_WARNING, "Alcohol gas leak.");
-	SystemEvent FrameExhaustPresAlarm(1062, EVENT_LEVEL_WARNING, "Machine frame exhaust pressure alarm.");
+	SystemEvent FrameExhaustPresAlarm(1062, EVENT_LEVEL_ERROR, "Machine frame exhaust pressure alarm.");
 	SystemEvent GasboxDoorOpen(1063, EVENT_LEVEL_WARNING, "Gasbox door is open.");
-	SystemEvent GasboxHFConcAlarm(1064, EVENT_LEVEL_WARNING, "Gasbox HF concentration alarm.");
+	SystemEvent GasboxHFLeak(1064, EVENT_LEVEL_ERROR, "Gasbox HF leak.");
 	SystemEvent HardwareInterlock(1065, EVENT_LEVEL_WARNING, "Hardware interlock.");
 	SystemEvent AlcoholTankLow(1066, EVENT_LEVEL_WARNING, "Alcohol tank level is too low.");
 	SystemEvent PumpWarning(1067, EVENT_LEVEL_WARNING, "Vacuum pump warning.");
-	SystemEvent PumpAlarm(1068, EVENT_LEVEL_WARNING, "Vacuum pump Alarm.");
-	SystemEvent PlumbingHeaterAlarm(1069, EVENT_LEVEL_WARNING, "Plumbing heater alarm.");
-	SystemEvent ChamberHFConcAlarm(1070, EVENT_LEVEL_WARNING, "Chamber HF concentration alarm.");
+	SystemEvent PumpAlarm(1068, EVENT_LEVEL_ERROR, "Vacuum pump Alarm.");
+	SystemEvent PlumbingHeaterAlarm(1069, EVENT_LEVEL_ERROR, "Plumbing heater alarm.");
+	SystemEvent ChamberHFLeak(1070, EVENT_LEVEL_ERROR, "Process chamber HF leak.");
 	SystemEvent ArmVacuumDoorEStop(1071, EVENT_LEVEL_WARNING, "Arm & vacuum door EStop.");
 
 }

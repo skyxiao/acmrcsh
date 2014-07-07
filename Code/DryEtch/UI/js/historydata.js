@@ -231,7 +231,11 @@ function displayData(id)
 			if (results.length > 0)
 			{
 				var startTime = (new Date(results[0]["start_time"])).format("yyyy-mm-dd HH:MM:ss");
-				var endTime = (new Date(results[0]["end_time"])).format("yyyy-mm-dd HH:MM:ss");
+				var endTime = "";
+				if (results[0]["end_time"])
+				{
+					endTime = (new Date(results[0]["end_time"])).format("yyyy-mm-dd HH:MM:ss");
+				}
 
 				$("#txBeginTime").val(startTime);
 				$("#txEndTime").val(endTime);
@@ -252,6 +256,11 @@ function drawData(startTime, endTime)
 	for (var i = 0; i < typeArr.length; ++i)
 	{
 		var sql = "select time, type, data from process_data where type='" + typeArr[i] + "' and time >= '" + startTime + "' and time <= '" + endTime + "'";
+		if (endTime == "")
+		{
+			sql = "select time, type, data from process_data where type='" + typeArr[i] + "' and time >= '" + startTime + "'";
+		}
+
 		connection.query(
 			sql,
 			function selectCb(err, results, fields) {

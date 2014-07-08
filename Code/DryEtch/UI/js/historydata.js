@@ -5,7 +5,7 @@ var TypeMax = {
 	"N2": 5000,
 	"EtOH": 700,
 	"HF": 2000,
-	"Pressure": 5000,
+	"Pressure": 200,
 	"Chuck": 1000,
 	"Lid":1000,
 	"Body":1000,
@@ -309,9 +309,10 @@ function init()
 
 function Query()
 {
-	var id = $(".batch_id").val().trim();
-	displayData(id);
 	/*
+	var id = $(".batch_id").val().trim();
+	getAllWafer(id);
+	
 	var startTime = $("#txBeginTime").val();
 	if (startTime)
 	{

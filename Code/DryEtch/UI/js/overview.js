@@ -718,13 +718,8 @@ function overViewOk()
 {
 	var WaferLotID = $(".WaferLotID").val();
 	if (WaferLotID != "")
-	{
-		WaferLotID = parseInt(WaferLotID);
-		if (!isNaN(WaferLotID))
-		{
-			getControl().modify_system_data(100022, WaferLotID);
-		}
-
+	{		
+		getControl().modify_system_data(100022, WaferLotID);
 		getControl().modify_system_data(100019, 0);
 		getControl().modify_system_data(100020, 1);
 	}

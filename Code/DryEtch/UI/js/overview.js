@@ -10,6 +10,11 @@ var setIntervalID2;
 function  permissionCheck()
 {
 	var user_info = top.USER_INFO;
+	if (user_info)
+	{
+		return;
+	}
+
 	if (user_info["overview"] && user_info["overview"] == "readonly")
 	{
 		$(".auto").attr("disabled", "disabled");
@@ -293,8 +298,11 @@ $(document).ready(function () {
     $("#secondWinfer").attr("style", "position: absolute; left:" + sec[0] + "px; top:" + sec[1] + "px");
     $("#thirdWinfer").attr("style", "position: absolute; left:" + three[0] + "px; top:" + three[1] + "px");
     //console.log("three,position: absolute; left:" + three[0] + "px; top:" + three[1] + "px");
+	//setTimeout(initMenu, 200);   
+//    setPropertyChange(updateProperty);
+});
 
-	function initMenu()
+function initMenu()
 	{
 		$(".Mask1").contextMenu('myMenu1',
 		{
@@ -407,11 +415,6 @@ $(document).ready(function () {
 			}
 		});
 	}
-
-	setTimeout(initMenu, 200);   
-//    setPropertyChange(updateProperty);
-
-});
 
 //document.onmousemove = mouseMove;
 function mouseMove(ev) {
@@ -658,6 +661,8 @@ function getInitData()
 		
 		}
 	}
+
+	permissionCheck();
 
 	if (recipe_total_time != 0 && recipe_done_time <= recipe_total_time)
 	{

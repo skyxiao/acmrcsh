@@ -251,6 +251,7 @@ function displayData(id)
 
 function drawData(startTime, endTime)
 {
+	destroyObject(currentData);
 	var connection = getSqlConnection();
 	var dataCount = 0;
 	var relData = {};
@@ -273,6 +274,7 @@ function drawData(startTime, endTime)
 					connection.end();
 					return;
 				}
+
 
 				if (results.length > 0)
 				{
@@ -305,6 +307,23 @@ function init()
 			getAllWafer(text);
 		}
 	});
+}
+
+function destroyObject(obj)
+{
+	for (var key in obj)
+	{
+		if (typeof obj[key] == 'object')
+		{
+			obj[key].forEach(function(e){
+				delete e;
+			});
+		}
+
+		delete obj[key];
+	}
+
+	delete obj;
 }
 
 function Query()

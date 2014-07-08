@@ -61,6 +61,9 @@
 				if (results.length > 0)
 				{
 					USER_INFO = results[0];
+					window.top.frames["menu"].premiseCheck();
+					window.top.frames["overview"].permissionCheck();
+					window.top.frames["overview"].initMenu();
 				}
 				
 				connection.end();

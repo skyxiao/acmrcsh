@@ -508,6 +508,7 @@ function selectRecipeCancel()
 	$(".recipe_list").hide();
 }
 
+var lastAutoStatus = null;
 function getInitData()
 {
 	var arr = [100024, 100013, 100014, 100015, 100016, 100017, 100050, 100018, 100055, 4000, 5000, 6000, 8020, 8023];
@@ -559,6 +560,15 @@ function getInitData()
 			break;
 
 		case "100050":
+			if (lastAutoStatus === system_data[i]["value"])
+			{
+				break;
+			}
+			else
+			{
+				lastAutoStatus = system_data[i]["value"];
+			}
+
 			if (system_data[i]["value"] == 0)
 			{
 				$(".status_content").text("idle");

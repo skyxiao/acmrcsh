@@ -192,12 +192,13 @@ function init()
 		}
 	});
 
-	$(".username").text(top.user_arr[0]);
+	$(".username").text(top.USER_INFO["name"]);
 	$(".logout").click(function(){
 		$(".tooltip").remove();
 		if (confirm("Are you sure sign out?"))
 		{
 			top.window.location.href = "Login.htm";
+			delete top.USER_INFO;
 		}
 	});
 

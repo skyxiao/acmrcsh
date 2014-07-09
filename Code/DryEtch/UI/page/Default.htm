@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <script src="../js/jquery-2.1.0.min.js" type="text/javascript"></script>
-	<script language="javascript" type="text/javascript" src="../js/Dialog.js"></script>
 	<script language="javascript" type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript">
 		try
 		{
+			var FS = require("fs");
+			var userinfo_str = FS.readFileSync("./UserInfo_Temporary.txt").toString();
+			FS.unlink("./UserInfo_Temporary.txt");
 			var control = require('../ControlBinder');
 			control.initialize('libDryEtch');
 			var gui = require('nw.gui');
@@ -39,40 +41,44 @@
 				//win.removeAllListeners('close');
 				//win.close();
 			});
-
-			var FS = require("fs");
-			var userinfo_str = FS.readFileSync("./UserInfo_Temporary.txt").toString();
-			var user_arr = userinfo_str.split("###");
-			FS.unlink("./UserInfo_Temporary.txt");
+			
+			var USER_INFO = {};
+			
+			USER_INFO = $.parseJSON(userinfo_str);
+			/*
 			var connection = getSqlConnection();
 			var sql = "select * from user where name='" + user_arr[0] + "' and password='" + user_arr[1] + "'";
 			var USER_INFO = {};
-		
-			connection.query(
-			  sql,
-			  function selectCb(err, results, fields) {
-				if (err)
-				{
-					writeLog("error", err);
-					connection.end();
-					return;
-				}
-			
-				if (results.length > 0)
-				{
-					USER_INFO = results[0];
-					window.top.frames["menu"].premiseCheck();
-					window.top.frames["overview"].permissionCheck();
-					window.top.frames["overview"].initMenu();
-				}
+			$(document).ready(function () {
+				connection.query(
+				  sql,
+				  function selectCb(err, results, fields) {
+					if (err)
+					{
+						writeLog("error", err);
+						connection.end();
+						return;
+					}
 				
-				connection.end();
-			  }
-			);
+					if (results.length > 0)
+					{
+						USER_INFO = results[0];
+						window.top.frames["menu"].premiseCheck();
+						window.top.frames["overview"].permissionCheck();
+						window.top.frames["overview"].initMenu();
+					}
+					
+					connection.end();
+				  }
+				);
+			});
+			*/
+			
 		}
 		catch (e)
 		{
 			alert(e);
+			top.window.location.href = "Login.htm";
 		}
 //        var isHistoryLoad = false;
 //        var isRecipeEdit = false;	

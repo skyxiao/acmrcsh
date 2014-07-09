@@ -23,7 +23,7 @@ body {
 
 </style>
 </head>
-<body>
+<body onselectstart="return false">
     <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
             <td bgcolor="#e5f6cf">
@@ -166,7 +166,7 @@ body {
 			else
 			{
 				var fs = require("fs");
-				fs.writeFileSync("UserInfo_Temporary.txt", userName + "###" + passWord);
+				fs.writeFileSync("UserInfo_Temporary.txt", JSON.stringify(results[0]));
 				delete fs;
 				location.href = "default.htm";
 			}

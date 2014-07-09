@@ -188,7 +188,7 @@
         
     }
 </script>
-<body>
+<body onselectstart="return false">
 	<div class="menu_box">
     <table cellpadding="0" cellspacing="0">
         <tr>
@@ -321,7 +321,8 @@
 			$(".user").remove();
 		}
 	}
-	//setTimeout(premiseCheck, 200);
-	
+
+	premiseCheck();
+	//setTimeout(premiseCheck, 200);	
 </script>
 </html>

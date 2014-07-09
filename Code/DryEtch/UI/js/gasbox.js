@@ -159,6 +159,11 @@ function initVAC() {
     prpos[50] = "1";
     prpos[51] = "1";
     div.onclick = function () {
+		if (user_info["gasbox"] && user_info["gasbox"] == "readonly")
+		{
+			return;
+		}
+
         if (prpos[1011] == "1") {
             modifySystemData(1011, "0");
         }

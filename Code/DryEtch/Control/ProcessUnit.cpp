@@ -321,11 +321,11 @@ bool ProcessUnit::alarm_check()
 		EVT::FacVacuumPressureLow.Report();
 		return false;
 	}
-	else if(Data::diExpCbVPrsSwtLLmt == 1)
-	{
-		EVT::ExpVacuumPressureLow.Report();
-		return false;
-	}
+	// else if(Data::diExpCbVPrsSwtLLmt == 1)
+	// {
+	// 	EVT::ExpVacuumPressureLow.Report();
+	// 	return false;
+	// }
 	else if(Data::diVaporMHeaterAlarm == 1)
 	{
 		EVT::VapMainHeaterAlarm.Report();

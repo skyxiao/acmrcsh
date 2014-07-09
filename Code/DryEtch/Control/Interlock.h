@@ -27,6 +27,7 @@ public:
 private:
 	void shut_chemical_except_n2();
 	void shut_all_chemical();
+	void shut_pump_valve();
 	void report_alcohol_alarm();
 };
 

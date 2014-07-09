@@ -26,11 +26,12 @@ void Interlock::Initialize()
 	POST_INTERLOCK_MEMBER(diAlcoholGasLeak, 1, shut_all_chemical)
 	POST_INTERLOCK_MEMBER(diAlcoholLeak, 1, shut_all_chemical)
 	POST_INTERLOCK_MEMBER(diPrcCbDoorClose, 0, shut_all_chemical)
+	POST_INTERLOCK_MEMBER(diPrcCbDoorClose, 0, shut_pump_valve)
 	POST_INTERLOCK_MEMBER(diCbLeftDoorClose, 0, shut_all_chemical)
 	POST_INTERLOCK_MEMBER(diCbRightDoorClose, 0, shut_all_chemical)
 	POST_INTERLOCK_MEMBER(diAlcTkLow, 1, report_alcohol_alarm)
 	
-	POST_INTERLOCK_EVT(diAlcPrsLLmt, 1, AlcGasPressureLow)
+//	POST_INTERLOCK_EVT(diAlcPrsLLmt, 1, AlcGasPressureLow)
 
 	POST_INTERLOCK_EVT_STRING(diN2PgHFPrsULmt, 1, "N2 purge HF tube pressure is over upper limit.")
 	POST_INTERLOCK_EVT_STRING(diN2PgHFPrsLLmt, 1, "N2 purge HF tube pressure is below lower limit.")
@@ -55,8 +56,8 @@ void Interlock::Initialize()
 	
 	POST_INTERLOCK_EVT(diFacVPrsSwtLLmt, 1, FacVacuumPressureLow)
 
-	POST_INTERLOCK_EVT_STRING(diExpCbVPrsSwtULmt, 1, "Expansion chamber vacuum pressure is over upper limit.")
-	POST_INTERLOCK_EVT(diExpCbVPrsSwtLLmt, 1, ExpVacuumPressureLow)
+//	POST_INTERLOCK_EVT_STRING(diExpCbVPrsSwtULmt, 1, "Expansion chamber vacuum pressure is over upper limit.")
+//	POST_INTERLOCK_EVT(diExpCbVPrsSwtLLmt, 1, ExpVacuumPressureLow)
 	
 	POST_INTERLOCK_EVT_STRING(diIODoorClose, 0, "IO door is open.")
 	POST_INTERLOCK_EVT_STRING(diPCDoorClose, 0, "PC door is open.")
@@ -174,9 +175,12 @@ void Interlock::Initialize()
 	PRE_INTERLOCK(doExpCbVapVacValve, 1, diProcCbHFLeak, 1)
 	PRE_INTERLOCK(doExpCbVapVacValve, 1, diAlcoholGasLeak, 1)
 	PRE_INTERLOCK(doExpCbVapVacValve, 1, diAlcoholLeak, 1)
-	PRE_INTERLOCK(doExpCbVapVacValve, 1, diPrcCbDoorClose, 0)
+//	PRE_INTERLOCK(doExpCbVapVacValve, 1, diPrcCbDoorClose, 0)
 	PRE_INTERLOCK(doExpCbVapVacValve, 1, diCbLeftDoorClose, 0)
 	PRE_INTERLOCK(doExpCbVapVacValve, 1, diCbRightDoorClose, 0)
+
+	PRE_INTERLOCK(doVacFastProcCbVal, 1, diPrcCbDoorClose, 0)
+	PRE_INTERLOCK(doVacSlowProcCbVal, 1, diPrcCbDoorClose, 0)
 
 	PRE_INTERLOCK(doVaVapValve, 1, diGasBoxHFLeak, 1)
 	PRE_INTERLOCK(doVaVapValve, 1, diProcCbHFLeak, 1)
@@ -255,4 +259,10 @@ void Interlock::shut_all_chemical()
 void Interlock::report_alcohol_alarm()
 {
 	EVT::GenericWarning.Report("Alcohol tank level is too low.");
+}
+
+void Interlock::shut_pump_valve()
+{
+	Data::doVacFastProcCbVal = 0;
+	Data::doVacSlowProcCbVal = 0;
 }

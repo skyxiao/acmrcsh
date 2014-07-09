@@ -114,7 +114,7 @@ DELIMITER ;
 
 -- 导出  过程 dry_etch.record_data 结构
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `record_data`(IN `p_time` DATETIME, IN `p_type` ENUM('N2','EtOH','HF','Pressure','Chuck','Lid','Body'), IN `p_value` FLOAT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `record_data`(IN `p_time` DATETIME, IN `p_type` ENUM('N2','EtOH','HF','Pressure','Chuck','Lid','Body','Tank'), IN `p_value` FLOAT)
 BEGIN
 	insert into process_data values(p_time, p_type, p_value);
 END//

@@ -41,8 +41,11 @@
 
 			var FS = require("fs");
 			var userinfo_str = FS.readFileSync("./UserInfo_Temporary.txt").toString();
-			var user_arr = userinfo_str.split("###");
 			FS.unlink("./UserInfo_Temporary.txt");
+			var USER_INFO = {};
+			
+			USER_INFO = $.parseJSON(userinfo_str);
+			/*
 			var connection = getSqlConnection();
 			var sql = "select * from user where name='" + user_arr[0] + "' and password='" + user_arr[1] + "'";
 			var USER_INFO = {};
@@ -69,6 +72,7 @@
 				  }
 				);
 			});
+			*/
 			
 		}
 		catch (e)

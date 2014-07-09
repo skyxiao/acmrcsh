@@ -166,7 +166,7 @@ body {
 			else
 			{
 				var fs = require("fs");
-				fs.writeFileSync("UserInfo_Temporary.txt", userName + "###" + passWord);
+				fs.writeFileSync("UserInfo_Temporary.txt", JSON.stringify(results[0]));
 				delete fs;
 				location.href = "default.htm";
 			}

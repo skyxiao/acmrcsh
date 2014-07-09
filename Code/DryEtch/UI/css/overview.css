@@ -661,82 +661,103 @@ body
 {
 	background: url(../images/empty.png);
 	width:120px;
-	height:120px;
+	height:75px;
+	padding-top:45px;
 	color:#fff;
 	text-align:center;
-	line-height:120px;
+	/*line-height:120px;*/
 	margin-left:15px;
 	margin-top:15px;
+	white-space:normal;
+	word-break:break-all;
 }
 
  .broken
 {
     background: url(../images/broken.png);
     width:120px;
-	height:120px;
+	height:75px;
+	padding-top:45px;
 	margin-left:15px;
 	margin-top:15px;
 	color:#fff;
 	text-align:center;
-	line-height:120px;
+	/*line-height:120px;*/
+	white-space:normal;
+	word-break:break-all;
 }
 
  .dummy
 {
     background: url(../images/dummy.png);
     width:120px;
-	height:120px;
+	height:75px;
+	padding-top:45px;
 	margin-left:15px;
 	margin-top:15px;
 	color:#fff;
 	text-align:center;
-	line-height:120px;
+	/*line-height:120px;*/
+	white-space:normal;
+	word-break:break-all;
 }
 
  .processed
 {
     background: url(../images/processed.png);
     width:120px;
-	height:120px;
+	height:75px;
+	padding-top:45px;
 	margin-left:15px;
 	margin-top:15px;
 	color:#fff;
 	text-align:center;
-	line-height:120px;
+	/*line-height:120px;*/
+	white-space:normal;
+	word-break:break-all;
 }
 
  .processing
 {
     background: url(../images/processing.png);
     width:120px;
-	height:120px;
+	height:75px;
+	padding-top:45px;
 	margin-left:15px;
 	margin-top:15px;
 	color:#fff;
 	text-align:center;
-	line-height:120px;
+	/*line-height:120px;*/
+	white-space:normal;
+	word-break:break-all;
 }
 
  .unprocessed
 {
     background: url(../images/unprocessed.png);
     width:120px;
-	height:120px;
+	height:75px;
+	padding-top:45px;
 	margin-left:15px;
 	margin-top:15px;
 	color:#fff;
 	text-align:center;
-	line-height:120px;
+	/*line-height:120px;*/
+	white-space:normal;
+	word-break:break-all;
 }
 
  .semiprocessed
 {
     background: url(../images/semi-processed.png);
-   width:120px;
-	height:120px;
+	width:120px;
+	height:75px;
+	padding-top:45px;
 	margin-left:15px;
 	margin-top:15px; 
 	color:#fff;
 	text-align:center;
-	line-height:120px;
+	/*line-height:120px;*/
+	white-space:normal;
+	word-break:break-all;
 }

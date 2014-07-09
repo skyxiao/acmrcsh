@@ -6,6 +6,9 @@
     <script type="text/javascript">
 		try
 		{
+			var FS = require("fs");
+			var userinfo_str = FS.readFileSync("./UserInfo_Temporary.txt").toString();
+			FS.unlink("./UserInfo_Temporary.txt");
 			var control = require('../ControlBinder');
 			control.initialize('libDryEtch');
 			var gui = require('nw.gui');
@@ -38,10 +41,7 @@
 				//win.removeAllListeners('close');
 				//win.close();
 			});
-
-			var FS = require("fs");
-			var userinfo_str = FS.readFileSync("./UserInfo_Temporary.txt").toString();
-			FS.unlink("./UserInfo_Temporary.txt");
+			
 			var USER_INFO = {};
 			
 			USER_INFO = $.parseJSON(userinfo_str);

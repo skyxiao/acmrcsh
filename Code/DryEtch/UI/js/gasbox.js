@@ -270,6 +270,7 @@ function initValve() {
 }
 
 var lastStatus = null;
+var lastProcCommand = null;
 var lastprocParam1 = null;
 var lastprocParam2 = null;
 
@@ -319,13 +320,14 @@ function getSettingsData()
 		}
 	}
 
-	if (lastStatus === status && lastprocParam1 === procParam1 &&  lastprocParam2 === procParam2)
+	if (lastStatus === status && lastProcCommand === procCommand && lastprocParam1 === procParam1 &&  lastprocParam2 === procParam2)
 	{
 		return;
 	}
 	else
 	{
 		lastStatus = status;
+		lastProcCommand = procCommand;
 		lastprocParam1 = procParam1;
 		lastprocParam2 = procParam2;
 	}

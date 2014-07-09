@@ -10,7 +10,7 @@ var setIntervalID2;
 function  permissionCheck()
 {
 	var user_info = top.USER_INFO;
-	if (user_info)
+	if (!user_info || !user_info["overview"])
 	{
 		return;
 	}

@@ -193,6 +193,7 @@ void ProcessUnit::shut_all_chemical()
 {
 	Data::doHFFacSupplyVal = 0;
 	Data::doVapSupplyN2Valve = 0;
+	Data::doVaSupplyIPAValve = 0;
 	Data::doAlcMFCVal1 = 0;
 	Data::doAlcMFCVal2 = 0;
 	Data::aoEtOHFlowSetpoint = 0;
@@ -301,11 +302,11 @@ bool ProcessUnit::alarm_check()
 		EVT::AlcoholTankLow.Report();
 		return false;
 	}
-	else if(Data::diAlcPrsLLmt == 1)
-	{
-		EVT::AlcGasPressureLow.Report();
-		return false;
-	}
+	// else if(Data::diAlcPrsLLmt == 1)
+	// {
+	// 	EVT::AlcGasPressureLow.Report();
+	// 	return false;
+	// }
 	else if(Data::diN2FacSplPrsULmt == 1)
 	{
 		EVT::N2FacPressureHigh.Report();
@@ -1600,6 +1601,21 @@ void ProcessUnit::OnPurge(unsigned param)
 
 void ProcessUnit::OnPurgeHF()
 {
+	if(Data::doEnableVPump == 0)
+	{
+		NEW_UNIT_STEP("turn on pump", true)
+			ADD_STEP_COMMAND([&]()
+			{	Data::doVacFastProcCbVal = 0;
+				Data::doVacSlowProcCbVal = 0;
+				Data::doEnableVPump = 1;})
+			ADD_STEP_WAIT(5)
+			ADD_STEP_WAIT_CONDITION([&]()->bool
+			{	return Data::diVPumpWarning == 0 && Data::diVPumpAlarm == 0;},
+				1,
+				[&](){	EVT::PumpError.Report();})
+		END_UNIT_STEP
+	}
+
 	NEW_UNIT_STEP("prepare purge HF", false)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doHFFacSupplyVal = 0;
@@ -1639,10 +1655,25 @@ void ProcessUnit::OnPurgeHF()
 
 void ProcessUnit::OnPurgeEtOH()
 {
-	if(Data::diAlcTkLow == 0)
+	if(Data::diAlcTkLow == 1)
 	{
 		EVT::GenericWarning.Report("Alcohol tank isn't empty, please make it empty before purge.");
 		return;
+	}
+
+	if(Data::doEnableVPump == 0)
+	{
+		NEW_UNIT_STEP("turn on pump", true)
+			ADD_STEP_COMMAND([&]()
+			{	Data::doVacFastProcCbVal = 0;
+				Data::doVacSlowProcCbVal = 0;
+				Data::doEnableVPump = 1;})
+			ADD_STEP_WAIT(5)
+			ADD_STEP_WAIT_CONDITION([&]()->bool
+			{	return Data::diVPumpWarning == 0 && Data::diVPumpAlarm == 0;},
+				1,
+				[&](){	EVT::PumpError.Report();})
+		END_UNIT_STEP
 	}
 
 	NEW_UNIT_STEP("prepare purge EtOH", false)
@@ -1694,6 +1725,21 @@ void ProcessUnit::OnPurgeEtOH()
 
 void ProcessUnit::OnPurgeExpChamber()
 {
+	if(Data::doEnableVPump == 0)
+	{
+		NEW_UNIT_STEP("turn on pump", true)
+			ADD_STEP_COMMAND([&]()
+			{	Data::doVacFastProcCbVal = 0;
+				Data::doVacSlowProcCbVal = 0;
+				Data::doEnableVPump = 1;})
+			ADD_STEP_WAIT(5)
+			ADD_STEP_WAIT_CONDITION([&]()->bool
+			{	return Data::diVPumpWarning == 0 && Data::diVPumpAlarm == 0;},
+				1,
+				[&](){	EVT::PumpError.Report();})
+		END_UNIT_STEP
+	}
+
 	NEW_UNIT_STEP("prepare purge expansion chamber", false)
 		ADD_STEP_COMMAND([&]()
 		{	Data::doExpCbHFInletVal = 0;
@@ -1734,6 +1780,21 @@ void ProcessUnit::OnPurgeProcChamber()
 	{
 		EVT::GenericWarning.Report("Chamber pressure is too high, please pump process chamber.");
 		return;
+	}
+
+	if(Data::doEnableVPump == 0)
+	{
+		NEW_UNIT_STEP("turn on pump", true)
+			ADD_STEP_COMMAND([&]()
+			{	Data::doVacFastProcCbVal = 0;
+				Data::doVacSlowProcCbVal = 0;
+				Data::doEnableVPump = 1;})
+			ADD_STEP_WAIT(5)
+			ADD_STEP_WAIT_CONDITION([&]()->bool
+			{	return Data::diVPumpWarning == 0 && Data::diVPumpAlarm == 0;},
+				1,
+				[&](){	EVT::PumpError.Report();})
+		END_UNIT_STEP
 	}
 
 	NEW_UNIT_STEP("prepare purge process chamber", false)

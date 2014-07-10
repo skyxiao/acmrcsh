@@ -33,7 +33,7 @@ ParameterItem<unsigned> FlowWarnProportion(2011,"FlowWarnProportion","Flow","War
 ParameterItem<unsigned> FlowWarnMinimum(2012,"FlowWarnMinimum","Flow","Minimum warning of flow rate.",0,1000,50,"sccm");
 ParameterItem<unsigned> FlowAlarmProportion(2013,"FlowAlarmProportion","Flow","Alarm proportion of flow rate.",0,100,5,"%");
 ParameterItem<unsigned> FlowAlarmMinimum(2014,"FlowAlarmMinimum","Flow","Minimum alarm of flow rate.",0,1000,50,"sccm");
-ParameterItem<float> FlowMonitorDelay(2015, "FlowMonitorDelay", "Flow", "Delay time for gas flow.", 0, 100, 5, "s");
+ParameterItem<float> FlowMonitorDelay(2015, "FlowMonitorDelay", "Flow", "Delay time for gas flow.", 0, 300, 5, "s");
 ParameterItem<unsigned> EtOHWarnProportion(2021,"EtOHWarnProportion","Flow","Warning proportion of EtOH flow rate.",0,100,10,"%");
 ParameterItem<unsigned> EtOHWarnMinimum(2022,"EtOHWarnMinimum","Flow","Minimum warning of EtOH flow rate.",0,1000,50,"sccm");
 ParameterItem<unsigned> EtOHAlarmProportion(2023,"EtOHAlarmProportion","Flow","Alarm proportion of EtOH flow rate.",0,100,20,"%");
@@ -45,9 +45,9 @@ ParameterItem<float> EtOHMonitorDelay(2025, "EtOHMonitorDelay", "Flow", "Delay t
 ParameterItem<float> ATMPressure(3001,"ATMPressure","Pressure","ATM pressure",600,800,730,"torr");
 ParameterItem<float> VacuumPressure(3002,"VacuumPressure","Pressure","Vacuum pressure",0,100,10,"torr");
 ParameterItem<float> PressureDiffAllowance(3003,"PressureDiffAllowance","Pressure","Pressure difference allowance",0,100,60,"torr");
-ParameterItem<float> PressureWarnOffset(3005, "PressureWarnOffset", "Pressure", "Relative pressure offset of warning to setting value.", 0, 50, 10, "torr");
-ParameterItem<float> PressureAlarmOffset(3006, "PressureAlarmOffset", "Pressure", "Relative pressure offset of alarm to setting value.", 0, 50, 20, "torr");
-ParameterItem<float> PressureMonitorDelay(3007, "PressureMonitorDelay", "Pressure", "Delay time from recipe step start.", 0, 20, 5, "s");
+ParameterItem<float> PressureWarnOffset(3005, "PressureWarnOffset", "Pressure", "Relative pressure offset of warning to setting value.", 0, 100, 10, "torr");
+ParameterItem<float> PressureAlarmOffset(3006, "PressureAlarmOffset", "Pressure", "Relative pressure offset of alarm to setting value.", 0, 100, 20, "torr");
+ParameterItem<float> PressureMonitorDelay(3007, "PressureMonitorDelay", "Pressure", "Delay time from recipe step start.", 0, 300, 5, "s");
 
 
 //Purge

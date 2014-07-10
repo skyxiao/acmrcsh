@@ -39,8 +39,8 @@ SystemData<unsigned> diPCDoorClose(25, "diPCDoorClose", "DI", 0, 1, 0, 0, 0, 25,
 SystemData<unsigned> diPneuDoorClose(26, "diPneuDoorClose", "DI", 0, 1, 0, 0, 0, 26, 0, 1, false);
 SystemData<unsigned> diAcFrmDoorClose(27, "diAcFrmDoorClose", "DI", 0, 1, 0, 0, 0, 27, 0, 1, false);
 SystemData<unsigned> diAcDoorOverride(28, "diAcDoorOverride", "DI", 0, 1, 0, 0, 0, 28, 0, 1, false);
-SystemData<unsigned> diVaporMHeaterAlarm(29, "diVaporMHeaterAlarm", "DI", 0, 1, 0, 0, 0, 29, 0, 1, false,"",ConvertNot<unsigned>);
-SystemData<unsigned> diVaporVHeaterAlarm(30, "diVaporVHeaterAlarm", "DI", 0, 1, 0, 0, 0, 30, 0, 1, false,"",ConvertNot<unsigned>);
+SystemData<unsigned> diVaporMHeaterAlarm(29, "diVaporMHeaterAlarm", "DI", 0, 1, 0, 0, 0, 29, 0, 1, false);
+SystemData<unsigned> diVaporVHeaterAlarm(30, "diVaporVHeaterAlarm", "DI", 0, 1, 0, 0, 0, 30, 0, 1, false);
 SystemData<unsigned> diHFReady(31, "diHFReady", "DI", 0, 1, 0, 0, 0, 31, 0, 1, false);
 SystemData<unsigned> diHeartbeatFail(32, "diHeartbeatFail", "DI", 0, 1, 0, 0, 0, 32, 0, 1, false,"",ConvertNot<unsigned>);
 SystemData<unsigned> diExhaustAlarm(33, "diExhaustAlarm", "DI", 0, 1, 0, 0, 0, 33, 0, 1, false,"",ConvertNot<unsigned>);

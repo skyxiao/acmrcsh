@@ -70,7 +70,7 @@ void MonitorItem::Monitor()
 	{
 		if(m_report_flag < 2)
 		{
-			EVT::MonitorAlarm.Report(alarm_low, alarm_high, value, m_name);
+			EVT::MonitorAlarm.Report(value, alarm_low, alarm_high, m_name);
 			m_level = 2;
 		}
 		m_report_flag = 2;
@@ -81,7 +81,7 @@ void MonitorItem::Monitor()
 	{
 		if(m_report_flag < 1)
 		{
-			EVT::MonitorWarning.Report(warn_low, warn_high, value, m_name);
+			EVT::MonitorWarning.Report(value, warn_low, warn_high, m_name);
 			if(m_level < 1)
 			{
 				m_level = 1;

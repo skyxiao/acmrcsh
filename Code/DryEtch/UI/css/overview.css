@@ -458,14 +458,13 @@ body
 	float:right;
 }
 
-.temp_pre_display td
+.temp_pre_display td,th
 {
 	border-top : 1px solid #0A98AE;
 	border-bottom : 1px solid #042A30;
 	border-left : 1px solid #07ABC4;
 	border-right : 1px solid #042A30;
 	background-color : #0F6C84;
-	padding-left : 5px;
 	color : #fff;
 	font-size : 14px;
 	height : 22px;
@@ -582,23 +581,27 @@ body
 .wafer_h
 {
 	width:120px;
-	height:120px;
-	line-height:120px;
+	height:75px;
+	padding-top:45px;
 	margin-top:-90px;
 	margin-left:-150px;
 	color:#fff;
 	text-align:center;
+	white-space:normal;
+	word-break:break-all;
 }
 
 .wafer_v
 {
 	width:120px;
-	height:120px;
-	line-height:120px;
+	height:75px;
+	padding-top:45px;
 	margin-top:-180px;
 	margin-left:-45px;
 	color:#fff;
 	text-align:center;
+	white-space:normal;
+	word-break:break-all;
 }
 
 .wafer_empty

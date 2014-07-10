@@ -33,6 +33,7 @@ function  permissionCheck()
 		$(".btn_box").find("button").removeClass("enable_button");
 		$(".btn_box").find("button").addClass("disabled_button");
 		$(".btn_box").find("button").attr("isable", "false");		
+		$("input").attr("disabled", "disabled");
 	}
 }
 

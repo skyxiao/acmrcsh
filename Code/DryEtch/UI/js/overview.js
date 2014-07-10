@@ -672,7 +672,11 @@ function getInitData()
 	if (recipe_total_time != 0 && recipe_done_time <= recipe_total_time)
 	{
 		$(".recipe_done_progress").parent().find("div").text(recipe_done_time + " / " + recipe_total_time);
-	}	
+	}
+	else
+	{
+		$(".recipe_done_progress").parent().find("div").text("");
+	}
 
 	if (0 != recipe_total_time && !isNaN(recipe_total_time) && !isNaN(recipe_done_time))
 	{
@@ -694,6 +698,10 @@ function getInitData()
 	if (step_total_time != 0 && step_done_time <= step_total_time)
 	{
 		$(".step_done_progress").parent().find("div").text(step_done_time + " / " + step_total_time);
+	}
+	else
+	{
+		$(".step_done_progress").parent().find("div").text("");
 	}
 
 	if (0 != step_total_time && !isNaN(step_total_time) && !isNaN(step_done_time))

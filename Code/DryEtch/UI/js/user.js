@@ -192,6 +192,14 @@ function showUserInfo(This)
 	});
 
 	$(".overview").attr("disabled", "disabled");
+	$(".uname").keyup(function(){
+		var text = $(this).val();
+		if (text.length > 12)
+		{
+			var str = text.substring(0, 12);
+			$(this).val(str);
+		}
+	});
 
 	permissionCheck();
 }
@@ -220,6 +228,7 @@ function saveUser(This)
 {
 	if ($(".userselect").attr("isSave") == "false")
 	{
+		var oldUserName = $(".userselect").text().trim();
 		var userInfo = getUserObject();
 		if (userInfo["name"] == "")
 		{
@@ -250,6 +259,9 @@ function saveUser(This)
 					connection.end();
 					return;
 				}
+
+				delete currentUser[oldUserName];
+				$(".userselect").text(userInfo["name"]);
 
 				currentUser[userInfo["name"]] = userInfo;
 				$(".messagealert").text("The user '" + userInfo["name"] + "' save successfully");

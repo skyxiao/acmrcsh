@@ -1,7 +1,6 @@
 ﻿function  permissionCheck()
 {
 	var user_info = top.USER_INFO;
-	console.log(user_info);
 	if (user_info["config"] && user_info["config"] == "readonly")
 	{
 		$(".conf_btn").attr("class", "conf_btn disable_btn");

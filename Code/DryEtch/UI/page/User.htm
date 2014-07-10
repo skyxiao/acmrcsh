@@ -187,6 +187,14 @@
 			getAllUser();
 			permissionCheck();
 			$(".add_overview").attr("disabled", "disabled");
+			$(".add_uname").keyup(function(){
+				var text = $(this).val();
+				if (text.length > 12)
+				{
+					var str = text.substring(0, 12);
+					$(this).val(str);
+				}
+			});
 		</script>
 	</body>
 </html>

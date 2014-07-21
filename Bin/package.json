@@ -6,7 +6,7 @@
 	"icon":"./images/acm3.png",
     "width": 1270,
     "height": 1020,
-	"min_width": 1270,
+	"min_width": 1150,
     "min_height": 960,
 	"max_width": 1280,
     "max_height": 1020,

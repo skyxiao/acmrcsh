@@ -277,7 +277,7 @@ var lastprocParam2 = null;
 
 function getSettingsData()
 {
-	var arr = [100050, 100052, 100053, 100054];
+	var arr = [100050, 100052, 100053, 100054, 46, 47, 48];
 	var json = {};
 	try
 	{
@@ -295,6 +295,9 @@ function getSettingsData()
 	var procCommand = 1000;
 	var procParam1 = 0;
 	var procParam2 = 0;
+	var TKLow = 0;
+	var TKHigh = 0;
+	var TKHighH = 0;
 	for (var i = 0; i < system_data.length; ++i)
 	{
 		switch (system_data[i]["id"])
@@ -316,9 +319,38 @@ function getSettingsData()
 			procParam2 = parseInt(system_data[i]["value"]);
 			break;
 
+		case "46":
+			TKLow = parseInt(system_data[i]["value"]);
+			break;
+
+		case "47":
+			TKHigh = parseInt(system_data[i]["value"]);
+			break;
+
+		case "48":
+			TKHighH = parseInt(system_data[i]["value"]);
+			break;
+
 		default:
 		
 		}
+	}
+
+	if (TKHighH == 1)
+	{
+		$(".gas_level").text("highhigh");
+	}
+	else if (TKHigh == 1)
+	{
+		$(".gas_level").text("high");
+	}
+	else if (TKLow == 1)
+	{
+		$(".gas_level").text("low");
+	}
+	else
+	{
+		$(".gas_level").text("lowlow");
 	}
 
 	if (lastStatus === status && lastProcCommand === procCommand && lastprocParam1 === procParam1 &&  lastprocParam2 === procParam2)

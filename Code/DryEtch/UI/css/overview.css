@@ -446,7 +446,7 @@ body
 
 .pinStatus
 {
-	width:410px;
+	width:450px;
 	position:relative;
 	left: 70px;
 	top: -560px;
@@ -454,8 +454,9 @@ body
 
 .temp_pre_display
 {
-	width:210px;
+	width:240px;
 	float:right;
+	margin-top: -15px;
 }
 
 .temp_pre_display td,th

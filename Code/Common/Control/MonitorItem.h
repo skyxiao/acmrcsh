@@ -18,7 +18,7 @@ class MonitorItem : public boost::noncopyable
 public:
 	MonitorItem(const std::string& name, boost::function<float ()> getter);
 
-	void Reset(float delay, float setpoint, float warn_offset, float alarm_offset);
+	void Reset(float delay, float timeout, float setpoint, float warn_offset, float alarm_offset);
 	//void Reset(float setpoint);
 	void Enable();
 	void Disable();
@@ -28,6 +28,7 @@ public:
 
 private:
 	std::string m_name;
+	float m_timeout; //unit: s
 	boost::function<float ()> m_getter;
 	float m_setpoint;
 	float m_warn_offset;
@@ -38,6 +39,8 @@ private:
 	unsigned m_report_flag;	//no:0, warn:1, alarm:2
 	unsigned m_level;	//no:0, warn:1, alarm:2
 	time_point m_start_time;
+	time_point m_warn_trigger_time;
+	time_point m_alarm_trigger_time;
 };
 
 #endif /* MONITORITEM_H_ */

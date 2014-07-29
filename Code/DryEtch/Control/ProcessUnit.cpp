@@ -828,8 +828,8 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		float pres_warn_offset = Parameters::PressureWarnOffset;
 		float pres_alarm_offset = Parameters::PressureAlarmOffset;
 		Data::aoAPCPressure = pressure;
-		Monitor::Instance().Reset("Process pressure", Parameters::PressureMonitorDelay, pressure, 
-			pres_warn_offset, pres_alarm_offset);
+		Monitor::Instance().Reset("Process pressure", Parameters::PressureMonitorDelay, Parameters::PressureTriggerTimeout,
+			pressure, pres_warn_offset, pres_alarm_offset);
 	}
 	unsigned short rpm = recipe_step.RotateSpeed();
 	if (rpm > 0)
@@ -873,7 +873,8 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		{
 			Data::doExpCbHFInletVal = 1;
 			Data::doVaHFValve = 0;
-			Monitor::Instance().Reset("HF flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
+			Monitor::Instance().Reset("HF flowrate", Parameters::FlowMonitorDelay, Parameters::FlowTriggerTimeout, 
+				flowrate, flow_warn_offset, flow_alarm_offset);
 		}
 	}
 	Data::doHFMFCVal1 = 1;
@@ -905,7 +906,8 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 		{
 			Data::doExpCbVacIPASupply = 1;
 			Data::doVaVapValve = 0;
-			Monitor::Instance().Reset("EtOH flowrate", Parameters::EtOHMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
+			Monitor::Instance().Reset("EtOH flowrate", Parameters::EtOHMonitorDelay, Parameters::EtOHTriggerTimeout, 
+				flowrate, flow_warn_offset, flow_alarm_offset);
 		}
 	}
 	Data::doAlcMFCVal1 = 1;
@@ -919,7 +921,8 @@ void ProcessUnit::process_recipe_step(unsigned index, const RecipeStep& recipe_s
 	flow_alarm_offset = 0.01 * flowrate * Parameters::FlowAlarmProportion;
 	flow_alarm_offset = std::max<float>(Parameters::FlowAlarmMinimum, flow_alarm_offset);
 	Data::aoN2FlowSetpoint = flowrate;
-	Monitor::Instance().Reset("N2 flowrate", Parameters::FlowMonitorDelay, flowrate, flow_warn_offset, flow_alarm_offset);
+	Monitor::Instance().Reset("N2 flowrate", Parameters::FlowMonitorDelay, Parameters::FlowTriggerTimeout, 
+		flowrate, flow_warn_offset, flow_alarm_offset);
 
 	Data::doPurgeN2MFCVal1 = 1;
 	Data::doPurgeN2MFCVal2 = 1;
@@ -989,12 +992,12 @@ void ProcessUnit::OnProcess()
 			DataRecorder::Instance().Enable("Body");
 			DataRecorder::Instance().Enable("Tank");
 			//start monitor heater when process start.
-			Monitor::Instance().Reset("Chuck temperature", Parameters::TempMonitorDelay, Parameters::ChuckTemp, 
-				Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
-			Monitor::Instance().Reset("Body temperature", Parameters::TempMonitorDelay, Parameters::BodyTemp, 
-				Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
-			Monitor::Instance().Reset("Lid temperature", Parameters::TempMonitorDelay, Parameters::LidTemp, 
-				Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
+			Monitor::Instance().Reset("Chuck temperature", Parameters::TempMonitorDelay, Parameters::TempTriggerTimeout, 
+				Parameters::ChuckTemp, Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
+			Monitor::Instance().Reset("Body temperature", Parameters::TempMonitorDelay, Parameters::TempTriggerTimeout, 
+				Parameters::BodyTemp, Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
+			Monitor::Instance().Reset("Lid temperature", Parameters::TempMonitorDelay, Parameters::TempTriggerTimeout, 
+				Parameters::LidTemp, Parameters::TempWarnOffset, Parameters::TempAlarmOffset);
 		};
 		ADD_STEP_COMMAND(f)
 	END_UNIT_STEP
@@ -1440,6 +1443,7 @@ bool ProcessUnit::OnPumpProcChamber()
 		float pressure2 = Parameters::PumpDownTargetPressure;
 		auto event_function = [=](){EVT::PumpTimeout.Report<float, float>(pressure1, pressure2);};
 		ADD_STEP_WAIT_CONDITION(condition_function,	Parameters::FastPumpTimeout, event_function);
+		ADD_STEP_WAIT(10)
 	END_UNIT_STEP
 
 

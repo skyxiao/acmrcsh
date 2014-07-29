@@ -33,7 +33,7 @@ public:
 	void Enable(const std::string& name);
 	void Disable(const std::string& name);
 
-	void Reset(const std::string& name, float delay, float setpoint, float warn_offset, float alarm_offset);
+	void Reset(const std::string& name, float delay, float timeout, float setpoint, float warn_offset, float alarm_offset);
 	//void Reset(const std::string& name, float setpoint);
 
 	bool HasWarning();

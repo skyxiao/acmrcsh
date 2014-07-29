@@ -20,6 +20,7 @@ ParameterItem<float> TempAlarmOffset(26, "TempAlarmOffset", "Heater", "Relative 
 ParameterItem<float> TempMonitorDelay(27, "TempMonitorDelay", "Heater", "Delay time from recipe step start.", 0, 20, 5, "s");
 ParameterItem<float> GasboxWarnTemp(28, "GasboxWarnTemp", "Heater", "Warning temperature for gasbox.", 0, 100, 40, "Cels");
 ParameterItem<float> PipeWarnTemp(29, "PipeWarnTemp", "Heater", "Warning temperature for pipe.", 0, 100, 40, "Cels");
+ParameterItem<float> TempTriggerTimeout(30, "TempTriggerTimeout", "Heater", "Time duration of temperature out of range before warn/alarm trigger.", 0, 300, 2, "s");
 
 
 //Chuck position
@@ -34,11 +35,13 @@ ParameterItem<unsigned> FlowWarnMinimum(2012,"FlowWarnMinimum","Flow","Minimum w
 ParameterItem<unsigned> FlowAlarmProportion(2013,"FlowAlarmProportion","Flow","Alarm proportion of flow rate.",0,100,5,"%");
 ParameterItem<unsigned> FlowAlarmMinimum(2014,"FlowAlarmMinimum","Flow","Minimum alarm of flow rate.",0,1000,50,"sccm");
 ParameterItem<float> FlowMonitorDelay(2015, "FlowMonitorDelay", "Flow", "Delay time for gas flow.", 0, 300, 5, "s");
+ParameterItem<float> FlowTriggerTimeout(2017, "FlowTriggerTimeout", "Flow", "Time duration of gas flow out of range before warn/alarm trigger.", 0, 300, 2, "s");
 ParameterItem<unsigned> EtOHWarnProportion(2021,"EtOHWarnProportion","Flow","Warning proportion of EtOH flow rate.",0,100,10,"%");
 ParameterItem<unsigned> EtOHWarnMinimum(2022,"EtOHWarnMinimum","Flow","Minimum warning of EtOH flow rate.",0,1000,50,"sccm");
 ParameterItem<unsigned> EtOHAlarmProportion(2023,"EtOHAlarmProportion","Flow","Alarm proportion of EtOH flow rate.",0,100,20,"%");
 ParameterItem<unsigned> EtOHAlarmMinimum(2024,"EtOHAlarmMinimum","Flow","Minimum alarm of EtOH flow rate.",0,1000,50,"sccm");
 ParameterItem<float> EtOHMonitorDelay(2025, "EtOHMonitorDelay", "Flow", "Delay time for EtOH flow.", 0, 300, 20, "s");
+ParameterItem<float> EtOHTriggerTimeout(2027, "EtOHTriggerTimeout", "Flow", "Time duration of EtOH flow out of range before warn/alarm trigger.", 0, 300, 5, "s");
 
 
 //Pressure
@@ -48,6 +51,7 @@ ParameterItem<float> PressureDiffAllowance(3003,"PressureDiffAllowance","Pressur
 ParameterItem<float> PressureWarnOffset(3005, "PressureWarnOffset", "Pressure", "Relative pressure offset of warning to setting value.", 0, 100, 10, "torr");
 ParameterItem<float> PressureAlarmOffset(3006, "PressureAlarmOffset", "Pressure", "Relative pressure offset of alarm to setting value.", 0, 100, 20, "torr");
 ParameterItem<float> PressureMonitorDelay(3007, "PressureMonitorDelay", "Pressure", "Delay time from recipe step start.", 0, 300, 5, "s");
+ParameterItem<float> PressureTriggerTimeout(3009, "PressureTriggerTimeout", "Pressure", "Time duration of pressure out of range before warn/alarm trigger.", 0, 300, 2, "s");
 
 
 //Purge

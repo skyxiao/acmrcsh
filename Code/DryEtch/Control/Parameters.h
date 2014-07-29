@@ -15,7 +15,7 @@ extern ParameterItem<float> TempAlarmOffset;
 extern ParameterItem<float> TempMonitorDelay;
 extern ParameterItem<float> GasboxWarnTemp;
 extern ParameterItem<float> PipeWarnTemp;
-
+extern ParameterItem<float> TempTriggerTimeout;
 
 //Chuck position
 extern ParameterItem<float> ChuckPos1;
@@ -29,12 +29,13 @@ extern ParameterItem<unsigned> FlowWarnMinimum;
 extern ParameterItem<unsigned> FlowAlarmProportion;
 extern ParameterItem<unsigned> FlowAlarmMinimum;
 extern ParameterItem<float> FlowMonitorDelay;
+extern ParameterItem<float> FlowTriggerTimeout;
 extern ParameterItem<unsigned> EtOHWarnProportion;
 extern ParameterItem<unsigned> EtOHWarnMinimum;
 extern ParameterItem<unsigned> EtOHAlarmProportion;
 extern ParameterItem<unsigned> EtOHAlarmMinimum;
 extern ParameterItem<float> EtOHMonitorDelay;
-
+extern ParameterItem<float> EtOHTriggerTimeout;
 
 //Pressure
 extern ParameterItem<float> ATMPressure;
@@ -43,7 +44,7 @@ extern ParameterItem<float> PressureDiffAllowance;
 extern ParameterItem<float> PressureWarnOffset;
 extern ParameterItem<float> PressureAlarmOffset;
 extern ParameterItem<float> PressureMonitorDelay;
-
+extern ParameterItem<float> PressureTriggerTimeout;
 
 //Purge
 extern ParameterItem<unsigned> N2PurgeFlow;

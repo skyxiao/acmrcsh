@@ -70,13 +70,13 @@ void Monitor::Disable(const std::string& name)
 	}
 }
 
-void Monitor::Reset(const std::string& name, float delay, float setpoint, float warn_offset, float alarm_offset)
+void Monitor::Reset(const std::string& name, float delay, float timeout, float setpoint, float warn_offset, float alarm_offset)
 {
 	boost::mutex::scoped_lock lock(m_mtx);
 	boost::shared_ptr<MonitorItem> item_ptr = m_items[name];
 	if(item_ptr)
 	{
-		item_ptr->Reset(delay, setpoint, warn_offset, alarm_offset);
+		item_ptr->Reset(delay, timeout, setpoint, warn_offset, alarm_offset);
 	}
 }
 

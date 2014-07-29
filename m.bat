@@ -44,7 +44,7 @@ goto quit
 :default
 if not exist Build mkdir Build
 cd Build
-cmake -G"MinGW Makefiles" ..
+cmake -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug ..
 make
 cd ..
 goto quit
@@ -65,7 +65,7 @@ goto quit
 if "%2"=="" echo "module name is empty." && goto quit
 if not exist Build mkdir Build
 cd Build
-cmake -G"MinGW Makefiles" ..
+cmake -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ..
 make install
 cd ..
 7z a ./Release/%2.7z ./Output/%2/

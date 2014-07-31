@@ -19,7 +19,9 @@ var unit = {
     "8020" : "torr",
     "2006" : "kPa",
 	"8023" : "torr",
-	"8032" : "sccm"
+	"8032" : "sccm",
+	"2022" : "℃",
+	"2024" : "℃"
 };
 
 var user_info = {};
@@ -203,6 +205,8 @@ function initText() {
     ids.push(2006);
     ids.push(2004);
 	ids.push(8023);
+	ids.push(2022);
+	ids.push(2024);
 
 
     prpos[8005] = "0";
@@ -213,6 +217,8 @@ function initText() {
     prpos[2006] = "0";
     prpos[2004] = "0";
 	prpos[8023] = "0";
+	prpos[2022] = "0";
+	prpos[2024] = "0";
 
     $(":text").keydown(function (event) {
         if (event.keyCode == 13) {

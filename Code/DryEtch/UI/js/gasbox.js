@@ -53,10 +53,16 @@ function valve(left, top,class1,class2,id) {
 		}
 
         if (prpos[id] == "1") {
-            modifySystemData(id, "0");
+        	if (confirm("Are you sure close the valve?"))
+        	{
+            	modifySystemData(id, "0");
+            }
         }
         else {
-            modifySystemData(id, "1");
+        	if (confirm("Are you sure open the valve?"))
+        	{
+            	modifySystemData(id, "1");
+            }
         }
 		//getVoleStatus();
 		//setIntervalID = setInterval(getVoleStatus, 500);
@@ -151,10 +157,16 @@ function initVAC() {
 		}
 
         if (prpos[1011] == "1") {
-            modifySystemData(1011, "0");
+        	if (confirm("Are you sure close the pump?"))
+        	{
+            	modifySystemData(1011, "0");
+            }
         }
         else {
-            modifySystemData(1011, "1");
+        	if (confirm("Are you sure open the pump?"))
+        	{
+            	modifySystemData(1011, "1");
+            }
         }
     };
     $("#gasbox")[0].appendChild(div);

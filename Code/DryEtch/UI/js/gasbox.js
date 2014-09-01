@@ -87,20 +87,12 @@ $(document).ready(function () {
 		{
 			getControl().invoke(0, 1009, 2);
 		}
-		else if ($(this).attr("isable") == "false")
-		{
-			getControl().invoke(0, 3);
-		}
 	});
 
 	$(".PurgeEtOH").click(function() {
 		if ($(this).attr("isable") == "true")
 		{
 			getControl().invoke(0, 1009, 3);
-		}
-		else if ($(this).attr("isable") == "false")
-		{
-			getControl().invoke(0, 3);
 		}
 	});
 
@@ -109,10 +101,6 @@ $(document).ready(function () {
 		{
 			getControl().invoke(0, 1009, 1);
 		}
-		else if ($(this).attr("isable") == "false")
-		{
-			getControl().invoke(0, 3);
-		}
 	});
 
 	$(".PurgeProcesschamber").click(function() {
@@ -120,10 +108,6 @@ $(document).ready(function () {
 		{
 			getControl().invoke(0, 1009, 0);
 		}
-		else if ($(this).attr("isable") == "false")
-		{
-			getControl().invoke(0, 3);
-		}	
 	});
 
 	$(".PumpExpchamber").click(function() {
@@ -131,18 +115,17 @@ $(document).ready(function () {
 		{
 			getControl().invoke(0, 1007, 1);
 		}
-		else if ($(this).attr("isable") == "false")
-		{
-			getControl().invoke(0, 3);
-		}
 	});
 
 	$(".PumpProcesschamber").click(function() {
 		if ($(this).attr("isable") == "true")
 		{
 			getControl().invoke(0, 1007, 0);
-		}
-		else if ($(this).attr("isable") == "false")
+		}	
+	});
+
+	$(".Abort").click(function(){
+		if ($(this).attr("isable") == "true")
 		{
 			getControl().invoke(0, 3);
 		}
@@ -257,7 +240,6 @@ function initValve() {
     arr.push(new valve(650, 230, "valve_green_h", "valve_gray_h", 1038));
     arr.push(new valve(151, 243, "valve_green_h", "valve_gray_h", 1037));
     arr.push(new valve(191, 440, "valve_green_h", "valve_gray_h", 1039));
-    arr.push(new valve(151, 549, "valve_green_h", "valve_gray_h", 1048));
     arr.push(new valve(321, 423, "valve_green_h", "valve_gray_h", 1026));
     arr.push(new valve(474, 423, "valve_green_h", "valve_gray_h", 1027));
     arr.push(new valve(394, 459, "valve_green_h", "valve_gray_h", 1028));
@@ -272,7 +254,7 @@ function initValve() {
     arr.push(new valve(833, 167, "valve_green", "valve_gray", 1041));
     arr.push(new valve(529, 270, "valve_green", "valve_gray", 1024));
     arr.push(new valve(557, 270, "valve_green", "valve_gray", 1025));
-    arr.push(new valve(242, 461, "valve_green", "valve_gray", 1040));
+    arr.push(new valve(242, 461, "valve_green", "valve_gray", 1048));
     return arr;
 }
 
@@ -373,87 +355,28 @@ function getSettingsData()
 
 	if (status == 0)
 	{
-		$(".PurgeHF").text("PurgeHF");
-		$(".PurgeEtOH").text("PurgeEtOH");
-		$(".PurgeExpchamber").text("PurgeExpchamber");
-		$(".PurgeProcesschamber").text("PurgeProcesschamber");
-		$(".PumpExpchamber").text("PumpExpchamber");
-		$(".PumpProcesschamber").text("PumpProcesschamber");
 		$(".btn_box").find("button").removeAttr("disabled");
 		$(".btn_box").find("button").removeClass("disabled_button");
 		$(".btn_box").find("button").addClass("enable_button");
 		$(".btn_box").find("button").attr("isable", "true");
+		$(".Abort").attr("disabled", "disabled");
+		$(".Abort").removeClass("enable_button");
+		$(".Abort").addClass("disabled_button");
+		$(".Abort").attr("isable", "false");
 	}
 	else if (status == 1)
 	{
-		$(".PurgeHF").text("PurgeHF");
-		$(".PurgeEtOH").text("PurgeEtOH");
-		$(".PurgeExpchamber").text("PurgeExpchamber");
-		$(".PurgeProcesschamber").text("PurgeProcesschamber");
-		$(".PumpExpchamber").text("PumpExpchamber");
-		$(".PumpProcesschamber").text("PumpProcesschamber");
 		$(".btn_box").find("button").attr("disabled", "disabled");
 		$(".btn_box").find("button").removeClass("enable_button");
 		$(".btn_box").find("button").addClass("disabled_button");
 		$(".btn_box").find("button").attr("isable", "false");
-
-		if (procCommand == 1009 && procParam1 == 2 && procParam2 == 0)
-		{
-			$(".PurgeHF").text("PurgeHF Abort");
-			$(".PurgeHF").removeAttr("disabled");
-			$(".PurgeHF").removeClass("disabled_button");
-			$(".PurgeHF").addClass("enable_button");
-			$(".PurgeHF").attr("isable", "true");
-		}
-		else if (procCommand == 1009 && procParam1 == 3 && procParam2 == 0)
-		{
-			$(".PurgeEtOH").text("PurgeEtOH Abort");
-			$(".PurgeEtOH").removeAttr("disabled");
-			$(".PurgeEtOH").removeClass("disabled_button");
-			$(".PurgeEtOH").addClass("enable_button");
-			$(".PurgeEtOH").attr("isable", "true");
-		}
-		else if (procCommand == 1009 && procParam1 == 1 && procParam2 == 0)
-		{
-			$(".PurgeExpchamber").text("PurgeExpchamber Abort");
-			$(".PurgeExpchamber").removeAttr("disabled");
-			$(".PurgeExpchamber").removeClass("disabled_button");
-			$(".PurgeExpchamber").addClass("enable_button");
-			$(".PurgeExpchamber").attr("isable", "true");
-		}
-		else if (procCommand == 1009 && procParam1 == 0 && procParam2 == 0)
-		{
-			$(".PurgeProcesschamber").text("PurgeProcesschamber Abort");
-			$(".PurgeProcesschamber").removeAttr("disabled");
-			$(".PurgeProcesschamber").removeClass("disabled_button");
-			$(".PurgeProcesschamber").addClass("enable_button");
-			$(".PurgeProcesschamber").attr("isable", "true");
-		}
-		else if (procCommand == 1007 && procParam1 == 1 && procParam2 == 0)
-		{
-			$(".PumpExpchamber").text("PumpExpchamber Abort");
-			$(".PumpExpchamber").removeAttr("disabled");
-			$(".PumpExpchamber").removeClass("disabled_button");
-			$(".PumpExpchamber").addClass("enable_button");
-			$(".PumpExpchamber").attr("isable", "true");
-		}
-		else if (procCommand == 1007 && procParam1 == 0 && procParam2 == 0)
-		{
-			$(".PumpProcesschamber").text("PumpProcesschamber Abort");
-			$(".PumpProcesschamber").removeAttr("disabled");
-			$(".PumpProcesschamber").removeClass("disabled_button");
-			$(".PumpProcesschamber").addClass("enable_button");
-			$(".PumpProcesschamber").attr("isable", "true");
-		}
+		$(".Abort").removeAttr("disabled");
+		$(".Abort").removeClass("disabled_button");
+		$(".Abort").addClass("enable_button");
+		$(".Abort").attr("isable", "true");		
 	}
 	else if (status == 2)
 	{
-		$(".PurgeHF").text("PurgeHF");
-		$(".PurgeEtOH").text("PurgeEtOH");
-		$(".PurgeExpchamber").text("PurgeExpchamber");
-		$(".PurgeProcesschamber").text("PurgeProcesschamber");
-		$(".PumpExpchamber").text("PumpExpchamber");
-		$(".PumpProcesschamber").text("PumpProcesschamber");
 		$(".btn_box").find("button").attr("disabled", "disabled");
 		$(".btn_box").find("button").removeClass("enable_button");
 		$(".btn_box").find("button").addClass("disabled_button");

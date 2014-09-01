@@ -133,7 +133,8 @@ function setPropertyChange(func) {
 
        function writeLog(type, logmsg) {
            var log = { type: type, msg: logmsg, time: getTime() };
-           top.FS.appendFile('./log/UILog.log', formatLogMsg(log), 'utf8', function (err) {
+		   var fs = require("fs");
+           fs.appendFile('./log/UILog.log', formatLogMsg(log), 'utf8', function (err) {
                if (err) {
                    console.log(err);
                }

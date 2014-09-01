@@ -291,10 +291,10 @@ function draw(results) {
 	var bmax = parseInt($(".test_time").val());
 	if (!isNaN(bmax) && 0 != bmax)
 	{
-		Chart1.axes.bottom.setMinMax(0, bmax);
+		Chart1.axes.bottom.setMinMax(0, bmax / 60);
 	}
 	
-	var lmax = parseInt($(".pump_down_pressure").val());
+	var lmax = parseFloat($(".pump_down_pressure").val());
 	if (!isNaN(lmax) && 0 != lmax)
 	{
 		Chart1.axes.left.setMinMax(0, lmax);
@@ -370,6 +370,7 @@ function getProChamberData()
 	{
 		getControl().invoke(0, 1014, 0);
 		clearInterval(timeId2);
+		clearInterval(timeId1);
 		if (time1 == 0)
 		{
 			pchamberData.push({pressure:LeakCheckPressure,time:0});
@@ -398,8 +399,8 @@ function getProChamberData()
 			time1 = time1 + 0.5;
 			var data = {
 				pressure : parseFloat(valueJson["systemdata"][0]["value"]),
-				time : (time1 / 60).toFixed(3) + leadTime
-			};			
+				time : parseFloat(((time1 / 60).toFixed(3))) + leadTime
+			};	
 			
 			if (pchamberData.length > LeakCheckTime / 0.5)
 			{
@@ -447,6 +448,7 @@ function getExpChamberData()
 	{
 		getControl().invoke(0, 1014, 1);
 		clearInterval(timeId1);
+		clearInterval(timeId2);
 
 		if (time2 == 0)
 		{
@@ -476,7 +478,7 @@ function getExpChamberData()
 			time2 = time2 + 0.5;
 			var data = {
 				pressure : parseFloat(valueJson["systemdata"][0]["value"]),
-				time : (time2 / 60).toFixed(3) + leadTime
+				time : parseFloat(((time2 / 60).toFixed(3))) + leadTime
 			};			
 			
 			if (echamberData.length > LeakCheckTime / 0.5)
@@ -523,7 +525,7 @@ function init()
 	});
 
 	$(".pump_down_pressure").blur(function(){
-		LeakCheckPressure = parseInt($(this).val());
+		LeakCheckPressure = parseFloat($(this).val());
 		if (isNaN(LeakCheckPressure))
 		{
 			LeakCheckPressure = 10;
@@ -543,7 +545,7 @@ function init()
 	});
 
 	$(".leak_check_threshold").blur(function(){
-		LeakCheckThreshold = parseInt($(this).val());
+		LeakCheckThreshold = parseFloat($(this).val());
 		if (isNaN(LeakCheckThreshold))
 		{
 			LeakCheckThreshold = 5;

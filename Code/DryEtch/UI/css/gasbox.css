@@ -50,9 +50,9 @@ body
     border-radius : 10px;            /* W3C syntax */
 	background: -webkit-gradient(linear, left top, left bottom, from(#01202A), to(#07495F));
 	width:200px;
-	height:500px;
+	height:540px;
 	margin-left:40px;
-	margin-top:30px;
+	margin-top:20px;
 	float:left;
 }
 
@@ -62,7 +62,7 @@ body
     -webkit-border-radius : 5px;   /* Webkit browsers */
     border-radius : 5px;            /* W3C syntax */
 	margin-left : 15px;
-	margin-top : 37px;
+	margin-top : 32px;
 	width : 170px;
 	height : 40px;
 	font-weight : bold;
@@ -75,7 +75,7 @@ body
     -webkit-border-radius : 5px;   /* Webkit browsers */
     border-radius : 5px;            /* W3C syntax */
 	margin-left : 15px;
-	margin-top : 37px;
+	margin-top : 32px;
 	width : 170px;
 	height : 40px;
 	font-weight : bold;

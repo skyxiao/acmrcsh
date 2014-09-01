@@ -326,19 +326,19 @@ function getSettingsData()
 
 	if (TKHighH == 1)
 	{
-		$(".gas_level").text("highhigh");
+		$(".gas_level").text("HH");
 	}
 	else if (TKHigh == 1)
 	{
-		$(".gas_level").text("high");
+		$(".gas_level").text("H");
 	}
 	else if (TKLow == 1)
 	{
-		$(".gas_level").text("low");
+		$(".gas_level").text("L");
 	}
 	else
 	{
-		$(".gas_level").text("lowlow");
+		$(".gas_level").text("LL");
 	}
 
 	if (lastStatus === status && lastProcCommand === procCommand && lastprocParam1 === procParam1 &&  lastprocParam2 === procParam2)

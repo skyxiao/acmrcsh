@@ -157,13 +157,13 @@ function initVAC() {
 		}
 
         if (prpos[1011] == "1") {
-        	if (confirm("Are you sure close the pump?"))
+        	if (confirm("Are you sure turn off the pump?"))
         	{
             	modifySystemData(1011, "0");
             }
         }
         else {
-        	if (confirm("Are you sure open the pump?"))
+        	if (confirm("Are you sure turn on the pump?"))
         	{
             	modifySystemData(1011, "1");
             }

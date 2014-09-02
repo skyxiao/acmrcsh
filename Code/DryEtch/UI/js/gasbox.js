@@ -39,12 +39,14 @@ function  permissionCheck()
 	}
 }
 
-function valve(left, top,class1,class2,id) {
+function valve(left, top,class1,class2,id, namePosition, name) {
     this.left = left - 7;
     this.top = top - 7;
     this.id = id;
     this.class1 = class1;
     this.class2 = class2;
+    this.namePosition = namePosition;
+    this.name = name;
     this.click = function () {
 		//clearInterval(setIntervalID);
 		if (user_info["gasbox"] && user_info["gasbox"] == "readonly")
@@ -83,6 +85,50 @@ $(document).ready(function () {
         $("#gasbox")[0].appendChild(div);
         prpos[arr[i].id] = "1";
         ids.push(arr[i].id);
+        if (arr[i].namePosition && arr[i].namePosition != "")
+        {
+        	var label = document.createElement("label");
+        	var style = "";
+        	switch (arr[i].namePosition)
+        	{
+        		case "top":
+        			style = "left:" + (arr[i].left - 5) + "px;top:" + (arr[i].top - 14) + "px";
+        			label.setAttribute("style", style);
+        			label.setAttribute("class", "valve_name");
+        			break;
+
+        		case "bottom":
+        			style = "left:" + (arr[i].left - 5) + "px;top:" + (arr[i].top + 18) + "px";
+        			label.setAttribute("style", style);
+        			label.setAttribute("class", "valve_name");
+        			break;
+
+        		case "left":
+        			style = "left:" + (arr[i].left - 25) + "px;top:" + arr[i].top  + "px";
+        			label.setAttribute("style", style);
+        			label.setAttribute("class", "valve_name");
+        			break;
+
+        		case "right":
+        			style = "left:" + (arr[i].left + 18) + "px;top:" + arr[i].top  + "px";
+        			label.setAttribute("style", style);
+        			label.setAttribute("class", "valve_name");
+        			break;
+
+        		case "lefttop":
+        			style = "left:" + (arr[i].left - 20) + "px;top:" + (arr[i].top - 14)  + "px";
+        			label.setAttribute("style", style);
+        			label.setAttribute("class", "valve_name");
+        			break;
+
+        		default:
+        			break;
+        	}
+
+        	label.innerHTML = arr[i].name ? arr[i].name : "";
+
+        	$("#gasbox")[0].appendChild(label);
+        }
     }
     initVAC();
     initText();
@@ -170,6 +216,11 @@ function initVAC() {
         }
     };
     $("#gasbox")[0].appendChild(div);
+    var label = document.createElement("label");
+    label.setAttribute("class", "valve_name");
+    label.setAttribute("style", "left:29px;top:82px;");
+    label.innerHTML = "VAC PUMP";
+    $("#gasbox")[0].appendChild(label);
 }
 
 function initText() {
@@ -239,34 +290,34 @@ function initText() {
 
 function initValve() {
     var arr = new Array();
-    arr.push(new valve(271, 45, "valve_green_h", "valve_gray_h", 1056));
-    arr.push(new valve(271, 72, "valve_green_h", "valve_gray_h", 1057));
-    arr.push(new valve(179, 118, "valve_green_h", "valve_gray_h", 1018));
-    arr.push(new valve(730, 119, "valve_green_h", "valve_gray_h", 1019));
-    arr.push(new valve(270, 168, "valve_green_h", "valve_gray_h", 1021));
-    arr.push(new valve(420, 167, "valve_green_h", "valve_gray_h", 1022));
-    arr.push(new valve(245, 184, "valve_green_h", "valve_gray_h", 1036));
-    arr.push(new valve(348, 203, "valve_green_h", "valve_gray_h", 1023));
-    arr.push(new valve(540, 184, "valve_green_h", "valve_gray_h", 1034));
-    arr.push(new valve(650, 184, "valve_green_h", "valve_gray_h", 1035));
-    arr.push(new valve(650, 230, "valve_green_h", "valve_gray_h", 1038));
-    arr.push(new valve(151, 243, "valve_green_h", "valve_gray_h", 1037));
-    arr.push(new valve(191, 440, "valve_green_h", "valve_gray_h", 1039));
-    arr.push(new valve(321, 423, "valve_green_h", "valve_gray_h", 1026));
-    arr.push(new valve(474, 423, "valve_green_h", "valve_gray_h", 1027));
-    arr.push(new valve(394, 459, "valve_green_h", "valve_gray_h", 1028));
-    arr.push(new valve(305, 504, "valve_green_h", "valve_gray_h", 1029));
-    arr.push(new valve(492, 502, "valve_green_h", "valve_gray_h", 1030));
-    arr.push(new valve(492, 593, "valve_green_h", "valve_gray_h", 1051));
-    arr.push(new valve(711, 546, "valve_green_h", "valve_gray_h", 1049));
-    arr.push(new valve(304, 592, "valve_green_h", "valve_gray_h", 1050));
-    arr.push(new valve(448, 220, "valve_green_h", "valve_gray_h", 1067));
-    arr.push(new valve(570, 151, "valve_green", "valve_gray", 1032));
-    arr.push(new valve(620, 151, "valve_green", "valve_gray", 1033));
-    arr.push(new valve(833, 167, "valve_green", "valve_gray", 1041));
-    arr.push(new valve(529, 270, "valve_green", "valve_gray", 1024));
-    arr.push(new valve(557, 270, "valve_green", "valve_gray", 1025));
-    arr.push(new valve(242, 461, "valve_green", "valve_gray", 1048));
+    arr.push(new valve(271, 45, "valve_green_h", "valve_gray_h", 1056, "top", "OPV1"));
+    arr.push(new valve(271, 72, "valve_green_h", "valve_gray_h", 1057, "bottom", "OPV2"));
+    arr.push(new valve(179, 118, "valve_green_h", "valve_gray_h", 1018, "bottom", "OPV3"));
+    arr.push(new valve(730, 119, "valve_green_h", "valve_gray_h", 1019, "top", "OPV4"));
+    arr.push(new valve(270, 168, "valve_green_h", "valve_gray_h", 1021, "lefttop", "OPV10"));
+    arr.push(new valve(420, 167, "valve_green_h", "valve_gray_h", 1022, "top", "OPV11"));
+    arr.push(new valve(245, 184, "valve_green_h", "valve_gray_h", 1036, "lefttop", "OPV12"));
+    arr.push(new valve(348, 203, "valve_green_h", "valve_gray_h", 1023, "bottom", "OPV15"));
+    arr.push(new valve(540, 184, "valve_green_h", "valve_gray_h", 1034, "bottom", "OPV8"));
+    arr.push(new valve(650, 184, "valve_green_h", "valve_gray_h", 1035, "bottom", "OPV9"));
+    arr.push(new valve(650, 230, "valve_green_h", "valve_gray_h", 1038, "bottom", "OPV14"));
+    arr.push(new valve(151, 243, "valve_green_h", "valve_gray_h", 1037, "lefttop", "OPV13"));
+    arr.push(new valve(191, 440, "valve_green_h", "valve_gray_h", 1039, "top", "OPV20"));
+    arr.push(new valve(321, 423, "valve_green_h", "valve_gray_h", 1026, "lefttop", "OPV18"));
+    arr.push(new valve(474, 423, "valve_green_h", "valve_gray_h", 1027, "top", "OPV19"));
+    arr.push(new valve(394, 459, "valve_green_h", "valve_gray_h", 1028, "bottom", "OPV21"));
+    arr.push(new valve(305, 504, "valve_green_h", "valve_gray_h", 1029, "top", "OPV23"));
+    arr.push(new valve(492, 502, "valve_green_h", "valve_gray_h", 1030, "top", "OPV24"));
+    arr.push(new valve(492, 593, "valve_green_h", "valve_gray_h", 1051, "top", "OPV28"));
+    arr.push(new valve(711, 546, "valve_green_h", "valve_gray_h", 1049, "bottom", "OPV26"));
+    arr.push(new valve(304, 592, "valve_green_h", "valve_gray_h", 1050, "top", "OPV27"));
+    arr.push(new valve(448, 220, "valve_green_h", "valve_gray_h", 1067, "left", ""));
+    arr.push(new valve(570, 151, "valve_green", "valve_gray", 1032, "right", "OPV5"));
+    arr.push(new valve(620, 151, "valve_green", "valve_gray", 1033, "right", "OPV6"));
+    arr.push(new valve(833, 167, "valve_green", "valve_gray", 1041, "right", "OPV7"));
+    arr.push(new valve(529, 270, "valve_green", "valve_gray", 1024, "bottom", "OPV16"));
+    arr.push(new valve(557, 270, "valve_green", "valve_gray", 1025, "right", "OPV17"));
+    arr.push(new valve(242, 461, "valve_green", "valve_gray", 1048, "right", "OPV22"));
     return arr;
 }
 

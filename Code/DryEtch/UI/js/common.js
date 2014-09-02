@@ -1,23 +1,23 @@
 ﻿$(document).keydown(function (e) { 
-      var keyEvent; 
-    if(e.keyCode==8)
+    var keyEvent; 
+    if (e.keyCode == 8)
     { 
-        var d=e.srcElement||e.target; 
-        if(d.tagName.toUpperCase()=='INPUT'||d.tagName.toUpperCase()=='TEXTAREA')
+        var d = e.srcElement || e.target; 
+        if (d.tagName.toUpperCase() == 'INPUT'|| d.tagName.toUpperCase() == 'TEXTAREA')
         { 
-            keyEvent=d.readOnly||d.disabled; 
+            keyEvent = d.readOnly || d.disabled; 
         }
         else
         { 
-            keyEvent=true; 
+            keyEvent = true; 
         } 
     }
     else
     { 
-        keyEvent=false; 
+        keyEvent = false; 
     } 
 
-    if(keyEvent)
+    if (keyEvent)
     { 
         e.preventDefault(); 
     } 

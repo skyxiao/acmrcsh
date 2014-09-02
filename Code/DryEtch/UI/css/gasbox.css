@@ -157,3 +157,10 @@ body
     background: url(../images/vac.png) no-repeat left center;
     cursor:pointer;
 }
+
+.valve_name
+{
+	position: absolute;
+	font-size: 10px;
+	color: white;
+}

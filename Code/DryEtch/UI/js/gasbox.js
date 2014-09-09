@@ -55,13 +55,13 @@ function valve(left, top,class1,class2,id, namePosition, name) {
 		}
 
         if (prpos[id] == "1") {
-        	if (confirm("Are you sure close the valve?"))
+        	if (confirm("Are you sure close the valve '" + name + "'?"))
         	{
             	modifySystemData(id, "0");
             }
         }
         else {
-        	if (confirm("Are you sure open the valve?"))
+        	if (confirm("Are you sure open the valve '" + name + "'?"))
         	{
             	modifySystemData(id, "1");
             }

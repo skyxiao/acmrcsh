@@ -38,11 +38,39 @@ function getLogData(time, selectTime)
 				return;
 			}
 		});
+
+		var sql = "";
+		var beginTime = $("#txBeginTime").val().trim();
+		var endTime = $("#txEndTime").val().trim();
+
+		if (endTime == "")
+		{
+			endTime = getDateString(new Date());
+		}
+
+		if (beginTime == "")
+		{
+
+			sql = "select id, time, level, info from event_log where time < '" + endTime + "'order by time desc limit 25";
+		}
+		else
+		{
+
+			sql = "select id, time, level, info from event_log where time >= '" + beginTime + "' and time <= '" + endTime + "'order by time desc limit 25";
+
+		}
 		
-		var sql = "select id, time, level, info from event_log order by time desc limit 25";
+		//var sql = "select id, time, level, info from event_log order by time desc limit 25";
 		if (time && time != "")
 		{
-			sql = "select id, time, level, info from event_log where time < '" + time + "' order by time desc limit 25";
+			if (beginTime != "")
+			{
+				sql = "select id, time, level, info from event_log where time >= '" + beginTime + "' and time < '" + time + "' order by time desc limit 25";
+			}
+			else
+			{
+				sql = "select id, time, level, info from event_log where time < '" + time + "' order by time desc limit 25";
+			}
 		}
 		
 		connection.query(

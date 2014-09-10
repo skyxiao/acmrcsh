@@ -29,6 +29,7 @@ private:
 	void shut_all_chemical();
 	void shut_pump_valve();
 	void report_alcohol_alarm();
+	void on_heartbeat_failed_reset();
 };
 
 #define POST_INTERLOCK_EX(di, func) Data::di.AddChangeSink(func);
@@ -68,7 +69,7 @@ private:
 		{ \
 			if(new_value == do_val && Data::di == di_val) \
 			{ \
-				EVT::InterlockTrigger.Report(#doo, do_val, #di, "=", di_val); \
+				EVT::InterlockTrigger.Report(Data::doo.Name(), do_val, Data::di.Name(), "=", di_val); \
 				return true; \
 			} \
 			return false; \
@@ -80,7 +81,7 @@ private:
 			float ai_val1 = ai_val; \
 			if(new_value == do_val && Data::ai < ai_val1) \
 			{ \
-				EVT::InterlockTrigger.Report(#doo, do_val, #ai, "<", ai_val1); \
+				EVT::InterlockTrigger.Report(Data::doo.Name(), do_val, Data::ai.Name(), "<", ai_val1); \
 				return true; \
 			} \
 			return false; \

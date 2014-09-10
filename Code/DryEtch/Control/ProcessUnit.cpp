@@ -27,6 +27,11 @@ ProcessUnit::~ProcessUnit()
 
 void ProcessUnit::Initialize()
 {
+	//do safe handle
+	shut_all_chemical();
+	open_apc();
+	stop_motor();
+
 	//base class initialize
 	SmartUnit::Initialize();
 
@@ -47,7 +52,6 @@ void ProcessUnit::Initialize()
 	{
 		Data::ExpChamberDirty = 1;
 	}
-	//initialize hardware parameters
 
 	//initialize monitor
 	Monitor::Instance().Add("HF flowrate", [&](){return (float)Data::aiHFFlowrate;});
@@ -93,6 +97,11 @@ void ProcessUnit::Terminate()
 
 	//base class terminate
 	SmartUnit::Terminate();
+
+	//do safe handle
+	shut_all_chemical();
+	open_apc();
+	stop_motor();
 }
 
 UnitTask ProcessUnit::GetNextTask()
@@ -302,6 +311,11 @@ bool ProcessUnit::alarm_check()
 		EVT::AlcoholTankLow.Report();
 		return false;
 	}
+	else if(Data::diCDAInletAlarm)
+	{
+		EVT::CDAPressureLow.Report();
+		return false;
+	}
 	// else if(Data::diAlcPrsLLmt == 1)
 	// {
 	// 	EVT::AlcGasPressureLow.Report();
@@ -409,14 +423,21 @@ bool ProcessUnit::alarm_check()
 
 bool ProcessUnit::OnlinePrecheck()
 {
-	float error_offset = Parameters::TempWarnOffset;
+	float warn_offset = Parameters::TempWarnOffset;
+	float error_offset = Parameters::TempAlarmOffset;
 	float lid_offset = fabs(Data::aiLidHTTemp - Parameters::LidTemp);
 	float body_offset = fabs(Data::aiBodyHTTemp - Parameters::BodyTemp);
 	float chuck_offset = fabs(Data::aiChuckHTTemp - Parameters::ChuckTemp);
 	if(lid_offset>error_offset || body_offset>error_offset || chuck_offset>error_offset)
 	{
-		EVT::HeaterTempOutRange.Report();
+		EVT::HeaterTempOutAlarmRange.Report();
 		return false;
+	}
+
+	if(lid_offset>warn_offset || body_offset>warn_offset || chuck_offset>warn_offset)
+	{
+		EVT::HeaterTempOutWarnRange.Report();
+		return true;
 	}
 
 	if(!alarm_check())
@@ -1580,7 +1601,7 @@ bool ProcessUnit::OnVentProcChamber()
 		{	return Data::aiProcChamPressure > Parameters::ATMPressure;},
 			Parameters::VentProcTimeout,
 			[&](){	EVT::VentTimeout.Report("process");})
-		ADD_STEP_WAIT(2)
+//		ADD_STEP_WAIT(2)
 		ADD_STEP_COMMAND([&](){	Data::doN2SupplyProcVal = 0;})
 	END_UNIT_STEP
 

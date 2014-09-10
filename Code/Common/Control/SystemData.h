@@ -124,6 +124,12 @@ public:
 	{
 		return m_id;
 	}
+
+	std::string Name()
+	{
+		return m_name;
+	}
+	
 	bool HasChanged();
 	bool IsChild(const std::string& path);
 	bool IsInRange(int from, int to);

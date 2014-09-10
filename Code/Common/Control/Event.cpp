@@ -27,11 +27,12 @@ namespace EVT
 	SystemEvent VentTimeout(1024, EVENT_LEVEL_ERROR, "Vent %s chamber timeout.");
 	SystemEvent ChamberNotClean(1026, EVENT_LEVEL_WARNING, "%s chamber is not clean, please purge it before vent.");
 	SystemEvent ChamberNotVacuum(1028, EVENT_LEVEL_WARNING, "%s chamber isn't vacuum, can't process wafer.");
-	SystemEvent ProcessAlarm(1030, EVENT_LEVEL_WARNING, "Alarm reported in process.");
-	SystemEvent InterlockTrigger(1032, EVENT_LEVEL_WARNING, "%s=%d trigger interlock for %s%s%d.");
+	SystemEvent ProcessAlarm(1030, EVENT_LEVEL_ERROR, "Alarm reported in process.");
+	SystemEvent InterlockTrigger(1032, EVENT_LEVEL_ERROR, "[%s=%d, %s%s%d] trigger interlock.");
 	SystemEvent ArmTimeout(1037, EVENT_LEVEL_ERROR, "Arm move %s timeout.");
 	SystemEvent ForkTimeout(1038, EVENT_LEVEL_ERROR, "Rotate fork timeout.");
-	SystemEvent HeaterTempOutRange(1040, EVENT_LEVEL_WARNING, "Heater temperature is out of range.");
+	SystemEvent HeaterTempOutWarnRange(1040, EVENT_LEVEL_WARNING, "Heater temperature is out of warning range.");
+	SystemEvent HeaterTempOutAlarmRange(1041, EVENT_LEVEL_ERROR, "Heater temperature is out of alarm range.");
 	SystemEvent MonitorWarning(1043, EVENT_LEVEL_WARNING, "%f is out of warning range [%f, %f] of %s.");
 	SystemEvent MonitorAlarm(1045, EVENT_LEVEL_ERROR, "%f is out of alarm range [%f, %f] of %s.");
 	SystemEvent OverTemp(1046, EVENT_LEVEL_WARNING, "%s over temperature, current temperature is %f ¡æ.");
@@ -46,10 +47,10 @@ namespace EVT
 	SystemEvent HeartbeatFail(1057, EVENT_LEVEL_ERROR, "Heartbeat failed.");
 	SystemEvent GasboxExhaustPresAlarm(1058, EVENT_LEVEL_ERROR, "Gasbox exhaust pressure alarm.");
 	SystemEvent FacMainInletVacPresHigh(1059, EVENT_LEVEL_WARNING, "Facility main inlet vacuum pressure is over upper limit.");
-	SystemEvent AlcoholLeak(1060, EVENT_LEVEL_WARNING, "Alcohol leak.");
-	SystemEvent AlcoholGasLeak(1061, EVENT_LEVEL_WARNING, "Alcohol gas leak.");
+	SystemEvent AlcoholLeak(1060, EVENT_LEVEL_ERROR, "Alcohol leak.");
+	SystemEvent AlcoholGasLeak(1061, EVENT_LEVEL_ERROR, "Alcohol gas leak.");
 	SystemEvent FrameExhaustPresAlarm(1062, EVENT_LEVEL_ERROR, "Machine frame exhaust pressure alarm.");
-	SystemEvent GasboxDoorOpen(1063, EVENT_LEVEL_WARNING, "Gasbox door is open.");
+	SystemEvent GasboxDoorOpen(1063, EVENT_LEVEL_ERROR, "Gasbox door is open.");
 	SystemEvent GasboxHFLeak(1064, EVENT_LEVEL_ERROR, "Gasbox HF leak.");
 	SystemEvent HardwareInterlock(1065, EVENT_LEVEL_WARNING, "Hardware interlock.");
 	SystemEvent AlcoholTankLow(1066, EVENT_LEVEL_WARNING, "Alcohol tank level is too low.");
@@ -58,6 +59,11 @@ namespace EVT
 	SystemEvent PlumbingHeaterAlarm(1069, EVENT_LEVEL_ERROR, "Plumbing heater alarm.");
 	SystemEvent ChamberHFLeak(1070, EVENT_LEVEL_ERROR, "Process chamber HF leak.");
 	SystemEvent ArmVacuumDoorEStop(1071, EVENT_LEVEL_WARNING, "Arm & vacuum door EStop.");
+	SystemEvent CDAPressureLow(1072, EVENT_LEVEL_ERROR, "CDA pressure is too low.");
+	SystemEvent ProcChamberPressHigh(1075, EVENT_LEVEL_ERROR, "Valve can't be opened because process chamber pressure is too high.");
+	SystemEvent ExpChamberDirty(1077, EVENT_LEVEL_ERROR, "Expansion chamber is dirty.");
+	SystemEvent ProcChamberDirty(1078, EVENT_LEVEL_ERROR, "Process chamber is dirty.");
+	SystemEvent ProcDoorLockHFInletValve(1079, EVENT_LEVEL_ERROR, "HF inlet valve can't be opened because process chamber door is open.");
 
 }
 

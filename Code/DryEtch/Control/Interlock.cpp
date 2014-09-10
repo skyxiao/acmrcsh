@@ -30,7 +30,8 @@ void Interlock::Initialize()
 	POST_INTERLOCK_MEMBER(diCbLeftDoorClose, 0, shut_all_chemical)
 	POST_INTERLOCK_MEMBER(diCbRightDoorClose, 0, shut_all_chemical)
 	POST_INTERLOCK_MEMBER(diAlcTkLow, 1, report_alcohol_alarm)
-	
+	POST_INTERLOCK_MEMBER(diHeartbeatFail, 0, on_heartbeat_failed_reset)
+
 //	POST_INTERLOCK_EVT(diAlcPrsLLmt, 1, AlcGasPressureLow)
 
 	POST_INTERLOCK_EVT_STRING(diN2PgHFPrsULmt, 1, "N2 purge HF tube pressure is over upper limit.")
@@ -79,6 +80,7 @@ void Interlock::Initialize()
 	POST_INTERLOCK_EVT(diAlcTkLow, 0, AlcoholTankLow)
 	POST_INTERLOCK_EVT(diVPumpWarning, 1, PumpWarning)
 	POST_INTERLOCK_EVT(diVPumpAlarm, 1, PumpAlarm)
+	POST_INTERLOCK_EVT(diCDAInletAlarm, 1, CDAPressureLow)
 	
 	POST_INTERLOCK_EVT(diPlumbing1Alarm, 1, PlumbingHeaterAlarm)
 	POST_INTERLOCK_EVT(diPlumbing2Alarm, 1, PlumbingHeaterAlarm)
@@ -88,9 +90,44 @@ void Interlock::Initialize()
 	
 	POST_INTERLOCK_EVT(diProcCbHFLeak, 1, ChamberHFLeak)
 	POST_INTERLOCK_EVT(diEStop, 1, ArmVacuumDoorEStop)
+	POST_INTERLOCK_MEMBER(diEStop, 1, shut_all_chemical)
 
 	POST_INTERLOCK_AI_EVT(aiGasboxTC, GasboxWarnTemp, OverTemp, "Gasbox TC")
 	POST_INTERLOCK_AI_EVT(aiPipelineTC, PipeWarnTemp, OverTemp, "Pipeline TC")
+	POST_INTERLOCK_EX(aiProcChamPressure, [&](unsigned, unsigned value)
+	{	if(Data::ProcChamberDirty==1)
+		{
+			if(value > Parameters::FastSlowSwitchPressure)
+			{
+				Data::doExpCbSupplyCbVal = 0;
+				Data::doN2SupplyProcVal = 0;
+				Data::doExpCbHFInletVal = 0;
+				Data::doVaSupplyIPAValve = 0;
+			}
+		}
+		else
+		{
+			if(value > Parameters::ATMPressure)
+			{
+				Data::doExpCbSupplyCbVal = 0;
+				Data::doN2SupplyProcVal = 0;
+			}
+		}
+	})
+
+	PRE_INTERLOCK_EX(doN2SupplyProcVal, [&](unsigned new_value)
+	{	if(new_value==1)
+		{
+			if((Data::ProcChamberDirty==1 && Data::aiProcChamPressure>Parameters::FastSlowSwitchPressure) 
+				|| (Data::ProcChamberDirty==0 && Data::aiProcChamPressure>Parameters::ATMPressure))
+			{
+				EVT::ProcChamberPressHigh.Report();
+				return true;
+			}
+		}
+
+		return false;
+	})
 
 	//PRE_INTERLOCK(doExpCbSupplyCbVal, 1, diPrcCbVacuumFail, 1)
 	PRE_INTERLOCK(doExpCbSupplyCbVal, 1, diGasBoxHFLeak, 1)
@@ -100,6 +137,25 @@ void Interlock::Initialize()
 	PRE_INTERLOCK(doExpCbSupplyCbVal, 1, diPrcCbDoorClose, 0)
 	PRE_INTERLOCK(doExpCbSupplyCbVal, 1, diCbLeftDoorClose, 0)
 	PRE_INTERLOCK(doExpCbSupplyCbVal, 1, diCbRightDoorClose, 0)
+	PRE_INTERLOCK_EX(doExpCbSupplyCbVal, [&](unsigned new_value)
+	{	if(new_value==1)
+		{
+			if(((Data::ProcChamberDirty==1 || Data::ExpChamberDirty==1) && Data::aiProcChamPressure>Parameters::FastSlowSwitchPressure) 
+				|| (Data::aiProcChamPressure>Parameters::ATMPressure))
+			{
+				EVT::ProcChamberPressHigh.Report();
+				return true;
+			}
+
+			if(Data::ExpChamberDirty==1 && Data::diPrcCbDoorOpen==1)
+			{
+				EVT::ExpChamberDirty.Report();
+				return true;
+			}
+		}
+
+		return false;
+	})
 	POST_INTERLOCK_EX(doExpCbSupplyCbVal, [&](unsigned, unsigned value)
 	{	if(value==1)
 		{
@@ -109,6 +165,26 @@ void Interlock::Initialize()
 				return;
 			}
 			if(Data::ExpChamberDirty == 1)
+			{
+				Data::ProcChamberDirty = 1;
+			}
+		}
+	})
+
+	PRE_INTERLOCK_EX(doExpCbHFInletVal, [&](unsigned new_value)
+	{	if(new_value==1 && Data::diPrcCbDoorOpen==1 && Data::doExpCbSupplyCbVal==1)
+		{
+			EVT::ProcDoorLockHFInletValve.Report();
+			return true;
+		}
+
+		return false;
+	})
+	POST_INTERLOCK_EX(doExpCbHFInletVal, [&](unsigned, unsigned value)
+	{	if(value==1)
+		{
+			Data::ExpChamberDirty = 1;
+			if(Data::doExpCbSupplyCbVal == 1)
 			{
 				Data::ProcChamberDirty = 1;
 			}
@@ -240,20 +316,39 @@ void Interlock::shut_chemical_except_n2()
 	Data::doAlcTankOpen = 0;
 	Data::doVaSupplyIPAValve = 0;
 	Data::doHFFacSupplyVal = 0;
+	Data::aoEtOHFlowSetpoint = 0;
+	Data::aoHFFlowSetpoint = 0;
+//	Data::aoN2FlowSetpoint = 0;
+//	Data::aoPurgeN2FlowSetpoint = 0;
 }
 
 void Interlock::shut_all_chemical()
 {
-//	Data::doPurgeAlcTank = 0;
 	Data::doAlcTankOpen = 0;
-	Data::doVaSupplyIPAValve = 0;
-	Data::doHFFacSupplyVal = 0;
 	Data::doExpCbSupplyCbVal = 0;
 	Data::doN2PurgeHFVal = 0;
 	Data::doExpCbVapVacValve = 0;
 	Data::doVaVapValve = 0;
 	Data::doVaHFValve = 0;
 	Data::doExpCbVacIPASupply = 0;
+
+	Data::doHFFacSupplyVal = 0;
+	Data::doVapSupplyN2Valve = 0;
+	Data::doVaSupplyIPAValve = 0;
+	Data::doAlcMFCVal1 = 0;
+	Data::doAlcMFCVal2 = 0;
+	Data::aoEtOHFlowSetpoint = 0;
+	Data::doHFMFCVal1 = 0;
+	Data::doHFMFCVal2 = 0;
+	Data::aoHFFlowSetpoint = 0;
+	Data::doN2MFCVal1 = 0;
+	Data::doN2MFCVal2 = 0;
+	Data::aoN2FlowSetpoint = 0;
+	Data::doPurgeN2MFCVal1 = 0;
+	Data::doPurgeN2MFCVal2 = 0;
+	Data::aoPurgeN2FlowSetpoint = 0;
+	Data::doHFRequest = 0;
+	Data::doVapInletVal = 0;
 }
 
 void Interlock::report_alcohol_alarm()
@@ -265,4 +360,9 @@ void Interlock::shut_pump_valve()
 {
 	Data::doVacFastProcCbVal = 0;
 	Data::doVacSlowProcCbVal = 0;
+}
+
+void Interlock::on_heartbeat_failed_reset()
+{
+
 }

@@ -26,7 +26,8 @@ extern SystemEvent ProcessAlarm;
 extern SystemEvent InterlockTrigger;
 extern SystemEvent ArmTimeout;
 extern SystemEvent ForkTimeout;
-extern SystemEvent HeaterTempOutRange;
+extern SystemEvent HeaterTempOutWarnRange;
+extern SystemEvent HeaterTempOutAlarmRange;
 extern SystemEvent MonitorWarning;
 extern SystemEvent MonitorAlarm;
 extern SystemEvent OverTemp;
@@ -52,5 +53,10 @@ extern SystemEvent PumpAlarm;
 extern SystemEvent PlumbingHeaterAlarm;
 extern SystemEvent ChamberHFLeak;
 extern SystemEvent ArmVacuumDoorEStop;
+extern SystemEvent CDAPressureLow;
+extern SystemEvent ProcChamberPressHigh;
+extern SystemEvent ExpChamberDirty;
+extern SystemEvent ProcChamberDirty;
+extern SystemEvent ProcDoorLockHFInletValve;
 
 }

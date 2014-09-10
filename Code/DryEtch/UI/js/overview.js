@@ -283,6 +283,9 @@ $(document).ready(function () {
 		else if ("Stop" == text)
 		{
 			getControl().invoke(0, 1);
+			$(".auto").attr("disabled", "disabled");
+			$(".auto").removeClass("enable_button");
+			$(".auto").addClass("disabled_button");
 		}		
 	});
 

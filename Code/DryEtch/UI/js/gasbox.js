@@ -21,7 +21,9 @@ var unit = {
 	"8023" : "torr",
 	"8032" : "sccm",
 	"2022" : "℃",
-	"2024" : "℃"
+	"2024" : "℃",
+	"2000" : "kPa",
+	"2008" : "kPa"
 };
 
 var user_info = {};
@@ -253,6 +255,8 @@ function initText() {
 	ids.push(8023);
 	ids.push(2022);
 	ids.push(2024);
+	ids.push(2000);
+	ids.push(2008);
 
 
     prpos[8005] = "0";
@@ -265,6 +269,8 @@ function initText() {
 	prpos[8023] = "0";
 	prpos[2022] = "0";
 	prpos[2024] = "0";
+	prpos[2000] = "0";
+	prpos[2008] = "0";
 
     $(":text").keydown(function (event) {
         if (event.keyCode == 13) {

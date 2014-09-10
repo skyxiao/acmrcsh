@@ -55,13 +55,13 @@ function valve(left, top,class1,class2,id, namePosition, name) {
 		}
 
         if (prpos[id] == "1") {
-        	if (confirm("Are you sure close the valve?"))
+        	if (confirm("Are you sure close the valve '" + name + "'?"))
         	{
             	modifySystemData(id, "0");
             }
         }
         else {
-        	if (confirm("Are you sure open the valve?"))
+        	if (confirm("Are you sure open the valve '" + name + "'?"))
         	{
             	modifySystemData(id, "1");
             }
@@ -104,13 +104,13 @@ $(document).ready(function () {
         			break;
 
         		case "left":
-        			style = "left:" + (arr[i].left - 25) + "px;top:" + arr[i].top  + "px";
+        			style = "left:" + (arr[i].left - 42) + "px;top:" + (arr[i].top + 3) + "px";
         			label.setAttribute("style", style);
         			label.setAttribute("class", "valve_name");
         			break;
 
         		case "right":
-        			style = "left:" + (arr[i].left + 18) + "px;top:" + arr[i].top  + "px";
+        			style = "left:" + (arr[i].left + 18) + "px;top:" + (arr[i].top + 3)  + "px";
         			label.setAttribute("style", style);
         			label.setAttribute("class", "valve_name");
         			break;
@@ -295,7 +295,7 @@ function initValve() {
     arr.push(new valve(179, 118, "valve_green_h", "valve_gray_h", 1018, "bottom", "OPV3"));
     arr.push(new valve(730, 119, "valve_green_h", "valve_gray_h", 1019, "top", "OPV4"));
     arr.push(new valve(270, 168, "valve_green_h", "valve_gray_h", 1021, "lefttop", "OPV10"));
-    arr.push(new valve(420, 167, "valve_green_h", "valve_gray_h", 1022, "top", "OPV11"));
+    arr.push(new valve(420, 167, "valve_green_h", "valve_gray_h", 1022, "top", "OPV11A"));
     arr.push(new valve(245, 184, "valve_green_h", "valve_gray_h", 1036, "lefttop", "OPV12"));
     arr.push(new valve(348, 203, "valve_green_h", "valve_gray_h", 1023, "bottom", "OPV15"));
     arr.push(new valve(540, 184, "valve_green_h", "valve_gray_h", 1034, "bottom", "OPV8"));
@@ -311,7 +311,7 @@ function initValve() {
     arr.push(new valve(492, 593, "valve_green_h", "valve_gray_h", 1051, "top", "OPV28"));
     arr.push(new valve(711, 546, "valve_green_h", "valve_gray_h", 1049, "bottom", "OPV26"));
     arr.push(new valve(304, 592, "valve_green_h", "valve_gray_h", 1050, "top", "OPV27"));
-    arr.push(new valve(448, 220, "valve_green_h", "valve_gray_h", 1067, "left", ""));
+    arr.push(new valve(448, 220, "valve_green_h", "valve_gray_h", 1067, "left", "OPV11B"));
     arr.push(new valve(570, 151, "valve_green", "valve_gray", 1032, "right", "OPV5"));
     arr.push(new valve(620, 151, "valve_green", "valve_gray", 1033, "right", "OPV6"));
     arr.push(new valve(833, 167, "valve_green", "valve_gray", 1041, "right", "OPV7"));

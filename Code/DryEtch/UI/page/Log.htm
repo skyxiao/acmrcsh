@@ -5,10 +5,17 @@
 	<link rel="stylesheet" href="../css/log.css" type="text/css" />
 	<script language="javascript" type="text/javascript" src="../js/jquery-2.1.0.min.js"></script>
 	<script language="javascript" type="text/javascript" src="../js/common.js"></script>
+	<script type="text/javascript" src="../js/WebCalendar.js"></script>
 </head>
 <body onselectstart="return false">
 	<div style="padding-top:30px;">
-		<div class="logo"></div>
+		<div class="logo">
+			<label style="color:white;margin-left:400px;margin-top:20px;">BeginTime:</label>
+			<input type="text" maxlength="100"  id="txBeginTime" readonly="true" style=" width:135px;padding-left:5px;" onclick="SelectDate(this,'yyyy-MM-dd hh:mm:ss');"/>
+			<label style="color:white;margin-left:40px;margin-top:20px;">EndTime:</label>
+			<input type="text" maxlength="100" id="txEndTime" runat="server" readonly="true" style="width:135px;padding-left:5px;" onclick="SelectDate(this,'yyyy-MM-dd hh:mm:ss');"/>
+			<button class="enable_button" onclick="getLogData('')">Query</button>
+		</div>
 		<div class="log_box">
 			<div class="log_content">
 				<div class="table_content">

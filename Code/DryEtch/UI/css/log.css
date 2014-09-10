@@ -118,7 +118,7 @@ body
 .info
 {
 	background-color:#FFFFE3;
-	color:#D43C05;
+	color:white;
 }
 
 .error
@@ -143,4 +143,22 @@ body
 {
 	background-color:#9BFAFA;
 	color:#D43C05;
+}
+
+.enable_button
+{
+	-moz-border-radius : 5px;      /* Gecko browsers */
+    -webkit-border-radius : 5px;   /* Webkit browsers */
+    border-radius : 5px;            /* W3C syntax */
+	margin-left : 20px;
+	margin-top : 20px;
+	width : 70px;
+	height : 30px;
+	font-weight : bold;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#16707E));
+}
+
+.enable_button:hover
+{
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#0D6FD0));
 }

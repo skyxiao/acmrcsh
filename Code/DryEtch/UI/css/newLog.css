@@ -84,8 +84,8 @@ body
 
 .log_btn
 {
-	margin-right:20px;
-	float:right;
+	margin-right:10px;
+	/*float:right;*/
 }
 
 .log_btn button

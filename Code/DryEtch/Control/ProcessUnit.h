@@ -95,6 +95,7 @@ private:
 private:
 	float get_next_position();
 	float get_last_position();
+	//bool current_position_has_wafer();
 	void create_wafer();
 	void remove_wafer();
 	void wafer_movein(unsigned short slot);

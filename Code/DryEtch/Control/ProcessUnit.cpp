@@ -262,7 +262,7 @@ void ProcessUnit::SafeHandle()
 		}
 		else if(m_task.para1 == 2)
 		{
-			Data::doN2PurgeHFVal = 0;
+			Data::doN2SupplyVacVal = 0;
 			Data::doHFMFCVal1 = 0;
 			Data::doHFMFCVal2 = 0;
 			Data::doHFMFCVal3 = 0;
@@ -442,6 +442,11 @@ bool ProcessUnit::TaskPrecheck(const UnitTask& task)
 		EVT::GenericWarning.Report("Chuck motor need homing.");
 		return false;
 	}
+
+	// if(task.command == COMMAND_PINUP && Data::diArmIn == 1)
+	// {
+
+	// }
 
 	return true;
 }
@@ -1637,11 +1642,11 @@ void ProcessUnit::OnPurgeHF()
 	{
 		NEW_UNIT_STEP("purge HF", false)
 			ADD_STEP_COMMAND([&]()
-			{	Data::doN2PurgeHFVal = 1;
+			{	Data::doN2SupplyVacVal = 1;
 				Data::aoHFFlowSetpoint = Parameters::HFPurgeFlow;})
 			ADD_STEP_WAIT(Parameters::PurgeHoldTime)
 			ADD_STEP_COMMAND([&]()
-			{	Data::doN2PurgeHFVal = 0;
+			{	Data::doN2SupplyVacVal = 0;
 				Data::aoHFFlowSetpoint = 0;})
 			ADD_STEP_WAIT(Parameters::PumpHoldTime)
 		END_UNIT_STEP
@@ -1685,7 +1690,7 @@ void ProcessUnit::OnPurgeEtOH()
 		{	Data::doExpCbVapVacValve = 0;
 			Data::doExpCbVacIPASupply = 0;
 			Data::doVaHFValve = 0;
-			Data::doN2PurgeHFVal = 0;
+			Data::doN2SupplyVacVal = 0;
 			Data::doVaVapValve = 1;
 			Data::doExpCbVacValve = 1;
 			Data::doVapSupplyN2Valve = 0;
@@ -1846,7 +1851,7 @@ void ProcessUnit::OnTurnOnHeater()
 			Data::doChuckHTEnable = 1;})
 		ADD_STEP_WAIT_CONDITION([&]()->bool
 		{	return Data::diBodyHTPowRdy == 1 && Data::diLidHTPowRdy == 1 && Data::diChuckHTPowRdy == 1;},
-			2,
+			5,
 			[&](){	EVT::TurnOnHeaterTimeout.Report();})
 	END_UNIT_STEP
 }

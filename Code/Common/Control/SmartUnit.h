@@ -79,6 +79,9 @@ public:
 public:
 	virtual void Initialize();
 	virtual void Terminate();
+
+	virtual bool AlarmCheck() = 0;
+	
 	void Invoke(unsigned cmd, unsigned param1, unsigned param2);
 
 protected:

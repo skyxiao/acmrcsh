@@ -26,6 +26,7 @@ public:
 	void Terminate();
 
 	void Invoke(int unit, unsigned cmd, unsigned param1, unsigned param2);
+	void AlarmCheck();
 
 	friend class SingletonT<UnitManager>;
 private:

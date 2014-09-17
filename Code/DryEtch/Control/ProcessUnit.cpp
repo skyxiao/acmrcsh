@@ -150,7 +150,7 @@ UnitTask ProcessUnit::GetNextTask()
 			}
 			else
 			{
-				if(!alarm_check())
+				if(!AlarmCheck())
 				{
 					return UnitTask{COMMAND_OFFLINE, 0, 0};
 				}
@@ -304,121 +304,144 @@ void ProcessUnit::OnAbort()
 	}
 }
 
-bool ProcessUnit::alarm_check()
+bool ProcessUnit::AlarmCheck()
 {
+	bool rtv = true;
+
 	if(Data::diAlcTkLow == 0)
 	{
 		EVT::AlcoholTankLow.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diCDAInletAlarm)
+	
+	if(Data::diCDAInletAlarm)
 	{
 		EVT::CDAPressureLow.Report();
-		return false;
+		rtv = false;
 	}
-	// else if(Data::diAlcPrsLLmt == 1)
+
+	// if(Data::diAlcPrsLLmt == 1)
 	// {
 	// 	EVT::AlcGasPressureLow.Report();
-	// 	return false;
+	// 	rtv = false;
 	// }
-	else if(Data::diN2FacSplPrsULmt == 1)
+	
+	if(Data::diN2FacSplPrsULmt == 1)
 	{
 		EVT::N2FacPressureHigh.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diN2FacSplPrsLLmt == 1)
+	
+	if(Data::diN2FacSplPrsLLmt == 1)
 	{
 		EVT::N2FacPressureLow.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diFacVPrsSwtLLmt == 1)
+	
+	if(Data::diFacVPrsSwtLLmt == 1)
 	{
 		EVT::FacVacuumPressureLow.Report();
-		return false;
+		rtv = false;
 	}
-	// else if(Data::diExpCbVPrsSwtLLmt == 1)
+
+	// if(Data::diExpCbVPrsSwtLLmt == 1)
 	// {
 	// 	EVT::ExpVacuumPressureLow.Report();
-	// 	return false;
+	// 	rtv = false;
 	// }
-	else if(Data::diVaporMHeaterAlarm == 1)
+	
+	if(Data::diVaporMHeaterAlarm == 1)
 	{
 		EVT::VapMainHeaterAlarm.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diVaporVHeaterAlarm == 1)
+	
+	if(Data::diVaporVHeaterAlarm == 1)
 	{
 		EVT::VapVapHeaterAlarm.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diHeartbeatFail == 1)
+	
+	if(Data::diHeartbeatFail == 1)
 	{
 		EVT::HeartbeatFail.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diExhaustAlarm == 1)
+	
+	if(Data::diExhaustAlarm == 1)
 	{
 		EVT::GasboxExhaustPresAlarm.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diFacInletVPrsULmt == 1)
+	
+	if(Data::diFacInletVPrsULmt == 1)
 	{
 		EVT::FacMainInletVacPresHigh.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diAlcoholLeak == 1)
+	
+	if(Data::diAlcoholLeak == 1)
 	{
 		EVT::AlcoholLeak.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diAlcoholGasLeak == 1)
+	
+	if(Data::diAlcoholGasLeak == 1)
 	{
 		EVT::AlcoholGasLeak.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diExhaustPresAlarm == 1)
+	
+	if(Data::diExhaustPresAlarm == 1)
 	{
 		EVT::FrameExhaustPresAlarm.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diGasboxDoorClose == 0)
+	
+	if(Data::diGasboxDoorClose == 0)
 	{
 		EVT::GasboxDoorOpen.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diGasBoxHFLeak == 1)
+	
+	if(Data::diGasBoxHFLeak == 1)
 	{
 		EVT::GasboxHFLeak.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diHWInterlock == 1)
+	
+	if(Data::diHWInterlock == 1)
 	{
 		EVT::HardwareInterlock.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diVPumpWarning == 1)
+	
+	if(Data::diVPumpWarning == 1)
 	{
 		EVT::PumpWarning.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diVPumpAlarm == 1)
+	
+	if(Data::diVPumpAlarm == 1)
 	{
 		EVT::PumpAlarm.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diPlumbing1Alarm == 1 || Data::diPlumbing2Alarm == 1 || Data::diPlumbing3Alarm == 1 || 
+	
+	if(Data::diPlumbing1Alarm == 1 || Data::diPlumbing2Alarm == 1 || Data::diPlumbing3Alarm == 1 || 
 		Data::diPlumbing4Alarm == 1 || Data::diPlumbing5Alarm == 1)
 	{
 		EVT::PlumbingHeaterAlarm.Report();
-		return false;
+		rtv = false;
 	}
-	else if(Data::diProcCbHFLeak == 1)
+	
+	if(Data::diProcCbHFLeak == 1)
 	{
 		EVT::ChamberHFLeak.Report();
-		return false;
+		rtv = false;
 	}
 
-	return true;
+	return rtv;
 }
 
 bool ProcessUnit::OnlinePrecheck()
@@ -440,7 +463,7 @@ bool ProcessUnit::OnlinePrecheck()
 		return true;
 	}
 
-	if(!alarm_check())
+	if(!AlarmCheck())
 	{
 		return false;
 	}
@@ -1473,7 +1496,7 @@ bool ProcessUnit::OnPumpProcChamber()
 	END_UNIT_STEP
 
 
-	NEW_UNIT_STEP("finish pump", true)
+	NEW_UNIT_STEP("post pump", true)
 		ADD_STEP_COMMAND([&]()
 		{	float pressure_difference = fabs(Data::aiExpChamPressure - Data::aiProcChamPressure);
 			if(pressure_difference < Parameters::PressureDiffAllowance)
@@ -1482,6 +1505,7 @@ bool ProcessUnit::OnPumpProcChamber()
 				Data::doExpCbVacValve = 0;
 				Data::doExpCbVapVacValve = 0;
 			}})
+		ADD_STEP_WAIT(Parameters::PostPumpTime)
 	END_UNIT_STEP
 
 	return true;

@@ -44,7 +44,7 @@ struct
 	f12 	invoke;	
 	f13		load_recipe;
 	f14		unload_recipe;
-	f15		reset_signal_tower;
+	f15		clear_alarm;
 	f16		change_mode;
 } control_module;
 
@@ -105,7 +105,7 @@ Handle<Value> Initialize(const Arguments& args)
 	control_module.invoke = (f12)GetProcAddress(control_core_handle, "Invoke");
 	control_module.load_recipe = (f13)GetProcAddress(control_core_handle, "LoadRecipe");
 	control_module.unload_recipe = (f14)GetProcAddress(control_core_handle, "UnloadRecipe");
-	control_module.reset_signal_tower = (f15)GetProcAddress(control_core_handle, "ResetSignalTower");
+	control_module.clear_alarm = (f15)GetProcAddress(control_core_handle, "ClearAlarm");
 	control_module.change_mode = (f16)GetProcAddress(control_core_handle, "ChangeMode");
 
 	try
@@ -141,7 +141,7 @@ Handle<Value> Terminate(const Arguments& args)
 	control_module.invoke = NULL;
 	control_module.load_recipe = NULL;
 	control_module.unload_recipe = NULL;
-	control_module.reset_signal_tower = NULL;
+	control_module.clear_alarm = NULL;
 	control_module.change_mode = NULL;
 
 	if (control_module.terminate)
@@ -536,15 +536,15 @@ Handle<Value> UnloadRecipe(const Arguments& args)
 	return scope.Close(Undefined());
 }
 
-Handle<Value> ResetSignalTower(const Arguments& args) 
+Handle<Value> ClearAlarm(const Arguments& args) 
 {
 	HandleScope scope;
 
-	if(control_module.reset_signal_tower)
+	if(control_module.clear_alarm)
 	{
 		try
 		{
-			control_module.reset_signal_tower();
+			control_module.clear_alarm();
 		}
 		catch(std::exception& e)
 		{
@@ -601,7 +601,7 @@ void init(Handle<Object> exports)
 	exports->Set(String::NewSymbol("invoke"), FunctionTemplate::New(Invoke)->GetFunction());
 	exports->Set(String::NewSymbol("load_recipe"), FunctionTemplate::New(LoadRecipe)->GetFunction());
 	exports->Set(String::NewSymbol("unload_recipe"), FunctionTemplate::New(UnloadRecipe)->GetFunction());
-	exports->Set(String::NewSymbol("reset_signal_tower"), FunctionTemplate::New(ResetSignalTower)->GetFunction());
+	exports->Set(String::NewSymbol("clear_alarm"), FunctionTemplate::New(ClearAlarm)->GetFunction());
 	exports->Set(String::NewSymbol("change_mode"), FunctionTemplate::New(ChangeMode)->GetFunction());
 }
 

@@ -58,7 +58,7 @@ ParameterItem<float> PressureTriggerTimeout(3009, "PressureTriggerTimeout", "Pre
 ParameterItem<unsigned> N2PurgeFlow(4000,"N2PurgeFlow","Purge","N2 purge flowrate.",0,5000,1000,"sccm");
 ParameterItem<unsigned> PurgeRepeatTimes(4002,"PurgeRepeatTimes","Purge","Repeat times for purge.",3,20,3,"times");
 ParameterItem<float> PurgeTargetPressure(4003,"PurgeTargetPressure","Purge","Purge target pressure.",0,500,400,"torr");
-ParameterItem<unsigned> FlushTime(4004,"FlushTime","Purge","Flush time after purge.",0,100,30,"s");
+//ParameterItem<unsigned> FlushTime(4004,"FlushTime","Purge","Flush time after purge.",0,100,30,"s");
 ParameterItem<unsigned> FlushFlowrate(4005,"FlushFlowrate","Purge","Flush flowrate of N2.",0,5000,1000,"sccm");
 ParameterItem<unsigned> PurgeHoldTime(4006,"PurgeHoldTime","Purge","Hold time after reaching PurgeTargetPressure.",0,100,5,"s");
 ParameterItem<unsigned> PumpHoldTime(4007,"PumpHoldTime","Purge","Hold time after reaching PumpDownTargetPressure.",0,100,5,"s");
@@ -91,6 +91,7 @@ ParameterItem<float> PumpDownTargetPressure(7001,"PumpDownTargetPressure","Pump"
 ParameterItem<unsigned> SlowPumpTimeout(7003,"SlowPumpTimeout","Pump","Pump timeout from ATM to FastSlowSwitchPressure.",0,100,60,"s");
 ParameterItem<unsigned> FastPumpTimeout(7004,"FastPumpTimeout","Pump","Pump timeout from FastSlowSwitchPressure to Vacuum.",0,100,60,"s");
 ParameterItem<unsigned> PumpExpTimeout(7005,"PumpExpTimeout","Pump","Pump expansion chamber timeout.",0,100,60,"s");
+ParameterItem<unsigned> PostPumpTime(7007,"PostPumpTime","Pump","Pump time after process chamber pressure reaching VacuumPressure.",0,300,60,"s");
 
 
 //Wafer

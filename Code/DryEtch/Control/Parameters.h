@@ -50,7 +50,7 @@ extern ParameterItem<float> PressureTriggerTimeout;
 extern ParameterItem<unsigned> N2PurgeFlow;
 extern ParameterItem<unsigned> PurgeRepeatTimes;
 extern ParameterItem<float> PurgeTargetPressure;
-extern ParameterItem<unsigned> FlushTime;
+//extern ParameterItem<unsigned> FlushTime;
 extern ParameterItem<unsigned> FlushFlowrate;
 extern ParameterItem<unsigned> PurgeHoldTime;
 extern ParameterItem<unsigned> PumpHoldTime;
@@ -82,7 +82,7 @@ extern ParameterItem<float> PumpDownTargetPressure;
 extern ParameterItem<unsigned> SlowPumpTimeout;
 extern ParameterItem<unsigned> FastPumpTimeout;
 extern ParameterItem<unsigned> PumpExpTimeout;
-
+extern ParameterItem<unsigned> PostPumpTime;
 
 //Wafer
 extern ParameterItem<unsigned> WaferSize;

@@ -31,3 +31,14 @@ void UnitManager::Invoke(int unit, unsigned cmd, unsigned param1, unsigned param
 		unit_ptr->Invoke(cmd, param1, param2);
 	}
 }
+
+void UnitManager::AlarmCheck()
+{
+	for(auto& v : m_units)
+	{
+		if(v.second)
+		{
+			v.second->AlarmCheck();
+		}
+	}
+}

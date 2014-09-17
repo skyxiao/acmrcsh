@@ -175,6 +175,7 @@ extern "C" int FetchRecentEventLog(char* json, unsigned buffer_size)
 {
 	std::string json_string;
 	json_string = EventLogger::Instance().FetchLogs();
+	//LogInfo(json_string);
 	return copy_string(json, buffer_size, json_string);
 }
 
@@ -205,9 +206,10 @@ extern "C" void UnloadRecipe()
 	RecipeManager::Instance().Unload();
 }
 
-extern "C" void ResetSignalTower()
+extern "C" void ClearAlarm()
 {
 	SignalTower::Instance().ClearEvent();
+	UnitManager::Instance().AlarmCheck();
 }
 
 extern "C" void ChangeMode(unsigned mode)

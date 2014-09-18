@@ -2,14 +2,14 @@
 var drawType = [];
 var currentData = {};
 var TypeMax = {
-	"N2": 5000,
-	"EtOH": 700,
-	"HF": 2000,
-	"Pressure": 200,
-	"Chuck": 1000,
-	"Lid":1000,
-	"Body":1000,
-	"Tank":2000
+	"N2": 1,
+	"EtOH": 1,
+	"HF": 1,
+	"Pressure": 1,
+	"Chuck": 1,
+	"Lid":1,
+	"Body":1,
+	"Tank":1
 };
 
 function  permissionCheck()
@@ -54,6 +54,35 @@ function initChart() {
     Chart1.draw();
 }
 
+function getMinMax()
+{
+	var arr = [];
+	arr[0] = 0;
+	arr[1] = 0;
+
+	for (var i = 0; i < drawType.length; ++i)
+	{
+		var res = currentData[drawType[i]];
+		if (res && res.length != 0)
+		{
+			for (var j = 0; j < res.length; ++j)
+			{
+				if (arr[0] > res[j]['data'] * TypeMax[drawType[i]])
+				{
+					arr[0] = res[j]['data'] * TypeMax[drawType[i]];
+				}
+
+				if (arr[1] < res[j]['data'] * TypeMax[drawType[i]])
+				{
+					arr[1] = res[j]['data'] * TypeMax[drawType[i]];
+				}
+			}
+		}
+
+		return arr;
+	}
+}
+
 function draw(results) {
     Chart1 = new Tee.Chart("canvas");
     Chart1.title.visible = false;
@@ -87,11 +116,13 @@ function draw(results) {
 		{
 			var tmp = new Date(res[t]['time']);
 			series1.data.x[t] = tmp;
-			series1.data.values[t] = parseFloat(res[t]['data']) / TypeMax[drawType[i]];
+			series1.data.values[t] = parseFloat(res[t]['data']) * TypeMax[drawType[i]];
 		}
 
-		series1["typeFlag"] = drawType[i];
+		//series1["typeFlag"] = drawType[i];
     }
+
+    var minmax = getMinMax();
 	
 	if (!flag)
 	{
@@ -104,6 +135,10 @@ function draw(results) {
 			series1.data.x[t] = t;
 			series1.data.values[t] = 0;
 		}
+	}
+	else
+	{
+		Chart1.axes.left.setMinMax(minmax[0], minmax[1]);
 	}
     
     Chart1.title.text = $("#ddlType").val();
@@ -129,12 +164,7 @@ function draw(results) {
     tip = new Tee.ToolTip(Chart1);
     Chart1.tools.add(tip);
     tip.ongettext = function (tool, text, series, index) {
-		var value = "";
-		if (series["typeFlag"])
-		{
-			value += "Value: " + (parseFloat(series.data.values[index]) * TypeMax[series["typeFlag"]]);
-		}
-		
+		var value = "Value: " + parseFloat(series.data.values[index]);
 		return value;
     }
 
@@ -293,6 +323,54 @@ function drawData(startTime, endTime)
 	}
 }
 
+function N2Spinner()
+{
+	TypeMax["N2"] = parseInt($("#N2Spinner").numberspinner("getValue").trim());
+	draw(currentData);
+}
+
+function EtOHSpinner()
+{
+	TypeMax["EtOH"] = parseInt($("#EtOHSpinner").numberspinner("getValue").trim());
+	draw(currentData);
+}
+
+function HFSpinner()
+{
+	TypeMax["HF"] = parseInt($("#HFSpinner").numberspinner("getValue").trim());
+	draw(currentData);
+}
+
+function PressureSpinner()
+{
+	TypeMax["Pressure"] = parseInt($("#PressureSpinner").numberspinner("getValue").trim());
+	draw(currentData);
+}
+
+function ChuckSpinner()
+{
+	TypeMax["Chuck"] = parseInt($("#ChuckSpinner").numberspinner("getValue").trim());
+	draw(currentData);
+}
+
+function LidSpinner()
+{
+	TypeMax["Lid"] = parseInt($("#LidSpinner").numberspinner("getValue").trim());
+	draw(currentData);
+}
+
+function BodySpinner()
+{
+	TypeMax["Body"] = parseInt($("#BodySpinner").numberspinner("getValue").trim());
+	draw(currentData);
+}
+
+function TankSpinner()
+{
+	TypeMax["Tank"] = parseInt($("#TankSpinner").numberspinner("getValue").trim());
+	draw(currentData);
+}
+
 function init()
 {
 	$(".typelist").find("input").click(function(){
@@ -307,6 +385,41 @@ function init()
 			getAllWafer(text);
 		}
 	});
+
+	$("#N2Spinner").numberspinner({
+		min:1,max:100	
+	});
+	$("#EtOHSpinner").numberspinner({
+		min:1,max:100
+	});
+	$("#HFSpinner").numberspinner({
+		min:1,max:100
+	});
+	$("#PressureSpinner").numberspinner({
+		min:1,max:100
+	});
+	$("#ChuckSpinner").numberspinner({
+		min:1,max:100
+	});
+	
+	$("#LidSpinner").numberspinner({
+		min:1,max:100
+	});
+	$("#BodySpinner").numberspinner({
+		min:1,max:100
+	});
+	$("#TankSpinner").numberspinner({
+		min:1,max:100
+	});
+
+	TypeMax["N2"] = parseInt($("#N2Spinner").val().trim());
+	TypeMax["EtOH"] = parseInt($("#EtOHSpinner").val().trim());
+	TypeMax["HF"] = parseInt($("#HFSpinner").val().trim());
+	TypeMax["Pressure"] = parseInt($("#PressureSpinner").val().trim());
+	TypeMax["Chuck"] = parseInt($("#ChuckSpinner").val().trim());
+	TypeMax["Lid"] = parseInt($("#LidSpinner").val().trim());
+	TypeMax["Body"] = parseInt($("#BodySpinner").val().trim());
+	TypeMax["Tank"] = parseInt($("#TankSpinner").val().trim());
 }
 
 function destroyObject(obj)
@@ -324,29 +437,4 @@ function destroyObject(obj)
 	}
 
 	delete obj;
-}
-
-function Query()
-{
-	/*
-	var id = $(".batch_id").val().trim();
-	getAllWafer(id);
-	
-	var startTime = $("#txBeginTime").val();
-	if (startTime)
-	{
-		startTime = startTime.trim();
-	}
-
-	var endTime = $("#txEndTime").val();
-
-	if (endTime)
-	{
-		endTime = endTime.trim();
-	}
-
-	if (startTime || endTime)
-	{
-		drawData(startTime, endTime);
-	}*/
 }

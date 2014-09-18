@@ -34,42 +34,44 @@ function getParam()
 	{
 		confJson = getControl().fetch_parameters(arr);
 		confJson = $.parseJSON(confJson);
+
+		var system_data = confJson["parameters"];
+		for (var i = 0; i < system_data.length; ++i)
+		{
+			switch (system_data[i]["id"])
+			{
+			case "9000":
+				$(".pump_down_pressure").val(system_data[i]["value"]);
+				LeakCheckPressure = parseFloat(system_data[i]["value"]);
+				break;
+
+			case "9001":
+				$(".leak_check_phtime").val(system_data[i]["value"]);
+				LeakCheckPumpHTime = parseInt(system_data[i]["value"]);
+				break;
+
+			case "9002":
+				$(".test_time").val(system_data[i]["value"]);
+				LeakCheckTime = parseInt(system_data[i]["value"]);
+				break;
+
+			case "9003":
+				$(".leak_check_threshold").val(system_data[i]["value"]);
+				LeakCheckThreshold = parseFloat(system_data[i]["value"]);
+				break;
+
+			default:
+			
+			}
+		}
 	}
 	catch (e)
 	{
+		writeLog("error", e);
 		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
 		return;
 	}
 
-	var system_data = confJson["parameters"];
-	for (var i = 0; i < system_data.length; ++i)
-	{
-		switch (system_data[i]["id"])
-		{
-		case "9000":
-			$(".pump_down_pressure").val(system_data[i]["value"]);
-			LeakCheckPressure = parseFloat(system_data[i]["value"]);
-			break;
-
-		case "9001":
-			$(".leak_check_phtime").val(system_data[i]["value"]);
-			LeakCheckPumpHTime = parseInt(system_data[i]["value"]);
-			break;
-
-		case "9002":
-			$(".test_time").val(system_data[i]["value"]);
-			LeakCheckTime = parseInt(system_data[i]["value"]);
-			break;
-
-		case "9003":
-			$(".leak_check_threshold").val(system_data[i]["value"]);
-			LeakCheckThreshold = parseFloat(system_data[i]["value"]);
-			break;
-
-		default:
-		
-		}
-	}
 }
 
 function getSettings()
@@ -80,149 +82,106 @@ function getSettings()
 	{
 		json = getControl().fetch_system_data(arr, false);
 		json = $.parseJSON(json);
-	}
-	catch (e)
-	{
-		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
-		return;
-	}
 
-	/*
-	var confJson = {};
-	arr = [9000, 9001, 9002, 9003];
-	try
-	{
-		confJson = getControl().fetch_parameters(arr);
-		confJson = $.parseJSON(confJson);
-	}
-	catch (e)
-	{
-		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
-		return;
-	}*/
-	
-	var system_data = json["systemdata"];
-	var status = 0;
-	var procCommand = 1000;
-	var procParam1 = 0;
-	var procParam2 = 0;
-	for (var i = 0; i < system_data.length; ++i)
-	{
-		switch (system_data[i]["id"])
+		var system_data = json["systemdata"];
+		var status = 0;
+		var procCommand = 1000;
+		var procParam1 = 0;
+		var procParam2 = 0;
+		for (var i = 0; i < system_data.length; ++i)
 		{
-		case "100030":
-			$(".result").text(system_data[i]["value"]);
-			break;
+			switch (system_data[i]["id"])
+			{
+			case "100030":
+				$(".result").text(system_data[i]["value"]);
+				break;
 
-		case "100031":
-			$(".increase_rate").find("span:first").text(system_data[i]["value"]);
-			break;
+			case "100031":
+				$(".increase_rate").find("span:first").text(system_data[i]["value"]);
+				break;
 
-		case "100050":
-			status = parseInt(system_data[i]["value"]);
-			break;
+			case "100050":
+				status = parseInt(system_data[i]["value"]);
+				break;
 
-		case "100052":
-			procCommand = parseInt(system_data[i]["value"]);
-			break;
+			case "100052":
+				procCommand = parseInt(system_data[i]["value"]);
+				break;
 
-		case "100053":
-			procParam1 = parseInt(system_data[i]["value"]);
-			break;
+			case "100053":
+				procParam1 = parseInt(system_data[i]["value"]);
+				break;
 
-		case "100054":
-			procParam2 = parseInt(system_data[i]["value"]);
-			break;
+			case "100054":
+				procParam2 = parseInt(system_data[i]["value"]);
+				break;
 
-		default:
-		
+			default:
+			
+			}
 		}
-	}
-	
-	/*
-	var system_data = confJson["parameters"];
-	for (var i = 0; i < system_data.length; ++i)
-	{
-		switch (system_data[i]["id"])
+
+		if (top.USER_INFO.leakcheck && top.USER_INFO.leakcheck == "readonly")
 		{
-		case "9000":
-			$(".pump_down_pressure").val(system_data[i]["value"]);
-			LeakCheckPressure = parseFloat(system_data[i]["value"]);
-			break;
-
-		case "9001":
-			$(".leak_check_phtime").val(system_data[i]["value"]);
-			LeakCheckPumpHTime = parseInt(system_data[i]["value"]);
-			break;
-
-		case "9002":
-			$(".test_time").val(system_data[i]["value"]);
-			LeakCheckTime = parseInt(system_data[i]["value"]);
-			break;
-
-		case "9003":
-			$(".leak_check_threshold").val(system_data[i]["value"]);
-			LeakCheckThreshold = parseInt(system_data[i]["value"]);
-			break;
-
-		default:
-		
+			return;
 		}
-	}*/
 
-	if (top.USER_INFO.leakcheck && top.USER_INFO.leakcheck == "readonly")
-	{
-		return;
-	}
-
-	if (status == 0)
-	{
-		$(".pro_chamber_btn").removeAttr("disabled");
-		$(".exp_chamber_btn").removeAttr("disabled");
-		$(".btn_box").find("button").removeClass("disabled_button");
-		$(".btn_box").find("button").addClass("enable_button");
-		$(".Abort").attr("disabled", "disabled");
-		$(".Abort").removeClass("enable_button");
-		$(".Abort").addClass("disabled_button");
-	}
-	else if (status == 1)
-	{
-		$(".pro_chamber_btn").attr("disabled", "disabled");
-		$(".exp_chamber_btn").attr("disabled", "disabled");
-		$(".btn_box").find("button").removeClass("enable_button");
-		$(".btn_box").find("button").addClass("disabled_button");
-		$(".Abort").removeAttr("disabled");
-		$(".Abort").removeClass("disabled_button");
-		$(".Abort").addClass("enable_button");
-		/*
-		if (procCommand == 1014 && procParam1 == 0 && procParam2 == 0)
+		if (status == 0)
 		{
-			$(".pro_chamber_btn").text("Process chamber test cancel");
 			$(".pro_chamber_btn").removeAttr("disabled");
-			$(".pro_chamber_btn").removeClass("disabled_button");
-			$(".pro_chamber_btn").addClass("enable_button");
-		}
-		else if (procCommand == 1014 && procParam1 == 1 && procParam2 == 0)
-		{
-			$(".exp_chamber_btn").text("Expansion chamber test cancel");
 			$(".exp_chamber_btn").removeAttr("disabled");
-			$(".exp_chamber_btn").removeClass("disabled_button");
-			$(".exp_chamber_btn").addClass("enable_button");
+			$(".btn_box").find("button").removeClass("disabled_button");
+			$(".btn_box").find("button").addClass("enable_button");
+			$(".Abort").attr("disabled", "disabled");
+			$(".Abort").removeClass("enable_button");
+			$(".Abort").addClass("disabled_button");
 		}
-		*/
+		else if (status == 1)
+		{
+			$(".pro_chamber_btn").attr("disabled", "disabled");
+			$(".exp_chamber_btn").attr("disabled", "disabled");
+			$(".btn_box").find("button").removeClass("enable_button");
+			$(".btn_box").find("button").addClass("disabled_button");
+			$(".Abort").removeAttr("disabled");
+			$(".Abort").removeClass("disabled_button");
+			$(".Abort").addClass("enable_button");
+			/*
+			if (procCommand == 1014 && procParam1 == 0 && procParam2 == 0)
+			{
+				$(".pro_chamber_btn").text("Process chamber test cancel");
+				$(".pro_chamber_btn").removeAttr("disabled");
+				$(".pro_chamber_btn").removeClass("disabled_button");
+				$(".pro_chamber_btn").addClass("enable_button");
+			}
+			else if (procCommand == 1014 && procParam1 == 1 && procParam2 == 0)
+			{
+				$(".exp_chamber_btn").text("Expansion chamber test cancel");
+				$(".exp_chamber_btn").removeAttr("disabled");
+				$(".exp_chamber_btn").removeClass("disabled_button");
+				$(".exp_chamber_btn").addClass("enable_button");
+			}
+			*/
+		}
+		else if (status == 2)
+		{
+			$(".pro_chamber_btn").attr("disabled", "disabled");
+			$(".exp_chamber_btn").attr("disabled", "disabled");
+			$(".Abort").attr("disabled", "disabled");
+			$(".btn_box").find("button").removeClass("enable_button");
+			$(".btn_box").find("button").addClass("disabled_button");
+		}
+		delete json;
+		//delete confJson;
+		delete system_data;
+		delete arr;
 	}
-	else if (status == 2)
+	catch (e)
 	{
-		$(".pro_chamber_btn").attr("disabled", "disabled");
-		$(".exp_chamber_btn").attr("disabled", "disabled");
-		$(".Abort").attr("disabled", "disabled");
-		$(".btn_box").find("button").removeClass("enable_button");
-		$(".btn_box").find("button").addClass("disabled_button");
+		writeLog("error", e);
+		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
+		return;
 	}
-	delete json;
-	//delete confJson;
-	delete system_data;
-	delete arr;
+	
 }
 
 function initChart() {
@@ -364,6 +323,7 @@ var echamberData = [];
 var time1 = 0;
 function getProChamberData()
 {
+	writeLog("info", "process chamber test start.");
 	if (time1 >= LeakCheckTime)
 	{
 		draw(pchamberData);
@@ -444,6 +404,7 @@ function cancelGetProChamberData()
 var time2 = 0;
 function getExpChamberData()
 {
+	writeLog("info", "Expansion chamber test start.");
 	if (time2 >= LeakCheckTime)
 	{
 		draw(pchamberData);

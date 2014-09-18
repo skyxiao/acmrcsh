@@ -225,33 +225,35 @@ function getData()
 	{
 		valueJson = getControl().fetch_system_data(allList, false);
 		valueJson = $.parseJSON(valueJson);
+	
+
+		time = time + intervalTime;
+		var system_data = valueJson["systemdata"];
+		for (var i = 0; i < system_data.length; ++i)
+		{
+			var length = results[system_data[i]["id"]].length;
+			if (length > 0 && results[system_data[i]["id"]][length - 1]["time"] > 100)
+			{
+				delete (results[system_data[i]["id"]].shift());
+			}
+
+			var value = parseFloat(system_data[i]["value"]);
+			if (isNaN(value))
+			{
+				value = 0;
+			}
+			results[system_data[i]["id"]].push({value:value,time:time/1000});
+		}
+		delete valueJson;
+		delete system_data;
+		delete value;
 	}
 	catch (e)
 	{
+		writeLog("error", e);
 		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
 		return;
 	}
-
-	time = time + intervalTime;
-	var system_data = valueJson["systemdata"];
-	for (var i = 0; i < system_data.length; ++i)
-	{
-		var length = results[system_data[i]["id"]].length;
-		if (length > 0 && results[system_data[i]["id"]][length - 1]["time"] > 100)
-		{
-			delete (results[system_data[i]["id"]].shift());
-		}
-
-		var value = parseFloat(system_data[i]["value"]);
-		if (isNaN(value))
-		{
-			value = 0;
-		}
-		results[system_data[i]["id"]].push({value:value,time:time/1000});
-	}
-	delete valueJson;
-	delete system_data;
-	delete value;
 }
 
 function start(This)
@@ -259,12 +261,14 @@ function start(This)
 	var text = $(This).text();
 	if ("Start" == text)
 	{
+		writeLog("info", "Start monitor");
 		intervalTimeId = setInterval(getData, intervalTime);
 		intervalTimeId2 = setInterval("draw(activeList)", 500);
 		$(This).text("Stop");
 	}
 	else
 	{
+		writeLog("info", "Stop monitor");
 		clearInterval(intervalTimeId);
 		clearInterval(intervalTimeId2);
 		for (var key in results)

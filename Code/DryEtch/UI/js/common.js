@@ -1,4 +1,5 @@
-﻿$(document).keydown(function (e) { 
+﻿var fs = require("fs");
+$(document).keydown(function (e) { 
     var keyEvent; 
     if (e.keyCode == 8)
     { 
@@ -158,7 +159,7 @@ function setPropertyChange(func) {
 
        function writeLog(type, logmsg) {
            var log = { type: type, msg: logmsg, time: getTime() };
-		   var fs = require("fs");
+		       
            fs.appendFile('./log/UILog.log', formatLogMsg(log), 'utf8', function (err) {
                if (err) {
                    console.log(err);

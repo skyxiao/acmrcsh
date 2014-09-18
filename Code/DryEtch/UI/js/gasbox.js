@@ -139,42 +139,90 @@ $(document).ready(function () {
 	$(".PurgeHF").click(function() {
 		if ($(this).attr("isable") == "true")
 		{
-			getControl().invoke(0, 1009, 2);
+            try
+            {
+                writeLog("info", "send PurgeHF command.");
+    			getControl().invoke(0, 1009, 2);
+            }
+            catch (e)
+            {
+                writeLog("error", e);
+            }
 		}
 	});
 
 	$(".PurgeEtOH").click(function() {
 		if ($(this).attr("isable") == "true")
 		{
-			getControl().invoke(0, 1009, 3);
+             try
+            {
+                writeLog("info", "send PurgeEtOH command.");
+			     getControl().invoke(0, 1009, 3);
+            }
+            catch (e)
+            {
+                writeLog("error", e);
+            }
 		}
 	});
 
 	$(".PurgeExpchamber").click(function() {
 		if ($(this).attr("isable") == "true")
 		{
-			getControl().invoke(0, 1009, 1);
+             try
+            {
+                writeLog("info", "send PurgeExpchamber command.");
+			    getControl().invoke(0, 1009, 1);
+            }
+            catch (e)
+            {
+                writeLog("error", e);
+            }
 		}
 	});
 
 	$(".PurgeProcesschamber").click(function() {
 		if ($(this).attr("isable") == "true")
 		{
-			getControl().invoke(0, 1009, 0);
+            try
+            {
+                 writeLog("info", "send PurgeProcesschamber command.");
+			     getControl().invoke(0, 1009, 0);
+            }
+            catch (e)
+            {
+                writeLog("error", e);
+            }
 		}
 	});
 
 	$(".PumpExpchamber").click(function() {
 		if ($(this).attr("isable") == "true")
 		{
-			getControl().invoke(0, 1007, 1);
+            try
+            {
+                writeLog("info", "send PumpExpchamber command.");
+			     getControl().invoke(0, 1007, 1);
+            }
+             catch (e)
+            {
+                writeLog("error", e);
+            }
 		}
 	});
 
 	$(".PumpProcesschamber").click(function() {
 		if ($(this).attr("isable") == "true")
 		{
-			getControl().invoke(0, 1007, 0);
+            try
+            {
+                writeLog("info", "send PumpProcesschamber command.");
+			     getControl().invoke(0, 1007, 0);
+            }
+            catch (e)
+            {
+                writeLog("error", e);
+            }
 		}	
 	});
 
@@ -340,123 +388,125 @@ function getSettingsData()
 	{
 		json = getControl().fetch_system_data(arr, false);
 		json = $.parseJSON(json);
-	}
-	catch (e)
-	{
-		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
-		return;
-	}
+	
 
-	var system_data = json["systemdata"];
-	var status = 0;
-	var procCommand = 1000;
-	var procParam1 = 0;
-	var procParam2 = 0;
-	var TKLow = 0;
-	var TKHigh = 0;
-	var TKHighH = 0;
-	for (var i = 0; i < system_data.length; ++i)
-	{
-		switch (system_data[i]["id"])
-		{
+    	var system_data = json["systemdata"];
+    	var status = 0;
+    	var procCommand = 1000;
+    	var procParam1 = 0;
+    	var procParam2 = 0;
+    	var TKLow = 0;
+    	var TKHigh = 0;
+    	var TKHighH = 0;
+    	for (var i = 0; i < system_data.length; ++i)
+    	{
+    		switch (system_data[i]["id"])
+    		{
 
-		case "100050":
-			status = parseInt(system_data[i]["value"]);
-			break;
+    		case "100050":
+    			status = parseInt(system_data[i]["value"]);
+    			break;
 
-		case "100052":
-			procCommand = parseInt(system_data[i]["value"]);
-			break;
+    		case "100052":
+    			procCommand = parseInt(system_data[i]["value"]);
+    			break;
 
-		case "100053":
-			procParam1 = parseInt(system_data[i]["value"]);
-			break;
+    		case "100053":
+    			procParam1 = parseInt(system_data[i]["value"]);
+    			break;
 
-		case "100054":
-			procParam2 = parseInt(system_data[i]["value"]);
-			break;
+    		case "100054":
+    			procParam2 = parseInt(system_data[i]["value"]);
+    			break;
 
-		case "46":
-			TKLow = parseInt(system_data[i]["value"]);
-			break;
+    		case "46":
+    			TKLow = parseInt(system_data[i]["value"]);
+    			break;
 
-		case "47":
-			TKHigh = parseInt(system_data[i]["value"]);
-			break;
+    		case "47":
+    			TKHigh = parseInt(system_data[i]["value"]);
+    			break;
 
-		case "48":
-			TKHighH = parseInt(system_data[i]["value"]);
-			break;
+    		case "48":
+    			TKHighH = parseInt(system_data[i]["value"]);
+    			break;
 
-		default:
-		
-		}
-	}
+    		default:
+    		
+    		}
+    	}
 
-	if (TKHighH == 1)
-	{
-		$(".gas_level").text("HH");
-	}
-	else if (TKHigh == 1)
-	{
-		$(".gas_level").text("H");
-	}
-	else if (TKLow == 1)
-	{
-		$(".gas_level").text("L");
-	}
-	else
-	{
-		$(".gas_level").text("LL");
-	}
+    	if (TKHighH == 1)
+    	{
+    		$(".gas_level").text("HH");
+    	}
+    	else if (TKHigh == 1)
+    	{
+    		$(".gas_level").text("H");
+    	}
+    	else if (TKLow == 1)
+    	{
+    		$(".gas_level").text("L");
+    	}
+    	else
+    	{
+    		$(".gas_level").text("LL");
+    	}
 
-	if (lastStatus === status && lastProcCommand === procCommand && lastprocParam1 === procParam1 &&  lastprocParam2 === procParam2)
-	{
-		return;
-	}
-	else
-	{
-		lastStatus = status;
-		lastProcCommand = procCommand;
-		lastprocParam1 = procParam1;
-		lastprocParam2 = procParam2;
-	}
+    	if (lastStatus === status && lastProcCommand === procCommand && lastprocParam1 === procParam1 &&  lastprocParam2 === procParam2)
+    	{
+    		return;
+    	}
+    	else
+    	{
+    		lastStatus = status;
+    		lastProcCommand = procCommand;
+    		lastprocParam1 = procParam1;
+    		lastprocParam2 = procParam2;
+    	}
 
-	if (status == 0)
-	{
-		$(".btn_box").find("button").removeAttr("disabled");
-		$(".btn_box").find("button").removeClass("disabled_button");
-		$(".btn_box").find("button").addClass("enable_button");
-		$(".btn_box").find("button").attr("isable", "true");
-		$(".Abort").attr("disabled", "disabled");
-		$(".Abort").removeClass("enable_button");
-		$(".Abort").addClass("disabled_button");
-		$(".Abort").attr("isable", "false");
-	}
-	else if (status == 1)
-	{
-		$(".btn_box").find("button").attr("disabled", "disabled");
-		$(".btn_box").find("button").removeClass("enable_button");
-		$(".btn_box").find("button").addClass("disabled_button");
-		$(".btn_box").find("button").attr("isable", "false");
-		$(".Abort").removeAttr("disabled");
-		$(".Abort").removeClass("disabled_button");
-		$(".Abort").addClass("enable_button");
-		$(".Abort").attr("isable", "true");		
-	}
-	else if (status == 2)
-	{
-		$(".btn_box").find("button").attr("disabled", "disabled");
-		$(".btn_box").find("button").removeClass("enable_button");
-		$(".btn_box").find("button").addClass("disabled_button");
-		$(".btn_box").find("button").attr("isable", "false");
-	}
+    	if (status == 0)
+    	{
+    		$(".btn_box").find("button").removeAttr("disabled");
+    		$(".btn_box").find("button").removeClass("disabled_button");
+    		$(".btn_box").find("button").addClass("enable_button");
+    		$(".btn_box").find("button").attr("isable", "true");
+    		$(".Abort").attr("disabled", "disabled");
+    		$(".Abort").removeClass("enable_button");
+    		$(".Abort").addClass("disabled_button");
+    		$(".Abort").attr("isable", "false");
+    	}
+    	else if (status == 1)
+    	{
+    		$(".btn_box").find("button").attr("disabled", "disabled");
+    		$(".btn_box").find("button").removeClass("enable_button");
+    		$(".btn_box").find("button").addClass("disabled_button");
+    		$(".btn_box").find("button").attr("isable", "false");
+    		$(".Abort").removeAttr("disabled");
+    		$(".Abort").removeClass("disabled_button");
+    		$(".Abort").addClass("enable_button");
+    		$(".Abort").attr("isable", "true");		
+    	}
+    	else if (status == 2)
+    	{
+    		$(".btn_box").find("button").attr("disabled", "disabled");
+    		$(".btn_box").find("button").removeClass("enable_button");
+    		$(".btn_box").find("button").addClass("disabled_button");
+    		$(".btn_box").find("button").attr("isable", "false");
+    	}
 
-	permissionCheck();
+    	permissionCheck();
 
-	delete json;
-	delete arr;
-	delete system_data;
+    	delete json;
+    	delete arr;
+    	delete system_data;
+    }
+    catch (e)
+    {
+        writeLog("error", e);
+        Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
+        return;
+    }
 }
 
 function getVoleStatus()

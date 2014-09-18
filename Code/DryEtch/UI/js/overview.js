@@ -65,6 +65,7 @@ function turntableRun()
 	}
 	catch (e)
 	{
+		writeLog("error", e);
 		delete json;
 		delete arr;
 		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
@@ -331,42 +332,55 @@ $(document).ready(function () {
 		bindings:
 		{
 			'HOME': function (t) {
+				writeLog("info", "do home.");
 				getControl().invoke(0, 1001);
 			},
 			'PUMP': function (t) {
+				writeLog("info", "do PUMP.");
 				getControl().invoke(0, 1007, 0);
 			},
 			'VENT': function (t) {
+				writeLog("info", "do VENT.");
 				getControl().invoke(0, 1008, 0);
 			},
 			'PINUP': function (t) {
+				writeLog("info", "do PINUP.");
 				getControl().invoke(0, 1010);
 			},
 			'PINDOWN': function (t){
+				writeLog("info", "do PINDOWN.");
 				getControl().invoke(0, 1011);
 			},
 			'OPEN_DOOR': function (t){
+				writeLog("info", "Open door.");
 				getControl().invoke(0, 1017);
 			},
 			'CLOSE_DOOR': function (t) {
+				writeLog("info", "Close door.");
 				getControl().invoke(0, 1018);
 			},
 			'TURNON_HEATER': function (t) {
+				writeLog("info", "TURNON HEATER");
 				getControl().invoke(0, 1012);
 			},
 			'TURNOFF_HEATER': function (t) {
+				writeLog("info", "TURNOFF HEATER");
 				getControl().invoke(0, 1013);
 			},
 			'ROTATE_FORWARD': function (t) {
+				writeLog("info", "ROTATE FORWARD");
 				getControl().invoke(0, 1015);
 			},
 			'ROTATE_BACKWARD': function (t) {
+				writeLog("info", "ROTATE BACKWARD");
 				getControl().invoke(0, 1016);
 			},
 			'LOAD': function (t) {
+				writeLog("info", "do load");
 				getControl().invoke(0, 1002);
 			},
 			'UNLOAD': function (t) {
+				writeLog("info", "do unload");
 				getControl().invoke(0, 1003);
 			}
 		}
@@ -442,6 +456,7 @@ function loadRecipe()
 	fs.readdir(recipedir, function(err, files){
 		if (err)
 		{
+			writeLog("error", err);
 			Dialog.alert("<label style='font-size:14px;'>Read The dir '" + recipedir + "' ERROE:" + err + "</label>");
 			return;
 		}
@@ -498,6 +513,7 @@ function selectRecipeSure()
 	}
 	catch (e)
 	{
+		writeLog("error", e);
 		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");
 		return;
 	}
@@ -523,6 +539,7 @@ function getInitData()
 	}
 	catch (e)
 	{
+		writeLog("error", e);
 		delete json;
 		delete arr;
 		Dialog.alert("<label style='font-size:14px;'>" + e + "</label>");

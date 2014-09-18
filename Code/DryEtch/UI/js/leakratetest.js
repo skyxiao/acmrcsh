@@ -63,7 +63,7 @@ function getParam()
 
 		case "9003":
 			$(".leak_check_threshold").val(system_data[i]["value"]);
-			LeakCheckThreshold = parseInt(system_data[i]["value"]);
+			LeakCheckThreshold = parseFloat(system_data[i]["value"]);
 			break;
 
 		default:
@@ -177,21 +177,24 @@ function getSettings()
 
 	if (status == 0)
 	{
-		$(".exp_chamber_btn").text("Expansion chamber test start");
-		$(".pro_chamber_btn").text("Process chamber test start");
 		$(".pro_chamber_btn").removeAttr("disabled");
 		$(".exp_chamber_btn").removeAttr("disabled");
 		$(".btn_box").find("button").removeClass("disabled_button");
 		$(".btn_box").find("button").addClass("enable_button");
+		$(".Abort").attr("disabled", "disabled");
+		$(".Abort").removeClass("enable_button");
+		$(".Abort").addClass("disabled_button");
 	}
 	else if (status == 1)
 	{
-		$(".exp_chamber_btn").text("Expansion chamber test start");
-		$(".pro_chamber_btn").text("Process chamber test start");
 		$(".pro_chamber_btn").attr("disabled", "disabled");
 		$(".exp_chamber_btn").attr("disabled", "disabled");
 		$(".btn_box").find("button").removeClass("enable_button");
 		$(".btn_box").find("button").addClass("disabled_button");
+		$(".Abort").removeAttr("disabled");
+		$(".Abort").removeClass("disabled_button");
+		$(".Abort").addClass("enable_button");
+		/*
 		if (procCommand == 1014 && procParam1 == 0 && procParam2 == 0)
 		{
 			$(".pro_chamber_btn").text("Process chamber test cancel");
@@ -206,13 +209,13 @@ function getSettings()
 			$(".exp_chamber_btn").removeClass("disabled_button");
 			$(".exp_chamber_btn").addClass("enable_button");
 		}
+		*/
 	}
 	else if (status == 2)
 	{
-		$(".exp_chamber_btn").text("Expansion chamber test start");
-		$(".pro_chamber_btn").text("Process chamber test start");
 		$(".pro_chamber_btn").attr("disabled", "disabled");
 		$(".exp_chamber_btn").attr("disabled", "disabled");
+		$(".Abort").attr("disabled", "disabled");
 		$(".btn_box").find("button").removeClass("enable_button");
 		$(".btn_box").find("button").addClass("disabled_button");
 	}
@@ -262,13 +265,27 @@ function initChart() {
     Chart1.title.visible = false;
     Chart1.panel.transparent = true;
     Chart1.legend.visible = false;
-    Chart1.axes.bottom.setMinMax(0, LeakCheckTime / 60);
+    Chart1.axes.bottom.setMinMax(0, (LeakCheckTime + LeakCheckPumpHTime + 120) / 60);
     Chart1.axes.bottom.labels.roundFirst = false;
     Chart1.zoom.enabled = false;
 	Chart1.scroll.enabled = false;
     Chart1.draw();
 	delete Chart1;
 	delete series1;
+}
+
+function getMaxxValue(res)
+{
+	var max = 0;
+	for (var i = 0; i < res.length; ++i)
+	{
+		if (max < res[i]['pressure'])
+		{
+			max = res[i]['pressure'];
+		}
+	}
+
+	return max;
 }
 
 function draw(results) {
@@ -294,7 +311,7 @@ function draw(results) {
 		Chart1.axes.bottom.setMinMax(0, bmax / 60);
 	}
 	
-	var lmax = parseFloat($(".pump_down_pressure").val());
+	var lmax = getMaxxValue(results);
 	if (!isNaN(lmax) && 0 != lmax)
 	{
 		Chart1.axes.left.setMinMax(0, lmax);
@@ -311,7 +328,7 @@ function draw(results) {
     Chart1.panel.transparent = true;
     Chart1.legend.visible = false;
     var x1 = series1.data.x;
-	Chart1.axes.bottom.setMinMax(leadTime, LeakCheckTime / 60);
+	Chart1.axes.bottom.setMinMax(leadTime, (LeakCheckTime + LeakCheckPumpHTime + 120) / 60);
     Chart1.axes.bottom.labels.roundFirst = false;
     Chart1.zoom.enabled = false;
 	Chart1.scroll.enabled = false;
@@ -354,6 +371,7 @@ function getProChamberData()
 		return;
 	}
 	saveSettingsData();
+	/*
 	var text = $(".pro_chamber_btn").text();
 	if ("Process chamber test cancel" == text)
 	{
@@ -368,6 +386,7 @@ function getProChamberData()
 	}
 	else if ("Process chamber test start" == text)
 	{
+		*/
 		getControl().invoke(0, 1014, 0);
 		clearInterval(timeId2);
 		clearInterval(timeId1);
@@ -402,7 +421,7 @@ function getProChamberData()
 				time : parseFloat(((time1 / 60).toFixed(3))) + leadTime
 			};	
 			
-			if (pchamberData.length > LeakCheckTime / 0.5)
+			if (pchamberData.length > (LeakCheckTime + LeakCheckPumpHTime + 120) / 0.5)
 			{
 				delete (pchamberData.shift());
 			}
@@ -414,7 +433,7 @@ function getProChamberData()
 		}
 	
 		timeId1 = setInterval(createData, 500);
-	}
+	//}
 }
 
 function cancelGetProChamberData()
@@ -432,6 +451,7 @@ function getExpChamberData()
 		return;
 	}
 	saveSettingsData();
+	/*
 	var text = $(".exp_chamber_btn").text();
 	if ("Expansion chamber test cancel" == text)
 	{
@@ -446,6 +466,7 @@ function getExpChamberData()
 	}
 	else if ("Expansion chamber test start" == text)
 	{
+		*/
 		getControl().invoke(0, 1014, 1);
 		clearInterval(timeId1);
 		clearInterval(timeId2);
@@ -481,7 +502,7 @@ function getExpChamberData()
 				time : parseFloat(((time2 / 60).toFixed(3))) + leadTime
 			};			
 			
-			if (echamberData.length > LeakCheckTime / 0.5)
+			if (echamberData.length > (LeakCheckTime + LeakCheckPumpHTime + 120) / 0.5)
 			{
 				delete (echamberData.shift());
 			}
@@ -493,7 +514,8 @@ function getExpChamberData()
 		}
 		
 		timeId2 = setInterval(createData, 500);
-	}
+
+	//}
 }
 
 function cancelGetExpChamberData()
@@ -525,7 +547,7 @@ function init()
 	});
 
 	$(".pump_down_pressure").blur(function(){
-		LeakCheckPressure = parseFloat($(this).val());
+		LeakCheckPressure = parseFloat($(this).val().trim());
 		if (isNaN(LeakCheckPressure))
 		{
 			LeakCheckPressure = 10;
@@ -545,7 +567,7 @@ function init()
 	});
 
 	$(".leak_check_threshold").blur(function(){
-		LeakCheckThreshold = parseFloat($(this).val());
+		LeakCheckThreshold = parseFloat($(this).val().trim());
 		if (isNaN(LeakCheckThreshold))
 		{
 			LeakCheckThreshold = 5;
@@ -582,6 +604,22 @@ function init()
 				$(this).val(range["LeakCheckPumpHTime"][1]);
 			}
 		}
+	});
+
+	$(".Abort").click(function(){
+		getControl().invoke(0, 3);
+		clearInterval(timeId2);
+		clearInterval(timeId1);
+		while(echamberData.length > 0)
+		{
+			delete (echamberData.shift());
+		}
+		time2 = 0;
+		while(pchamberData.length > 0)
+		{
+			delete (pchamberData.shift());
+		}
+		time1 = 0;
 	});
 }
 

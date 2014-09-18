@@ -1,10 +1,13 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
+    <title></title>	
+	<link rel="stylesheet" href="../css/easyui.css" type="text/css" />
+	<link rel="stylesheet" href="../css/icon.css" type="text/css" />
 	<link rel="stylesheet" href="../css/historyData.css" type="text/css" />
     <script language="javascript" type="text/javascript" src="../js/jquery-2.1.0.min.js"></script>
 	<script language="javascript" type="text/javascript" src="../js/common.js"></script>
+	<script language="javascript" type="text/javascript" src="../js/jquery.easyui.min.js"></script>
 	<script src="../js/date.format.js" type="text/javascript"></script>
     <script language="javascript" type="text/javascript" src="../js/historydata.js"></script>
     <script src="../js/teechart.js" type="text/javascript"></script>
@@ -16,30 +19,38 @@
 		<div class="logo">
 		</div>
 		<div class="historydata_body">
-			<div style="float:left;width:95px;margin-top:200px;margin-left:45px;" class="typelist">
+			<div style="float:left;width:150px;margin-top:200px;margin-left:25px;" class="typelist">
 				<input type="checkbox" class="N2" checked=true/>
 				<label style="color:#fff;margin-left:5px;">N2</label>
+				<span style="margin-left:43px;"><input id="N2Spinner" class="easyui-numberspinner" style="width:50px;" value="1" data-options="onSpinUp:N2Spinner,onSpinDown:N2Spinner"/></span>
 				<br/>
 				<input type="checkbox" class="EtOH" checked=true/>
 				<label style="color:#fff;margin-left:5px;">EtOH</label>
+				<span style="margin-left:25px;"><input id="EtOHSpinner" class="easyui-numberspinner" style="width:50px;" value="1" data-options="onSpinUp:EtOHSpinner,onSpinDown:EtOHSpinner"/></span>
 				<br/>
 				<input type="checkbox" class="HF" checked=true/>
 				<label style="color:#fff;margin-left:5px;">HF</label>
+				<span style="margin-left:42px;"><input id="HFSpinner" class="easyui-numberspinner" style="width:50px;" value="1" data-options="onSpinUp:HFSpinner,onSpinDown:HFSpinner"/></span>
 				<br/>
 				<input type="checkbox" class="Pressure" checked=true/>
 				<label style="color:#fff;margin-left:5px;">Pressure</label>
+				<span><input id="PressureSpinner" class="easyui-numberspinner" style="width:50px;" value="1" data-options="onSpinUp:PressureSpinner,onSpinDown:PressureSpinner"/></span>
 				<br/>
 				<input type="checkbox" class="Chuck" checked=true/>
 				<label style="color:#fff;margin-left:5px;">Chuck</label>
+				<span style="margin-left:19px;"><input id="ChuckSpinner" class="easyui-numberspinner" style="width:50px;" value="1" data-options="onSpinUp:ChuckSpinner,onSpinDown:ChuckSpinner"/></span>
 				<br/>
 				<input type="checkbox" class="Lid" checked=true/>
 				<label style="color:#fff;margin-left:5px;">Lid</label>
+				<span style="margin-left:41px;"><input id="LidSpinner" class="easyui-numberspinner" style="width:50px;" value="1" data-options="onSpinUp:LidSpinner,onSpinDown:LidSpinner"/></span>
 				<br/>
 				<input type="checkbox" class="Body" checked=true/>
 				<label style="color:#fff;margin-left:5px;">Body</label>
+				<span style="margin-left:27px;"><input id="BodySpinner" class="easyui-numberspinner" style="width:50px;" value="1" data-options="onSpinUp:BodySpinner,onSpinDown:BodySpinner"/></span>
 				<br/>
 				<input type="checkbox" class="Tank" checked=true/>
 				<label style="color:#fff;margin-left:5px;">Tank</label>
+				<span style="margin-left:29px;"><input id="TankSpinner" class="easyui-numberspinner" style="width:50px;" value="1" data-options="onSpinUp:TankSpinner,onSpinDown:TankSpinner"/></span>
 			</div>
 			<div class="historydata_content">
 				<div style="padding-left:40px;">

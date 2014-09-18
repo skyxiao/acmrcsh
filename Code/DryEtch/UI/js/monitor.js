@@ -23,16 +23,16 @@ var lineColor = {
 	"2000" : "#1371D0", 
 	"2002" : "#D87E2A", 
 	"2004" : "#F73003", 
-	"2006" : "#AFAC05", 
-	"2008" : "#62C209", 
+	"2006" : "#1BB066", 
+	"2008" : "#C3081A", 
 	"8001" : "#6D1E76", 
 	"8020" : "#0D8B90", 
 	"8023" : "#DA25A1", 
 	"4000" : "#070707", 
-	"5000" : "#234301", 
+	"5000" : "#666666", 
 	"6000" : "#24F41D",
 	"8009" : "#C5DE20",
-	"8012" : "#8BE9CB",
+	"8012" : "#05C6B3",
 	"8018" : "#052874",
 	"8015" : "#EA79FC"
 };
@@ -88,6 +88,30 @@ function initChart() {
 
 var count = 0;
 
+function getMinMaxValue(List)
+{
+	var arr = [];
+	arr[0] = 0;
+	arr[1] = 0;
+	for (var i = 0; i < List.length; ++i)
+	{
+		for (var j = 0; j < results[List[i]].length; ++j)
+		{
+			if (arr[1] < results[List[i]][j]["value"])
+			{
+				arr[1] = results[List[i]][j]["value"];
+			}
+
+			if (arr[0] > results[List[i]][j]["value"])
+			{
+				arr[0] = results[List[i]][j]["value"];
+			}
+		}
+	}
+
+	return arr;
+}
+
 function draw(List) {
 	$("#canvas").remove();
 	$(".canvas_box").append('<canvas id="canvas" width="850" height="600" style="padding:0px;">This browser does not seem to support HTML5 Canvas.</canvas>');
@@ -119,7 +143,22 @@ function draw(List) {
 		//delete series1;
 	}
 
-	Chart1.axes.left.setMinMax(-1000, 1000);
+	var minmax = getMinMaxValue(List);
+
+	if (minmax[0] > 0)
+	{
+		minmax[0] = 0;
+	}
+	else
+	{
+		minmax[0] = minmax[0] * 1.1;
+	}
+
+	minmax[1] = minmax[1] * 1.1;
+
+	Chart1.axes.left.setMinMax(minmax[0], minmax[1]);
+	
+	//Chart1.axes.left.setMinMax(-1000, 1000);
 	if (List.length == 0)
 	{
 		Chart1.axes.bottom.setMinMax(0, 100);
